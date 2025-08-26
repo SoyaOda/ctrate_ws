@@ -1,0 +1,79 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Data files (large medical images)
+*.nii
+*.nii.gz
+*.dcm
+*.mha
+*.nrrd
+*.raw
+
+# Output directories
+outputs/
+output/
+results/
+temp/
+tmp/
+cache/
+
+# Model weights and checkpoints
+*.pth
+*.pt
+*.h5
+*.hdf5
+*.pkl
+*.ckpt
+weights/
+checkpoints/
+models/
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+*.ipynb
+
+# Docker
+*.tar
+*.tar.gz
+
+# TotalSegmentator
+.totalsegmentator/
+
+# Keep important directories structure
+!outputs/.gitkeep
+!data/.gitkeep
+!scripts/
+!md_files/
+!CLAUDE.md
+!README.md
