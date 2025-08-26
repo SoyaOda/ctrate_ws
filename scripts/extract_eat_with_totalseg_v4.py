@@ -6,7 +6,6 @@
 - 遠位血管禁止帯でシェルを削る
 - 気道近傍の禁止帯を追加
 - 端スライスの厚み抑制
-- 前バージョンv3からの改善
 """
 import os
 import json
@@ -22,15 +21,15 @@ from scipy.ndimage import (
 )
 import sys
 
-# 血管ごとの近位保持距離（mm） - v4で厳格化
+# 血管ごとの近位保持距離（mm）
 KEEP_MM = {
-    "aorta": 5.0,  # v3: 8.0 -> v4: 5.0
-    "pulmonary_artery": 5.0,  # v3: 8.0 -> v4: 5.0
-    "pulmonary_vein": 0.0,  # v4: 実質不採用
-    "vena_cava_inferior": 6.0,  # v4: 新規追加
-    "vena_cava_superior": 6.0,  # v4: 新規追加
+    "aorta": 5.0,
+    "pulmonary_artery": 5.0,
+    "pulmonary_vein": 0.0,  # 0 = 実質不採用
+    "vena_cava_inferior": 6.0,
+    "vena_cava_superior": 6.0,
 }
-Z_MARGIN = 1  # 血管のZ範囲マージン（v3: 2 -> v4: 1）
+Z_MARGIN = 1  # 血管のZ範囲マージン
 
 def _mm_to_px(mm, spacing):
     """mmをピクセル数に変換"""
@@ -155,7 +154,7 @@ def build_domain_mask(totalseg_dir, ct_shape, spacing):
     
     return domain
 
-def keep_proximal_vessels(vessel_mask, heart_core, spacing, keep_mm=8.0, z_margin=1):
+def keep_proximal_vessels(vessel_mask, heart_core, spacing, keep_mm=8.0, z_margin=2):
     """
     血管マスクを心臓近位部のみに限定
     心膜は大血管の根部のみを覆うため
@@ -166,10 +165,10 @@ def keep_proximal_vessels(vessel_mask, heart_core, spacing, keep_mm=8.0, z_margi
     # 心筋+4腔からの距離
     dist_to_heart = distance_transform_edt(~heart_core, sampling=spacing)
     
-    # 近位部のみ保持（心臓から8mm以内）
+    # 近位部のみ保持（心臓から指定mm以内）
     proximal = vessel_mask & (dist_to_heart <= keep_mm)
     
-    # Z範囲も心臓コアの範囲±2スライスに限定
+    # Z範囲も心臓コアの範囲±zマージンに限定
     z_any = np.any(heart_core, axis=(0, 1))
     if np.any(z_any):
         z_indices = np.where(z_any)[0]
@@ -210,14 +209,14 @@ def create_heart_roi_with_domain_limited_edt(totalseg_dir, ct_nifti_path):
     
     if not heart_parts:
         print("[ERROR] No heart components found!")
-        return None, None, None, None, None, None, None
+        return None, None, None, None, None, None, None, None, None
     
     # 心臓全体（心筋+4腔）
     heart_core = np.logical_or.reduce(heart_parts) if heart_parts else np.zeros_like(ct_data, dtype=bool)
     
-    # 大血管（形状補助用、近位部と遠位部を分離） - v4改善
+    # 大血管（形状補助用、近位部と遠位部を分離）
     vessel_names = ["aorta", "pulmonary_artery", "pulmonary_vein",
-                    "vena_cava_inferior", "vena_cava_superior"]  # v4: SVC/IVC追加
+                    "vena_cava_inferior", "vena_cava_superior"]
     proximal_vessels = []
     far_vessels = []
     
@@ -234,7 +233,7 @@ def create_heart_roi_with_domain_limited_edt(totalseg_dir, ct_nifti_path):
             vessel_proximal = keep_proximal_vessels(vessel, heart_core, spacing, 
                                                    keep_mm=keep_mm, z_margin=Z_MARGIN)
             proximal_vessels.append(vessel_proximal)
-            # 遠位部を記録（v4新規）
+            # 遠位部を記録
             far_vessels.append(vessel & (~vessel_proximal))
             print(f"  Loaded vessel: {name} (proximal {keep_mm}mm, distal excluded)")
         else:
@@ -248,7 +247,7 @@ def create_heart_roi_with_domain_limited_edt(totalseg_dir, ct_nifti_path):
     else:
         heart_all = heart_core
     
-    # 遠位血管マスク（v4新規）
+    # 遠位血管マスク
     far_vessel_mask = np.logical_or.reduce(far_vessels) if far_vessels else np.zeros_like(heart_core, dtype=bool)
     
     # 心筋（除外用）
@@ -292,11 +291,11 @@ def create_heart_roi_with_domain_limited_edt(totalseg_dir, ct_nifti_path):
     # 適応厚推定用バンド（自動的にドメイン内限定）
     band20 = (dist_mm > 0) & (dist_mm <= 20.0)
     
-    return dist_mm, band20, myo, heart_core, heart_all, spacing, ct_data, domain, far_vessel_mask  # v4: far_vessel_mask追加
+    return dist_mm, band20, myo, heart_core, heart_all, spacing, ct_data, domain, far_vessel_mask
 
 def build_adaptive_shell_with_connectivity(dist_mm, band20, heart_core, heart_all, 
                                           ct_data, spacing, domain, far_vessel_mask,
-                                          totalseg_dir,  # v4: 気道禁止帯のため追加
+                                          totalseg_dir,
                                           hu_min=-190, hu_max=-30,
                                           adaptive_cap_mm=10.0, seed_shell_mm=6.0):
     """
@@ -335,7 +334,7 @@ def build_adaptive_shell_with_connectivity(dist_mm, band20, heart_core, heart_al
         else:
             t = seed_shell_mm
         
-        # v4: 端スライスの厚み抑制
+        # 端スライスの厚み抑制
         if z == z0 or z == z1:
             t = min(t, seed_shell_mm)
             
@@ -369,7 +368,7 @@ def build_adaptive_shell_with_connectivity(dist_mm, band20, heart_core, heart_al
     print(f"  Removed: {before_voxels-after_voxels:,} voxels ({100*(before_voxels-after_voxels)/max(before_voxels,1):.1f}%)")
     
     # === v4追加: 遠位血管禁止帯と気道禁止帯 ===
-    print("[INFO] Applying exclusion zones (v4 enhancement)...")
+    print("[INFO] Applying exclusion zones...")
     
     def _mm_to_iter(mm):  # 3D膨張の反復数
         return max(1, int(np.ceil(mm / min(spacing))))
@@ -404,7 +403,7 @@ def build_adaptive_shell_with_connectivity(dist_mm, band20, heart_core, heart_al
     labeled, num_components = label(shell_connected)
     print(f"[INFO] Shell components after all exclusions: {num_components}")
     
-    # v4: 検証ゲート
+    # 検証ゲート
     if far_vessel_mask.any():
         anti_vessel_check = binary_dilation(far_vessel_mask, structure=se3d, iterations=_mm_to_iter(2.0))
         ratio_far = np.sum(shell_connected & anti_vessel_check) / max(np.sum(shell_connected), 1)
@@ -470,7 +469,7 @@ def calculate_volume_ml(mask, spacing):
 
 def save_results(eat_mask, shell, ct_img, output_dir, shell_thickness_mm,
                 hu_min, hu_max, eat_mean_hu, eat_std_hu, harta_voxels=None):
-    """結果保存（v4: 検証ゲート追加）"""
+    """結果保存"""
     os.makedirs(output_dir, exist_ok=True)
     
     spacing = ct_img.header.get_zooms()[:3]
@@ -507,7 +506,7 @@ def save_results(eat_mask, shell, ct_img, output_dir, shell_thickness_mm,
     with open(stats_path, 'w') as f:
         json.dump(stats, f, indent=2)
     
-    # v4: 検証ゲート - EAT体積の妥当性チェック
+    # 検証ゲート: EAT体積の妥当性チェック
     print("\n" + "="*60)
     print("[VALIDATION RESULTS]")
     if 50 <= eat_vol_ml <= 200:
@@ -559,7 +558,7 @@ def main():
     print("IMPROVED EAT EXTRACTION v4 (Hilum Leak Prevention)")
     print("="*60)
     
-    # 1. 心臓ROIとドメイン限定EDT
+    # 1. 心臓ROIとドメイン限定EDT（遠位血管マスクも取得）
     result = create_heart_roi_with_domain_limited_edt(
         args.totalseg_dir,
         args.ct_nifti
@@ -569,12 +568,12 @@ def main():
         print("[ERROR] Failed to create heart ROI")
         sys.exit(1)
     
-    dist_mm, band20, myo, heart_core, heart_all, spacing, ct_data, domain, far_vessel_mask = result  # v4: far_vessel_mask追加
+    dist_mm, band20, myo, heart_core, heart_all, spacing, ct_data, domain, far_vessel_mask = result
     
-    # 2. スライス別適応シェルと連結制約（v4: 禁止帯追加）
+    # 2. スライス別適応シェルと連結制約（禁止帯を追加）
     shell, shell_thickness = build_adaptive_shell_with_connectivity(
         dist_mm, band20, heart_core, heart_all, ct_data, spacing, domain, far_vessel_mask,
-        args.totalseg_dir,  # v4: 気道のため追加
+        args.totalseg_dir,
         hu_min=args.hu_min,
         hu_max=args.hu_max,
         adaptive_cap_mm=args.shell_max,
