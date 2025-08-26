@@ -144,6 +144,31 @@ def build_domain_mask(totalseg_dir, ct_shape, spacing):
     
     return domain
 
+def keep_proximal_vessels(vessel_mask, heart_core, spacing, keep_mm=8.0, z_margin=2):
+    """
+    血管マスクを心臓近位部のみに限定
+    心膜は大血管の根部のみを覆うため
+    """
+    if not vessel_mask.any():
+        return vessel_mask
+    
+    # 心筋+4腔からの距離
+    dist_to_heart = distance_transform_edt(~heart_core, sampling=spacing)
+    
+    # 近位部のみ保持（心臓から8mm以内）
+    proximal = vessel_mask & (dist_to_heart <= keep_mm)
+    
+    # Z範囲も心臓コアの範囲±2スライスに限定
+    z_any = np.any(heart_core, axis=(0, 1))
+    if np.any(z_any):
+        z_indices = np.where(z_any)[0]
+        z0 = max(0, z_indices[0] - z_margin)
+        z1 = min(vessel_mask.shape[2] - 1, z_indices[-1] + z_margin)
+        proximal[:, :, :z0] = False
+        proximal[:, :, z1+1:] = False
+    
+    return proximal
+
 def create_heart_roi_with_domain_limited_edt(totalseg_dir, ct_nifti_path):
     """
     改善版v3：心臓ROI作成とドメイン限定EDT
@@ -178,16 +203,19 @@ def create_heart_roi_with_domain_limited_edt(totalseg_dir, ct_nifti_path):
     # 心臓全体（心筋+4腔）
     heart_core = np.logical_or.reduce(heart_parts) if heart_parts else np.zeros_like(ct_data, dtype=bool)
     
-    # 大血管（形状補助用）
+    # 大血管（形状補助用、近位部のみ使用）
     vessel_names = ["aorta", "pulmonary_artery", "pulmonary_vein"]
     vessel_parts = []
     for name in vessel_names:
         p = Path(totalseg_dir) / f"{name}.nii.gz"
         if p.exists():
-            vessel_parts.append(nib.load(str(p)).get_fdata() > 0)
-            print(f"  Loaded vessel: {name}")
+            vessel = nib.load(str(p)).get_fdata() > 0
+            # 血管を心臓近位部のみに限定
+            vessel_proximal = keep_proximal_vessels(vessel, heart_core, spacing, keep_mm=8.0, z_margin=2)
+            vessel_parts.append(vessel_proximal)
+            print(f"  Loaded vessel: {name} (proximal only)")
     
-    # EDT計算用の心臓集合（大血管を含む）
+    # EDT計算用の心臓集合（近位血管のみを含む）
     if vessel_parts:
         heart_all = heart_core | np.logical_or.reduce(vessel_parts)
     else:
@@ -202,9 +230,15 @@ def create_heart_roi_with_domain_limited_edt(totalseg_dir, ct_nifti_path):
         myo = heart_core  # フォールバック
         print("[INFO] Using full heart as myocardium (fallback)")
     
-    # 3D穴埋めと2Dクロージング
+    # 3D穴埋めと2D/3Dクロージング
     print("[INFO] Applying 3D hole filling...")
     heart_all = binary_fill_holes(heart_all)
+    
+    # 軽い3Dクロージング（微小な穴を塞ぐ）
+    print("[INFO] Applying 3D closing...")
+    se3d_small = generate_binary_structure(3, 1)  # 6連結
+    iterations_3d = max(1, int(np.ceil(1.0 / min(spacing))))
+    heart_all = binary_closing(heart_all, structure=se3d_small, iterations=iterations_3d)
     
     print("[INFO] Applying 2D closing per slice...")
     rad_mm = 1.5
@@ -283,8 +317,8 @@ def build_adaptive_shell_with_connectivity(dist_mm, band20, heart_core, heart_al
     print("[INFO] Applying connectivity constraint from heart surface...")
     se3d = generate_binary_structure(3, 2)
     
-    # 心臓表面（heart_allの1ボクセル外側）を種に
-    border = binary_dilation(heart_all, structure=se3d) & (~heart_all) & domain
+    # 心臓コア表面（heart_coreの1ボクセル外側）を種に（血管からの伝播を防ぐ）
+    border = binary_dilation(heart_core, structure=se3d) & (~heart_core) & domain
     
     # 心臓表面から到達可能な部分のみ残す
     shell_connected = binary_propagation(input=border, mask=shell, structure=se3d)
