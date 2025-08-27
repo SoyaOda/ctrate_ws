@@ -312,19 +312,15 @@ def extract_eat_pat(ct_path, totalseg_dir, output_dir,
     fat_near_heart = np.zeros_like(fat_mask, dtype=bool)
     fat_near_heart[:, :, z_min:z_max+1] = fat_mask[:, :, z_min:z_max+1]
     
-    # 5. 心膜周囲脂肪の抽出（心臓マスクを膨張）
-    print(f"\n6. Extracting pericardial fat (dilation: {dilation_radius_mm} mm)...")
+    # 5. 心膜周囲脂肪の抽出（EDTベースの等方的膨張）
+    print(f"\n6. Extracting pericardial fat (EDT-based dilation: {dilation_radius_mm} mm)...")
     
-    # 膨張回数の計算
-    min_spacing = min(spacing)
-    iterations = int(np.ceil(dilation_radius_mm / min_spacing))
-    print(f"  Dilation iterations: {iterations} (min spacing: {min_spacing} mm)")
+    # ユークリッド距離変換による等方的膨張
+    print(f"  Computing Euclidean Distance Transform...")
+    dist_to_heart = distance_transform_edt(~heart_mask, sampling=spacing)
+    heart_dilated = dist_to_heart <= dilation_radius_mm
     
-    # 3D構造要素（26近傍）
-    struct = generate_binary_structure(3, 2)
-    
-    # 心臓マスクを膨張
-    heart_dilated = binary_dilation(heart_mask, structure=struct, iterations=iterations)
+    print(f"  Heart dilated voxels: {np.sum(heart_dilated):,}")
     
     # Shell（心臓周囲の殻状領域）を計算
     shell_mask = heart_dilated & ~heart_mask
@@ -394,6 +390,7 @@ def extract_eat_pat(ct_path, totalseg_dir, output_dir,
         },
         "parameters": {
             "dilation_radius_mm": float(dilation_radius_mm),
+            "dilation_method": "EDT (Euclidean Distance Transform)",
             "ct_shape": list(ct_data.shape),
             "ct_spacing_mm": list(spacing),
             "heart_z_range": [int(z_min), int(z_max)]
