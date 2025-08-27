@@ -37,20 +37,42 @@ docker pull wasserth/totalsegmentator:2.10.0
 
 ### ステップ1: TotalSegmentatorでセグメンテーション実行
 
+#### 1-1. 基本的な臓器セグメンテーション
 ```bash
-# 基本的な臓器セグメンテーション
+# 心臓と臓器のセグメンテーション
 TotalSegmentator -i input_ct.nii.gz -o output_dir
+```
 
-# 内臓脂肪セグメンテーション（ライセンスキー必要）
+#### 1-2. 内臓脂肪セグメンテーション（必須）
+**重要**: EAT+PAT抽出には`torso_fat.nii.gz`が必須です。tissue_typesタスクを実行してください。
+
+```bash
+# tissue_typesタスクでtorso_fat（内臓脂肪）を生成
 TotalSegmentator -i input_ct.nii.gz -o output_dir --task tissue_types -l $LICENSE_KEY
 ```
 
-または、提供されているスクリプトを使用：
+生成されるファイル:
+- `torso_fat.nii.gz` - 内臓脂肪マスク（必須）
+- `subcutaneous_fat.nii.gz` - 皮下脂肪マスク
+- `skeletal_muscle.nii.gz` - 骨格筋マスク
+
+**注意事項**:
+- tissue_typesタスクにはライセンスキーが必要です（研究用途は無料）
+- ライセンスキーは`.env`ファイルまたは環境変数で設定
+- **同じ出力ディレクトリ**に両方のタスクを実行してください
+- tissue_typesは`--fast`オプションと非互換です
+
+提供されているスクリプトを使用（推奨）：
 
 ```bash
-# tissue_typesタスクの実行
+# tissue_typesタスクの自動実行
 ./scripts/run_tissue_types.sh input_ct.nii.gz output_dir
 ```
+
+このスクリプトは：
+- 自動的にライセンスキーを.envから読み込み
+- Dockerコンテナで実行
+- 出力ファイルの確認を実施
 
 ### ステップ2: EAT+PAT抽出
 

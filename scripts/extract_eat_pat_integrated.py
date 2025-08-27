@@ -106,6 +106,48 @@ def load_vessel_masks(totalseg_dir, verbose=False):
     
     return vessels
 
+def compute_intrapericardial_zmax(totalseg_dir, heart_mask, spacing,
+                                  prox_mm=5.0, z_margin_slices=1, verbose=False):
+    """
+    心膜内領域の上端Z座標を計算（近位大血管を考慮）
+    
+    Args:
+        totalseg_dir: TotalSegmentator出力ディレクトリ
+        heart_mask: 心臓マスク
+        spacing: ボクセルスペーシング
+        prox_mm: 心臓からの近接距離 [mm]
+        z_margin_slices: 安全マージン [スライス数]
+        verbose: 詳細出力
+    
+    Returns:
+        zmax: 上限Z座標
+    """
+    se3d = generate_binary_structure(3, 2)
+    it = max(1, int(np.ceil(prox_mm / min(spacing))))
+    prox_band = binary_dilation(heart_mask, structure=se3d, iterations=it)
+
+    def _load(name):
+        p = Path(totalseg_dir) / f"{name}.nii.gz"
+        return (nib.load(str(p)).get_fdata() > 0) if p.exists() else None
+
+    aorta = _load("aorta")
+    pa = _load("pulmonary_artery")
+
+    intrapericardial = heart_mask.copy()
+    for v in [aorta, pa]:
+        if v is not None:
+            intrapericardial |= (v & prox_band)
+
+    z_any = np.any(intrapericardial, axis=(0,1))
+    z_idx = np.where(z_any)[0]
+    if z_idx.size == 0:
+        return np.where(np.any(heart_mask, axis=(0,1)))[0][-1]  # 心臓だけで決定
+    
+    zmax = min(z_idx[-1] + z_margin_slices, heart_mask.shape[2]-1)
+    if verbose:
+        print(f"  Intrapericardial zmax (with proximal great vessels): {zmax}")
+    return zmax
+
 def incorporate_proximal_vessels(heart_mask, vessels, proximity_mm=5.0, spacing=(1.0, 1.0, 1.0), verbose=False):
     """
     心臓に近接する大血管の根元部分を心臓マスクに追加
@@ -293,20 +335,32 @@ def extract_eat_pat(ct_path, totalseg_dir, output_dir,
     nib.save(visceral_fat_img, str(visceral_fat_path))
     print(f"  Visceral fat mask saved: {visceral_fat_path}")
     
-    # 4. 心臓高さ近辺の脂肪に限定
-    print("\n5. Restricting fat to heart level...")
+    # 4. 心臓高さ近辺の脂肪に限定（改善版：解剖学的境界を使用）
+    print("\n5. Restricting fat to anatomical boundaries...")
+    
+    # 下端：心臓マスクが存在する最も尾側のZ
     z_indices = np.where(np.any(heart_mask, axis=(0, 1)))[0]
     if len(z_indices) > 0:
-        z_min, z_max = z_indices[0], z_indices[-1]
+        z_bottom_heart = z_indices[0]  # 最も尾側（小さいZ）
+        z_basic_top = z_indices[-1]    # 基本的な上端（大きいZ）
     else:
-        z_min, z_max = 0, heart_mask.shape[2] - 1
+        z_bottom_heart = 0
+        z_basic_top = heart_mask.shape[2] - 1
     
-    # 上下に少しマージンを追加
-    margin_slices = 5
-    z_min = max(0, z_min - margin_slices)
-    z_max = min(heart_mask.shape[2] - 1, z_max + margin_slices)
+    # 上端：近位大血管を考慮した解剖学的上限
+    z_top = compute_intrapericardial_zmax(
+        totalseg_dir, heart_mask, spacing, 
+        prox_mm=5.0, z_margin_slices=1, verbose=verbose
+    )
     
-    print(f"  Heart Z-range: {z_min} to {z_max} (total: {z_max - z_min + 1} slices)")
+    # 下端には少しマージンを追加（横隔膜側への余裕）
+    margin_bottom = 3
+    z_min = max(0, z_bottom_heart - margin_bottom)
+    z_max = z_top
+    
+    print(f"  Anatomical Z-range: {z_min} to {z_max} (total: {z_max - z_min + 1} slices)")
+    print(f"    Bottom (diaphragm): {z_min} (heart bottom: {z_bottom_heart})")
+    print(f"    Top (great vessels): {z_max}")
     
     # Z範囲外をマスク
     fat_near_heart = np.zeros_like(fat_mask, dtype=bool)
@@ -324,6 +378,14 @@ def extract_eat_pat(ct_path, totalseg_dir, output_dir,
     
     # Shell（心臓周囲の殻状領域）を計算
     shell_mask = heart_dilated & ~heart_mask
+    
+    # Shell領域も解剖学的境界でクリップ（上端・下端の制限を適用）
+    shell_mask[:, :, :z_min] = False
+    shell_mask[:, :, z_max+1:] = False
+    fat_near_heart[:, :, :z_min] = False  # 念のため脂肪も再度クリップ
+    fat_near_heart[:, :, z_max+1:] = False
+    
+    print(f"  Shell clipped to anatomical boundaries")
     
     # Shellマスクを保存
     shell_path = masks_dir / "shell.nii.gz"
