@@ -25,9 +25,8 @@ Web searchの際は、必ずo3-query MCPを利用すること！
 現状scripts/batch_process_all.shを用いて元CT画像のNIFTIファイルを入力してEATを得るScriptを実装した。
 
 [命令]
-現状README_EAT_PAT_EXTRACTION.mdのようにアルゴリズムとVisualization Scriptを実装できた。
-そのあと、scripts/extract_eat_pat_improved_v3_backup.pyのようにアルゴリズムを実装できた。
-現状のアルゴリズムへのフィードバックとして、md_files/lung_ROI_2.mdをえたので、extract_eat_pat_improved_v3_backup.pyを複製したのち、lung_ROI_2.mdを参考に修正して。
+現状README_EAT_PAT_v4_ILAM.mdのようにアルゴリズムとVisualization Scriptを実装できた。
+現状のアルゴリズムへのフィードバックとして、md_files/lung_ROI_3.mdをえたので、scripts/extract_eat_pat_improved_v4_ilam.pyを複製したのち、md_files/lung_ROI_3.mdを参考に修正して。
 
 
 もしわからない部分があればAIにクエリするのでプロンプトを作成して。
