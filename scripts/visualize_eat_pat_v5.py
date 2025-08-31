@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-EAT+PAT v5可視化スクリプト（ILAM追加領域表示付き）
-Heart、Shell、EAT+PAT、ILAM追加領域、Visceral Fatをすべて可視化
+EAT+PAT v5可視化スクリプト（ILAM領域表示付き）
+Heart、Shell、EAT+PAT、ILAM領域、Visceral Fatをすべて可視化
 """
 
 import os
@@ -17,14 +17,14 @@ import json
 
 def load_all_masks(masks_dir, ct_img):
     """
-    すべてのマスクを読み込み（ILAM追加領域含む）
+    すべてのマスクを読み込み（ILAM領域含む）
     """
     masks = {}
     mask_files = {
         'heart': 'heart.nii.gz',
         'shell': 'shell.nii.gz',
         'eat_pat': 'eat_pat.nii.gz',
-        'ilam_addition': 'ilam_addition.nii.gz',  # v5新規
+        'ilam_components': 'ilam_components.nii.gz',  # v5: ILAM全体
         'visceral_fat': 'visceral_fat.nii.gz'
     }
     
@@ -42,7 +42,7 @@ def load_all_masks(masks_dir, ct_img):
 
 def create_slice_visualization(ct_data, masks, slice_idx, spacing, output_path):
     """
-    単一スライスの可視化（6パネル - ILAM追加領域含む）
+    単一スライスの可視化（6パネル - ILAM領域含む）
     """
     fig = plt.figure(figsize=(24, 16))
     gs = gridspec.GridSpec(2, 3, figure=fig, hspace=0.15, wspace=0.15)
@@ -101,17 +101,17 @@ def create_slice_visualization(ct_data, masks, slice_idx, spacing, output_path):
     ax4.set_title(f'Visceral Fat (torso_fat)\nArea: {vf_area:.1f} cm²', fontsize=12, fontweight='bold')
     ax4.axis('off')
     
-    # 5. ILAM Addition (中央下) - v5新規
+    # 5. ILAM Components (中央下) - v5
     ax5 = fig.add_subplot(gs[1, 1])
     ax5.imshow(ct_slice, cmap='gray', vmin=-200, vmax=200)
-    if np.any(masks['ilam_addition'][:, :, slice_idx]):
-        ilam_masked = np.ma.masked_where(masks['ilam_addition'][:, :, slice_idx] < 0.5,
-                                        masks['ilam_addition'][:, :, slice_idx])
+    if np.any(masks['ilam_components'][:, :, slice_idx]):
+        ilam_masked = np.ma.masked_where(masks['ilam_components'][:, :, slice_idx] < 0.5,
+                                        masks['ilam_components'][:, :, slice_idx])
         ax5.imshow(ilam_masked, cmap='Greens', alpha=0.7, vmin=0, vmax=1)
     
-    ilam_pixels = np.sum(masks['ilam_addition'][:, :, slice_idx])
+    ilam_pixels = np.sum(masks['ilam_components'][:, :, slice_idx])
     ilam_area = ilam_pixels * spacing[0] * spacing[1] / 100
-    ax5.set_title(f'ILAM Addition (Green)\nArea: {ilam_area:.1f} cm²', fontsize=12, fontweight='bold', color='green')
+    ax5.set_title(f'ILAM Components (Green)\nArea: {ilam_area:.1f} cm²', fontsize=12, fontweight='bold', color='green')
     ax5.axis('off')
     
     # 6. Combined view (右下)
@@ -130,24 +130,22 @@ def create_slice_visualization(ct_data, masks, slice_idx, spacing, output_path):
         shell_masked = np.ma.masked_where(shell_outline < 0.5, shell_outline)
         ax6.imshow(shell_masked, cmap='Blues', alpha=0.3, vmin=0, vmax=1)
     
-    # EAT+PAT (黄色、強調)
+    # EAT+PAT (黄色)
     if np.any(masks['eat_pat'][:, :, slice_idx]):
-        # Shellベースの部分（黄色）
-        shell_based = masks['eat_pat'][:, :, slice_idx] & ~masks['ilam_addition'][:, :, slice_idx]
-        if np.any(shell_based):
-            shell_based_masked = np.ma.masked_where(shell_based < 0.5, shell_based)
-            ax6.imshow(shell_based_masked, cmap='YlOrRd', alpha=0.6, vmin=0, vmax=1)
-        
-        # ILAM追加部分（緑色で強調）
-        if np.any(masks['ilam_addition'][:, :, slice_idx]):
-            ilam_masked = np.ma.masked_where(masks['ilam_addition'][:, :, slice_idx] < 0.5,
-                                            masks['ilam_addition'][:, :, slice_idx])
-            ax6.imshow(ilam_masked, cmap='Greens', alpha=0.8, vmin=0, vmax=1)
+        eat_pat_masked = np.ma.masked_where(masks['eat_pat'][:, :, slice_idx] < 0.5,
+                                           masks['eat_pat'][:, :, slice_idx])
+        ax6.imshow(eat_pat_masked, cmap='YlOrRd', alpha=0.6, vmin=0, vmax=1)
+    
+    # ILAM領域（緑色で重ね表示）
+    if np.any(masks['ilam_components'][:, :, slice_idx]):
+        ilam_masked = np.ma.masked_where(masks['ilam_components'][:, :, slice_idx] < 0.5,
+                                        masks['ilam_components'][:, :, slice_idx])
+        ax6.imshow(ilam_masked, cmap='Greens', alpha=0.5, vmin=0, vmax=1)
     
     fat_fraction = (eat_pat_pixels / shell_pixels * 100) if 'shell_pixels' in locals() and shell_pixels > 0 else 0
     ilam_percent = (ilam_pixels / eat_pat_pixels * 100) if 'eat_pat_pixels' in locals() and eat_pat_pixels > 0 else 0
     
-    ax6.set_title(f'Combined (Yellow: Shell-based, Green: ILAM)\nILAM: {ilam_percent:.1f}% of total EAT+PAT',
+    ax6.set_title(f'Combined (Yellow: EAT+PAT, Green: ILAM Components)\nILAM: {ilam_percent:.1f}% of total EAT+PAT',
                  fontsize=12, fontweight='bold')
     ax6.axis('off')
     
@@ -174,8 +172,8 @@ def create_mip_visualization(ct_data, masks, spacing, output_path):
     }
     
     mask_names = list(masks.keys())
-    colors = {'heart': 'Reds', 'shell': 'Blues', 'eat_pat': 'YlOrBr', 'ilam_addition': 'Greens', 'visceral_fat': 'Oranges'}
-    alphas = {'heart': 0.4, 'shell': 0.3, 'eat_pat': 0.7, 'ilam_addition': 0.8, 'visceral_fat': 0.2}
+    colors = {'heart': 'Reds', 'shell': 'Blues', 'eat_pat': 'YlOrBr', 'ilam_components': 'Greens', 'visceral_fat': 'Oranges'}
+    alphas = {'heart': 0.4, 'shell': 0.3, 'eat_pat': 0.7, 'ilam_components': 0.8, 'visceral_fat': 0.2}
     
     for idx, (view_name, (axis, ct_mip, mask_mips)) in enumerate(views.items()):
         ax = plt.subplot(2, 3, idx + 1)
@@ -213,7 +211,7 @@ def create_mip_visualization(ct_data, masks, spacing, output_path):
         plt.Rectangle((0, 0), 1, 1, fc='red', alpha=0.4, label='Heart'),
         plt.Rectangle((0, 0), 1, 1, fc='blue', alpha=0.3, label='Shell'),
         plt.Rectangle((0, 0), 1, 1, fc='orange', alpha=0.7, label='EAT+PAT'),
-        plt.Rectangle((0, 0), 1, 1, fc='green', alpha=0.8, label='ILAM Addition'),
+        plt.Rectangle((0, 0), 1, 1, fc='green', alpha=0.8, label='ILAM Components'),
         plt.Rectangle((0, 0), 1, 1, fc='darkorange', alpha=0.2, label='Visceral Fat')
     ]
     ax_stats.legend(handles=legend_elements, loc='center', fontsize=12)
@@ -231,13 +229,13 @@ def create_mip_visualization(ct_data, masks, spacing, output_path):
     stats_text += f"Heart:         {volumes['heart']:8.1f} ml\n"
     stats_text += f"Shell:         {volumes['shell']:8.1f} ml\n"
     stats_text += f"EAT+PAT:       {volumes['eat_pat']:8.1f} ml\n"
-    stats_text += f"  - ILAM add:  {volumes['ilam_addition']:8.1f} ml\n"
+    stats_text += f"  - ILAM:       {volumes['ilam_components']:8.1f} ml\n"
     stats_text += f"Visceral Fat:  {volumes['visceral_fat']:8.1f} ml\n\n"
     
     # 比率計算
     fat_fraction = (volumes['eat_pat'] / volumes['shell'] * 100) if volumes['shell'] > 0 else 0
     eat_to_visceral = (volumes['eat_pat'] / volumes['visceral_fat'] * 100) if volumes['visceral_fat'] > 0 else 0
-    ilam_percent = (volumes['ilam_addition'] / volumes['eat_pat'] * 100) if volumes['eat_pat'] > 0 else 0
+    ilam_percent = (volumes['ilam_components'] / volumes['eat_pat'] * 100) if volumes['eat_pat'] > 0 else 0
     
     stats_text += "Ratios\n" + "-"*50 + "\n"
     stats_text += f"Fat fraction in shell:    {fat_fraction:5.1f}%\n"

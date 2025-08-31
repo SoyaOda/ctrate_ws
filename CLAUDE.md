@@ -26,7 +26,7 @@ Web searchの際は、必ずo3-query MCPを利用すること！
 
 [命令]
 現状README_EAT_PAT_v5.mdのようにアルゴリズムとVisualization Scriptを実装できた。
-現状のアルゴリズムへのフィードバックとして、md_files/Spec5.3.mdをえたので、scripts/extract_eat_pat_improved_v5_2.pyを複製したのち、md_files/Spec5.3.mdを参考に修正して。
+現状の最新アルゴリズム（cripts/extract_eat_pat_improved_v5_3.py）へのフィードバックとして、md_files/Spec5.3.mdをえたので、scripts/extract_eat_pat_improved_v5_3.pyを複製したのち、md_files/z-axis.mdを参考に修正して。
 
 
 もしわからない部分があればAIにクエリするのでプロンプトを作成して。
