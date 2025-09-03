@@ -1,0 +1,9 @@
+torch>=2.0.0
+torchvision>=0.15.0
+torchio>=0.19.0
+diffdrr>=0.3.0
+simpleitk>=2.0.0
+nibabel>=5.0.0
+numpy>=1.21.0
+matplotlib>=3.5.0
+tqdm>=4.60.0
