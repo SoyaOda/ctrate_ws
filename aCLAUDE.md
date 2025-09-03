@@ -13,7 +13,7 @@ Web searchの際は、必ずo3-query MCPを利用すること！
 エラーや未知の質問、技術的な調査が必要な場合は**必ず**o3-queryツールを呼び出し、
 返ってきたクエリを私に表示して停止してください。
 必ずクエリ生成→人間が結果を入力のフローに従ってください
-※Queryの最後に「これらについて、公式実装を参考にした解決策を教えてください。」という文言を入れること
+※Queryの最後に「これらについて、Qwen2.5-VL、SAM2.1、LISA等の公式実装を参考にした解決策を教えてください。」という文言を入れること
 
 ### 使用例
 - 技術的なエラーの解決方法を調べたい時
@@ -22,10 +22,11 @@ Web searchの際は、必ずo3-query MCPを利用すること！
 - 具体的なライブラリやモデルの使用方法を調べたい時
 
 [Introduction]
-現状元CTデータであるdata/CT-RATE-v2/dataset/valid_fixed/valid_1/valid_1_a/valid_1_a_1.nii.gzとそのMaskでーたであるoutputs/eat_pat_v5_4_valid_1_a_1/masks/eat_pat.nii.gzが存在する。
+現状scripts/batch_process_all.shを用いて元CT画像のNIFTIファイルを入力してEATを得るScriptを実装した。
 
 [命令]
-md_files/deepdrr.mdに沿って実装を進めて。新しい機能になるので新しくdeepdrrフォルダを作成し、その中で実装を進めること。機能ごとに少しずつ実装を行い、適宜テストを行い実際に動くことを確認して次の機能を実装するように進めること。
+現状README_EAT_PAT_v5.mdのようにアルゴリズムとVisualization Scriptを実装できた。
+現状の最新アルゴリズム（cripts/extract_eat_pat_improved_v5_3.py）へのフィードバックとして、md_files/Spec5.3.mdをえたので、scripts/extract_eat_pat_improved_v5_3.pyを複製したのち、md_files/z-axis.mdを参考に修正して。
 
 
 もしわからない部分があればAIにクエリするのでプロンプトを作成して。
