@@ -1,0 +1,55 @@
+# DeepDRR CUDA 11.8 環境用Dockerfile
+# md_files/answer1.mdの解決策に基づく
+FROM nvidia/cuda:11.8.0-devel-ubuntu22.04
+
+# 基本パッケージのインストール
+RUN apt-get update && apt-get install -y \
+    python3-pip \
+    python3-dev \
+    python3-venv \
+    wget \
+    git \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# pipのアップグレード
+RUN pip3 install --upgrade pip
+
+# Python依存関係のインストール
+RUN pip3 install \
+    pycuda \
+    deepdrr==1.1.3 \
+    nibabel \
+    imageio \
+    tqdm \
+    matplotlib \
+    numpy \
+    pydicom \
+    scikit-image
+
+# 作業ディレクトリ設定
+WORKDIR /workspace
+
+# スクリプトをコピー
+COPY test_deepdrr_cuda11.py /workspace/
+COPY *.py /workspace/
+
+# GPUアクセスを確認するためのスクリプト
+RUN echo '#!/bin/bash\n\
+echo "CUDA Version:"\n\
+nvcc --version\n\
+echo ""\n\
+echo "GPU Info:"\n\
+nvidia-smi\n\
+echo ""\n\
+echo "Python CUDA Test:"\n\
+python3 -c "import pycuda.driver as drv; drv.init(); print(f\"GPU: {drv.Device(0).name()}\")"' > /workspace/check_cuda.sh && \
+    chmod +x /workspace/check_cuda.sh
+
+# デフォルトコマンド
+CMD ["/bin/bash"]
