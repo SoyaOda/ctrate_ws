@@ -28,7 +28,7 @@ Web searchの際は、必ずo3-query MCPを利用すること！
 md_files/deepdrr.mdに沿って実装を進めている。
 現状CTのNiftiデータを2DのDRRにすることはでき、Maskデータを2Dに投射するアルゴリズムを試している。
 現状の問題はdeepdrr/query_geometric_projection_solution.mdであるので理解して。
-現状はMaskデータにおいても物理シミュレーションが強制適応される問題を解決するために、deepdrr/DiffDRR_modifiedにDiffDRRをCloneして修正する方針になった。deepdrr/logs/log.txtに前のセッションで作成したTest script2つ分ののログを共有する。これを踏まえてDiffDRRの内部構造の理解と修正の作業を続けて。
+deepdrr/md_files/gpt5pro1.mdを参考に修正していきたい。DiffDRRの内部構造の理解と修正の作業を続けて。
 
 新しい機能になるので新しくdeepdrrフォルダを作成し、その中で実装を進めること。機能ごとに少しずつ実装を行い、適宜テストを行い実際に動くことを確認して次の機能を実装するように進めること。
 
