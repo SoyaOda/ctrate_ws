@@ -25,12 +25,8 @@ Web searchの際は、必ずo3-query MCPを利用すること！
 現状元CTデータであるdata/CT-RATE-v2/dataset/valid_fixed/valid_1/valid_1_a/valid_1_a_1.nii.gzとそのMaskでーたであるoutputs/eat_pat_v5_4_valid_1_a_1/masks/eat_pat.nii.gzが存在する。
 
 [命令]
-md_files/deepdrr.mdに沿って実装を進めている。
-現状CTのNiftiデータを2DのDRRにすることはでき、Maskデータを2Dに投射するアルゴリズムを試している。
-現状の問題はdeepdrr/query_geometric_projection_solution.mdであるので理解して。
-deepdrr/md_files/gpt5pro1.mdを参考に修正していきたい。DiffDRRの内部構造の理解と修正の作業を続けて。
+md_files/deepdrr2.mdに沿って実装を進めたい。このプロジェクトはdeepdrrフォルダの中で進めたい。
 
 新しい機能になるので新しくdeepdrrフォルダを作成し、その中で実装を進めること。機能ごとに少しずつ実装を行い、適宜テストを行い実際に動くことを確認して次の機能を実装するように進めること。
 
-
-もしわからない部分があればAIにクエリするのでプロンプトを作成して。
+もしわからない部分があれば、積極的にAIにクエリするのでプロンプトを作成して。
