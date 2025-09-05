@@ -1,0 +1,121 @@
+# DeepDRR CUDA 11.8 修正版Dockerfile
+# OpenGL/X11依存関係を完全に解決してPA左右反転修正版をテスト
+FROM nvidia/cuda:11.8.0-devel-ubuntu22.04
+
+# 非対話的インストール用の環境変数
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONUNBUFFERED=1
+
+# OpenGL/X11/VTK関連の完全なライブラリセット
+RUN apt-get update && apt-get install -y \
+    python3-pip \
+    python3-dev \
+    python3-venv \
+    wget \
+    git \
+    curl \
+    # OpenGL関連
+    libgl1-mesa-glx \
+    libgl1-mesa-dri \
+    libgl1-mesa-dev \
+    freeglut3-dev \
+    mesa-utils \
+    # X11関連
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender1 \
+    libxtst6 \
+    libxi6 \
+    libxrandr2 \
+    libxss1 \
+    libxcursor1 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxfixes3 \
+    libxinerama1 \
+    libxrender-dev \
+    # 追加の依存関係
+    libgomp1 \
+    libfontconfig1 \
+    libfreetype6 \
+    libjpeg8 \
+    libpng16-16 \
+    && rm -rf /var/lib/apt/lists/*
+
+# VTKのヘッドレス実行用環境変数
+ENV VTK_USE_OFFSCREEN_RENDERING=1
+ENV MESA_GL_VERSION_OVERRIDE=3.3
+ENV DISPLAY=:99
+
+# pipのアップグレード
+RUN pip3 install --upgrade pip
+
+# NumPy互換性を考慮した依存関係インストール
+RUN pip3 install \
+    numpy==1.26.4 \
+    opencv-python-headless==4.8.1.78
+
+# PyCUDAを先にビルド
+RUN pip3 install pycuda
+
+# その他のPython依存関係
+RUN pip3 install \
+    nibabel \
+    imageio \
+    tqdm \
+    matplotlib \
+    pydicom \
+    scikit-image \
+    pynrrd \
+    pyvista \
+    rich \
+    colorlog \
+    seaborn
+
+# DeepDRRを最後にインストール（依存関係競合を避ける）
+RUN pip3 install --no-deps deepdrr==1.1.3
+
+# 作業ディレクトリ設定
+WORKDIR /workspace
+
+# Xvfbを使用した仮想ディスプレイの設定
+RUN apt-get update && apt-get install -y xvfb && rm -rf /var/lib/apt/lists/*
+
+# スクリプトをコピー
+COPY test_deepdrr_cuda11.py /workspace/
+COPY test_deepdrr_final_correct.py /workspace/
+COPY *.py /workspace/
+
+# GPUアクセスを確認するためのスクリプト
+RUN echo '#!/bin/bash\n\
+echo "🔍 CUDA Version:"\n\
+nvcc --version\n\
+echo ""\n\
+echo "🖥️ GPU Info:"\n\
+nvidia-smi\n\
+echo ""\n\
+echo "🐍 Python CUDA Test:"\n\
+python3 -c "import pycuda.driver as drv; drv.init(); print(f\"GPU: {drv.Device(0).name()}\")"\n\
+echo ""\n\
+echo "📦 OpenCV Version:"\n\
+python3 -c "import cv2; print(f\"OpenCV: {cv2.__version__}\")"\n\
+echo ""\n\
+echo "🧪 DeepDRR Import Test:"\n\
+python3 -c "from deepdrr import Volume, MobileCArm; print(\"DeepDRR: OK\")"' > /workspace/check_cuda.sh && \
+    chmod +x /workspace/check_cuda.sh
+
+# PA左右反転修正版テスト用スクリプト
+RUN echo '#!/bin/bash\n\
+echo "🧪 PA左右反転修正版テスト実行"\n\
+export DISPLAY=:99\n\
+Xvfb :99 -screen 0 1024x768x24 &\n\
+sleep 2\n\
+python3 test_deepdrr_final_correct.py\n\
+echo ""\n\
+echo "📁 出力ファイル確認:"\n\
+ls -la outputs/' > /workspace/run_pa_test.sh && \
+    chmod +x /workspace/run_pa_test.sh
+
+# デフォルトコマンド
+CMD ["/bin/bash"]

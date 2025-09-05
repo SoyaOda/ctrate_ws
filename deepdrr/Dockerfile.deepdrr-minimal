@@ -1,0 +1,82 @@
+# DeepDRR 軽量版Dockerfile - 必要最小限の依存関係
+FROM nvidia/cuda:11.8.0-devel-ubuntu22.04
+
+# 非対話的インストール用の環境変数
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONUNBUFFERED=1
+
+# ヘッドレス実行用環境変数
+ENV VTK_USE_OFFSCREEN_RENDERING=1
+ENV MESA_GL_VERSION_OVERRIDE=3.3
+ENV MPLBACKEND=Agg
+
+# 基本的なパッケージのみ（ネットワーク問題回避）
+RUN apt-get update || echo "Network issues - using cached packages" && \
+    apt-get install -y \
+    python3-pip \
+    python3-dev \
+    && rm -rf /var/lib/apt/lists/* || echo "Cleanup completed"
+
+# pipのアップグレード
+RUN pip3 install --upgrade pip
+
+# 最小構成のPython依存関係
+RUN pip3 install \
+    numpy==1.26.4 \
+    matplotlib \
+    nibabel \
+    imageio
+
+# PyCUDAをビルド
+RUN pip3 install pycuda
+
+# OpenCVヘッドレス版（問題のあったバージョンを避ける）
+RUN pip3 install opencv-python-headless==4.5.5.64
+
+# その他の必要な依存関係
+RUN pip3 install \
+    pynrrd \
+    rich \
+    colorlog \
+    seaborn \
+    tqdm
+
+# VTKとPyVistaを依存関係込みでインストール
+RUN pip3 install pyvista
+
+# DeepDRRを依存関係なしでインストール
+RUN pip3 install --no-deps deepdrr==1.1.3
+
+# 作業ディレクトリ設定
+WORKDIR /workspace
+
+# スクリプトをコピー
+COPY test_deepdrr_cuda11.py /workspace/
+COPY test_deepdrr_final_correct.py /workspace/
+COPY *.py /workspace/
+
+# 簡単なテストスクリプト
+RUN echo '#!/bin/bash\n\
+echo "🔍 CUDA Version:"\n\
+nvcc --version || echo "CUDA: Not available"\n\
+echo ""\n\
+echo "🐍 Python Libraries Test:"\n\
+python3 -c "import numpy; print(f\"NumPy: {numpy.__version__}\")"\n\
+python3 -c "import cv2; print(f\"OpenCV: {cv2.__version__}\")"\n\
+python3 -c "import matplotlib; print(f\"Matplotlib: {matplotlib.__version__}\")"\n\
+python3 -c "from deepdrr import Volume, MobileCArm; print(\"DeepDRR: OK\")"' > /workspace/check_environment.sh && \
+    chmod +x /workspace/check_environment.sh
+
+# PA左右反転修正版テスト用スクリプト（OpenGL依存なし）
+RUN echo '#!/bin/bash\n\
+echo "🧪 PA左右反転修正版テスト実行"\n\
+export MPLBACKEND=Agg\n\
+export VTK_USE_OFFSCREEN_RENDERING=1\n\
+python3 test_deepdrr_final_correct.py\n\
+echo ""\n\
+echo "📁 出力ファイル確認:"\n\
+ls -la outputs/' > /workspace/run_pa_test.sh && \
+    chmod +x /workspace/run_pa_test.sh
+
+# デフォルトコマンド
+CMD ["/bin/bash"]

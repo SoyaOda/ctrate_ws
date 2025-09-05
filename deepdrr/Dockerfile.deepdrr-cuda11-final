@@ -1,0 +1,111 @@
+# DeepDRR CUDA 11.8 最終版Dockerfile
+# PA左右反転修正版を確実に実行するためのクリーン環境
+FROM nvidia/cuda:11.8.0-devel-ubuntu20.04
+
+# 非対話的インストール用の環境変数
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONUNBUFFERED=1
+
+# ヘッドレス実行用環境変数（VTK/matplotlib対応）
+ENV VTK_USE_OFFSCREEN_RENDERING=1
+ENV MESA_GL_VERSION_OVERRIDE=3.3
+ENV MPLBACKEND=Agg
+
+# 基本パッケージインストール（Ubuntu 20.04で安定版）
+RUN apt-get update && apt-get install -y \
+    python3-pip \
+    python3-dev \
+    python3-distutils \
+    wget \
+    git \
+    build-essential \
+    # 最小限のOpenGL/Mesa関連
+    libgl1-mesa-glx \
+    libgl1-mesa-dri \
+    # X11最小セット
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender1 \
+    libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# pipアップグレード
+RUN python3 -m pip install --upgrade pip setuptools wheel
+
+# NumPy互換性を重視した厳密なバージョン管理
+RUN pip3 install --no-cache-dir \
+    "numpy>=1.21.0,<1.25.0" \
+    "matplotlib>=3.5.0,<3.6.0"
+
+# PyCUDA（CUDA 11.8専用ビルド）
+RUN pip3 install --no-cache-dir pycuda
+
+# OpenCV（ヘッドレス版、競合回避）
+RUN pip3 install --no-cache-dir opencv-python-headless==4.8.0.76
+
+# その他の依存関係（バージョン固定）
+RUN pip3 install --no-cache-dir \
+    nibabel \
+    imageio \
+    tqdm \
+    rich \
+    colorlog
+
+# VTKとPyVistaは互換性を慎重に管理
+RUN pip3 install --no-cache-dir \
+    "vtk>=9.1.0,<9.3.0" \
+    "pyvista>=0.37.0,<0.40.0"
+
+# 追加の科学計算ライブラリ
+RUN pip3 install --no-cache-dir \
+    scipy \
+    scikit-image \
+    pynrrd \
+    seaborn
+
+# DeepDRRを最終段階で依存関係なしでインストール
+RUN pip3 install --no-deps deepdrr==1.1.3
+
+# 作業ディレクトリ設定
+WORKDIR /workspace
+
+# 環境診断スクリプト
+RUN echo '#!/bin/bash\n\
+echo "🔍 CUDA環境診断"\n\
+echo "================"\n\
+nvcc --version\n\
+echo ""\n\
+echo "🖥️ GPU情報:"\n\
+nvidia-smi || echo "GPU情報取得不可"\n\
+echo ""\n\
+echo "🐍 Python環境:"\n\
+python3 --version\n\
+python3 -c "import numpy; print(f\"NumPy: {numpy.__version__}\")" || echo "NumPy: NG"\n\
+python3 -c "import cv2; print(f\"OpenCV: {cv2.__version__}\")" || echo "OpenCV: NG"\n\
+python3 -c "import matplotlib; print(f\"Matplotlib: {matplotlib.__version__}\")" || echo "Matplotlib: NG"\n\
+echo ""\n\
+echo "⚡ CUDA Python:"\n\
+python3 -c "import pycuda.driver as drv; drv.init(); print(f\"GPU: {drv.Device(0).name()}\")" || echo "PyCUDA: NG"\n\
+echo ""\n\
+echo "🏥 DeepDRR:"\n\
+python3 -c "from deepdrr import Volume, MobileCArm; print(\"DeepDRR: OK\")" || echo "DeepDRR: NG"\n' > /workspace/diagnose.sh && \
+    chmod +x /workspace/diagnose.sh
+
+# PA左右反転修正版テストスクリプト
+RUN echo '#!/bin/bash\n\
+echo "🧪 PA左右反転修正版テスト"\n\
+echo "========================"\n\
+export MPLBACKEND=Agg\n\
+export VTK_USE_OFFSCREEN_RENDERING=1\n\
+python3 test_deepdrr_clean.py\n\
+echo ""\n\
+echo "📁 出力結果:"\n\
+ls -la /workspace/outputs/ 2>/dev/null || echo "出力フォルダなし"\n\
+echo ""\n\
+echo "🔍 出力画像サイズ:"\n\
+file /workspace/outputs/*.png 2>/dev/null || echo "PNG画像なし"\n' > /workspace/run_pa_test.sh && \
+    chmod +x /workspace/run_pa_test.sh
+
+# デフォルトコマンド
+CMD ["/bin/bash"]

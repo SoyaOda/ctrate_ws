@@ -1,0 +1,134 @@
+# DeepDRR CUDA 11.8 完全版Dockerfile
+# torch、torchvision、pydicom、opencv-python事前インストール済み
+FROM nvidia/cuda:11.8.0-devel-ubuntu20.04
+
+# 非対話的インストール用の環境変数
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONUNBUFFERED=1
+
+# ヘッドレス実行用環境変数
+ENV VTK_USE_OFFSCREEN_RENDERING=1
+ENV MESA_GL_VERSION_OVERRIDE=3.3
+ENV MPLBACKEND=Agg
+
+# 日本のUbuntuミラーサーバーに変更
+RUN sed -i 's|http://archive.ubuntu.com/ubuntu|http://ftp.jaist.ac.jp/pub/Linux/ubuntu|g' /etc/apt/sources.list && \
+    sed -i 's|http://security.ubuntu.com/ubuntu|http://ftp.jaist.ac.jp/pub/Linux/ubuntu|g' /etc/apt/sources.list
+
+# APTキャッシュ更新とタイムアウト設定
+RUN apt-get clean && \
+    apt-get update -o Acquire::Retries=3 -o Acquire::http::Timeout=30
+
+# 基本パッケージインストール（エラー処理付き）
+RUN apt-get install -y --no-install-recommends \
+    python3-pip \
+    python3-dev \
+    python3-distutils \
+    wget \
+    git \
+    build-essential \
+    # OpenGL最小セット
+    libgl1-mesa-glx \
+    libgl1-mesa-dri \
+    mesa-utils \
+    # X11最小セット  
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender1 \
+    libgomp1 \
+    # 追加の依存関係
+    pkg-config \
+    libfontconfig1 \
+    libfreetype6 \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
+
+# pipアップグレード（日本のPyPIミラー使用）
+RUN python3 -m pip install --upgrade pip -i https://pypi.python.org/simple/
+
+# NumPy互換性重視の依存関係（PyPIミラー使用）
+RUN pip3 install --no-cache-dir -i https://pypi.python.org/simple/ \
+    "numpy>=1.21.0,<1.25.0" \
+    "matplotlib>=3.5.0,<3.6.0"
+
+# PyCUDA（CUDA 11.8専用）
+RUN pip3 install --no-cache-dir -i https://pypi.python.org/simple/ pycuda
+
+# 基本的な科学計算ライブラリ
+RUN pip3 install --no-cache-dir -i https://pypi.python.org/simple/ \
+    nibabel \
+    imageio \
+    tqdm \
+    rich \
+    colorlog \
+    scipy \
+    scikit-image \
+    pynrrd \
+    seaborn
+
+# VTKとPyVistaは互換性を重視
+RUN pip3 install --no-cache-dir -i https://pypi.python.org/simple/ \
+    "vtk>=9.1.0,<9.3.0" \
+    "pyvista>=0.37.0,<0.40.0"
+
+# DeepDRRを最終段階で依存関係なしでインストール
+RUN pip3 install --no-deps -i https://pypi.python.org/simple/ deepdrr==1.1.3
+
+# ★事前インストール★ PyTorch、torchvision、pydicom、opencv-python
+RUN pip3 install --no-cache-dir -i https://pypi.python.org/simple/ \
+    torch==2.0.1+cu118 \
+    torchvision==0.15.2+cu118 \
+    --extra-index-url https://download.pytorch.org/whl/cu118
+
+RUN pip3 install --no-cache-dir -i https://pypi.python.org/simple/ \
+    pydicom \
+    opencv-python
+
+# 作業ディレクトリ設定
+WORKDIR /workspace
+
+# 環境診断スクリプト
+RUN echo '#!/bin/bash\n\
+echo "🔍 CUDA環境診断"\n\
+echo "================"\n\
+nvcc --version || echo "CUDA: NG"\n\
+echo ""\n\
+echo "🖥️ GPU情報:"\n\
+nvidia-smi || echo "GPU情報取得不可"\n\
+echo ""\n\
+echo "🐍 Python環境:"\n\
+python3 --version\n\
+python3 -c "import numpy; print(f\"NumPy: {numpy.__version__}\")" || echo "NumPy: NG"\n\
+python3 -c "import cv2; print(f\"OpenCV: {cv2.__version__}\")" || echo "OpenCV: NG"\n\
+python3 -c "import matplotlib; print(f\"Matplotlib: {matplotlib.__version__}\")" || echo "Matplotlib: NG"\n\
+echo ""\n\
+echo "⚡ CUDA Python:"\n\
+python3 -c "import pycuda.driver as drv; drv.init(); print(f\"GPU: {drv.Device(0).name()}\")" || echo "PyCUDA: NG"\n\
+echo ""\n\
+echo "🏥 DeepDRR:"\n\
+python3 -c "from deepdrr import Volume, MobileCArm; print(\"DeepDRR: OK\")" || echo "DeepDRR: NG"\n\
+echo ""\n\
+echo "🔥 PyTorch (事前インストール済み):"\n\
+python3 -c "import torch; print(f\"PyTorch: {torch.__version__}\")" || echo "PyTorch: NG"\n\
+python3 -c "import torchvision; print(f\"torchvision: {torchvision.__version__}\")" || echo "torchvision: NG"\n\
+python3 -c "import pydicom; print(f\"pydicom: {pydicom.__version__}\")" || echo "pydicom: NG"\n' > /workspace/diagnose.sh && \
+    chmod +x /workspace/diagnose.sh
+
+# PA左右反転修正版テストスクリプト（事前インストール済み版）
+RUN echo '#!/bin/bash\n\
+echo "🧪 PA左右反転修正版テスト（事前インストール済み）"\n\
+echo "============================================"\n\
+export MPLBACKEND=Agg\n\
+export VTK_USE_OFFSCREEN_RENDERING=1\n\
+python3 test_deepdrr_final_pa_fixed.py\n\
+echo ""\n\
+echo "📁 出力結果:"\n\
+ls -la /workspace/outputs/ 2>/dev/null || echo "出力フォルダなし"\n\
+echo ""\n\
+echo "🔍 出力画像サイズ:"\n\
+file /workspace/outputs/*.png 2>/dev/null || echo "PNG画像なし"\n' > /workspace/run_pa_test_complete.sh && \
+    chmod +x /workspace/run_pa_test_complete.sh
+
+# デフォルトコマンド
+CMD ["/bin/bash"]
