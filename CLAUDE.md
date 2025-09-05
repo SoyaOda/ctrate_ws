@@ -23,10 +23,11 @@ Web searchの際は、必ずo3-query MCPを利用すること！
 
 [Introduction]
 現状元CTデータであるdata/CT-RATE-v2/dataset/valid_fixed/valid_1/valid_1_a/valid_1_a_1.nii.gzとそのMaskでーたであるoutputs/eat_pat_v5_4_valid_1_a_1/masks/eat_pat.nii.gzが存在する。
+deepdrr/README.mdにあるように、deepdrr/test_deepdrr_final_pa_fixed.pyでCTのNiftiをPAのDRRにすることはできた。次はMask dataをDRRに完全位置対応するように投射して2D画像を作成したい。
 
 [命令]
-md_files/deepdrr2.mdに沿って実装を進めたい。このプロジェクトはdeepdrrフォルダの中で進めたい。
+mask_projection/md_files/gpt5pro1.mdとmask_projection/md_files/gpt5pro2.mdに沿って実装を進めたい。このプロジェクトはmask_projectionフォルダの中で進めたい。
 
-新しい機能になるので新しくdeepdrrフォルダを作成し、その中で実装を進めること。機能ごとに少しずつ実装を行い、適宜テストを行い実際に動くことを確認して次の機能を実装するように進めること。
+機能ごとに少しずつ実装を行い、適宜テストを行い実際に動くことを確認して次の機能を実装するように進めること。
 
 もしわからない部分があれば、積極的にAIにクエリするのでプロンプトを作成して。
