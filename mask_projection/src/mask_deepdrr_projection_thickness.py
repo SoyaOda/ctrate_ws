@@ -106,7 +106,7 @@ def make_air_volume_like(vol: Volume) -> Volume:
     volと同shape/spacing/originで全ボクセル HU=-1000 の Volume を作る
     flat-field用
     """
-    air = np.full(vol.values.shape, -1000.0, dtype=np.float32)
+    air = np.full(vol.data.shape, -1000.0, dtype=np.float32)
     return Volume.from_hu(
         hu_values=air, origin=vol.origin, spacing=vol.spacing,
         anatomical_coordinate_system=vol.anatomical_coordinate_system,
@@ -316,7 +316,7 @@ def main():
     
     # 入力ファイル（現在の環境に合わせて調整）
     ct_nifti = Path("/workspace/data/CT-RATE-v2/dataset/valid_fixed/valid_1/valid_1_a/valid_1_a_1.nii.gz")
-    mask_nifti = Path("/home/soya/ctrate_ws/outputs/eat_pat_v5_4_valid_1_a_1/masks/eat_pat.nii.gz")
+    mask_nifti = Path("/workspace/outputs/eat_pat_v5_4_valid_1_a_1/masks/eat_pat.nii.gz")
     outdir = Path("/workspace/mask_projection/outputs")
     outdir.mkdir(parents=True, exist_ok=True)
     
@@ -370,8 +370,11 @@ def main():
         air_vol = make_air_volume_like(mask_vol)
         air_vol.place_center(carm.isocenter_in_world)  # 同じ配置
         
-        I_mask = render_energy(mask_vol, carm, alpha=0, beta=0, gamma=GAMMA_ROLL, flip_pa=True)
-        I_air = render_energy(air_vol, carm, alpha=0, beta=0, gamma=GAMMA_ROLL, flip_pa=True)
+        # 既存のproject_and_flip関数を使用して同じ解像度を保証
+        I_mask = project_and_flip(mask_vol, carm, alpha=0, beta=0, gamma=GAMMA_ROLL, 
+                                 do_pa_flip=True, label="マスク厚み用")
+        I_air = project_and_flip(air_vol, carm, alpha=0, beta=0, gamma=GAMMA_ROLL,
+                                do_pa_flip=True, label="空気厚み用")
         
         # 3Dマスク体積計算（mm³）
         mask_img = nib.load(str(mask_nifti))
