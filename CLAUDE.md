@@ -7,6 +7,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Project Overview
 必ずserena MCPが日本語で対応すること！
 日本語で応答すること！
+最小機能ごとに実装し→動作確認を繰り返すことで少しずつ着実に実装すること！
+仕様書の前提と実際の実装の観察結果が異なる場合は仕様書作成元のAIに指摘・質問する必要があるので、作業を止めて、Query prompt作成すること！
 Web searchの際は、必ずo3-query MCPを利用すること！
 
 ## o3-query MCP について
@@ -23,7 +25,7 @@ Web searchの際は、必ずo3-query MCPを利用すること！
 
 [Introduction]
 現状元CTデータであるdata/CT-RATE-v2/dataset/valid_fixed/valid_1/valid_1_a/valid_1_a_1.nii.gzとそのMaskでーたであるoutputs/eat_pat_v5_4_valid_1_a_1/masks/eat_pat.nii.gzが存在する。
-deepdrr/README.mdにあるように、deepdrr/test_deepdrr_final_pa_fixed.pyでCTのNiftiをPAのDRRにすることはできた。次はMask dataをDRRに完全位置対応するように投射して2D画像を作成したい。
+deepdrr/README.mdにあるように、deepdrr/test_deepdrr_final_pa_fixed.pyでCTのNiftiをPAのDRR（deepdrr/deepdrr/outputs/deepdrr_PA_final_pa_fixed.png）にすることはできた。次はMask dataをDRRに完全位置対応するように投射して2D画像を作成し、deepdrr/deepdrr/outputs/deepdrr_PA_final_pa_fixed.pngとOverlayして位置が合うかどうか確かめたい。
 
 [命令]
 mask_projection/md_files/gpt5pro1.mdとmask_projection/md_files/gpt5pro2.mdに沿って実装を進めたい。このプロジェクトはmask_projectionフォルダの中で進めたい。
