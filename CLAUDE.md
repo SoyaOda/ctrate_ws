@@ -26,11 +26,12 @@ Web searchの際は、必ずo3-query MCPを利用すること！
 [Introduction]
 現状元CTデータであるdata/CT-RATE-v2/dataset/valid_fixed/valid_1/valid_1_a/valid_1_a_1.nii.gzとそのMaskでーたであるoutputs/eat_pat_v5_4_valid_1_a_1/masks/eat_pat.nii.gzが存在する。
 deepdrr/README.mdにあるように、deepdrr/test_deepdrr_final_pa_fixed.pyでCTのNiftiをPAのDRR（deepdrr/deepdrr/outputs/deepdrr_PA_final_pa_fixed.png）にすることはできた。次はMask dataをDRRに完全位置対応するように投射して2D画像を作成し、deepdrr/deepdrr/outputs/deepdrr_PA_final_pa_fixed.pngとOverlayして位置が合うかどうか確かめたい。
-現状mask_projection/src/mask_projection/src/mask_deepdrr_projection_thickness.pyで位置位相が合う2DのMask投影画像は得た。mask_deepdrr_projection_thickness.pyについての詳細はmask_projection/README_thickness.md参照。ただ、ピクセル強度が局所のMaskの厚みを完全に反映していない可能性があり、mask_projection/src/mask_deepdrr_projection_thickness.pyの位置の投影方法は踏襲しつつ、強度の算出を改善したい。
+
+
+
 
 [命令]
-このプロジェクトはmask_projectionフォルダの中で進めたい。mask_projection/md_files/gpt5pro6.mdの推奨の方法で、mask_projection/src/mask_deepdrr_projection_thickness.pyを修正したScript作成して。
-
+このプロジェクトはmask_projectionフォルダの中で進めたい。mask_projection/src/mask_deepdrr_projection_thickness_gpt5pro7.pyを複製して、mask_projection/md_files/gpt5pro8.mdの方法で、修正したScript作成して。
 
 機能ごとに少しずつ実装を行い、適宜テストを行い実際に動くことを確認して次の機能を実装するように進めること。
 
