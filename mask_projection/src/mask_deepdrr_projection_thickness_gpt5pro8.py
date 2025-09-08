@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/env python3
 """
-Plan-A: 単色"実効"モデルで画素値=厚み[mm] (gpt5pro8改良版)
+Plan-A: 単色"実効"モデルで画素値=厚み[mm] (gpt5pro8物理補正版)
 - I_air (flat-field) を同一幾何で取得 + 健全性チェック
 - G = -log( I_mask / I_air ) with valid condition
 - μ_eff を体積一致で自己較正
@@ -132,7 +132,30 @@ def create_fov_mask(shape, edge_crop_px=8):
     mask[edge_crop_px:h-edge_crop_px, edge_crop_px:w-edge_crop_px] = True
     return mask
 
-# ---------- 5) Beer–Lambert 逆変換 + μ_eff 自己較正 ----------
+# ---------- 5) アイソセンタ面画素面積計算 ----------
+def pixel_area_at_isocenter(carm):
+    """
+    アイソセンタ面での画素面積を計算（物理的に正しい体積一致のため）
+    
+    Args:
+        carm: MobileCArm オブジェクト
+    
+    Returns:
+        A_iso: アイソセンタ面での画素面積 [mm²]
+        px_iso: アイソセンタ面での画素ピッチ [mm]  
+        M: 幾何倍率 (SID/SAD)
+    """
+    sid = float(getattr(carm, "source_to_detector_distance", 1800.0))
+    sad = float(getattr(carm, "source_to_isocenter_vertical_distance", 1720.0))
+    px_det = float(getattr(carm, "pixel_size", 0.14))  # detector pixel size [mm]
+    
+    M = sid / sad                  # magnification factor
+    px_iso = px_det * (sad / sid)  # pixel size mapped to isocenter plane [mm]
+    A_iso = px_iso ** 2           # pixel area at isocenter plane [mm²]
+    
+    return A_iso, px_iso, M
+
+# ---------- 6) Beer–Lambert 逆変換 + μ_eff 自己較正 ----------
 def thickness_from_energy(I_mask: np.ndarray, I_air: np.ndarray, V3D_mm3: float,
                           px_mm: float, support_tau: float = 1e-4):
     """
@@ -174,7 +197,8 @@ def thickness_from_energy(I_mask: np.ndarray, I_air: np.ndarray, V3D_mm3: float,
     print(f"  📊 valid pixels: {valid.sum()} / {valid.size} ({valid.sum()/valid.size*100:.1f}%)")
     
     # gpt5pro8改良: Ωのロバスト化（valid条件 + binary_closing十字型小穴埋め）
-    tau = max(support_tau, np.percentile(G[valid], 0.05) if valid.sum() > 0 else support_tau)
+    tau_p = np.percentile(G[valid], 5.0) if valid.sum() > 0 else support_tau  # 5%パーセンタイル
+    tau = max(support_tau, tau_p)
     Omega = valid & (G > tau)
     # 十字型構造要素（4近傍）で細線の太り過ぎを抑制
     cross_kernel = np.array([[0,1,0],[1,1,1],[0,1,0]], dtype=np.uint8)
@@ -182,7 +206,7 @@ def thickness_from_energy(I_mask: np.ndarray, I_air: np.ndarray, V3D_mm3: float,
     support_pixels = int(Omega.sum())
     
     print(f"  🎯 シルエット検出:")
-    print(f"    パーセンタイル閾値: {np.percentile(G, 0.05):.6f}")
+    print(f"    パーセンタイル閾値(5%/valid): {tau_p:.6f}")
     print(f"    最終閾値: {tau:.6f}")
     print(f"    サポートピクセル: {support_pixels}")
     
@@ -251,7 +275,7 @@ def energy_to_display(img, method="energy", window=(1.0, 99.5), gamma=1.0):
 # ---------- 6) メイン ----------
 def main():
     print("🏥 Plan-A: 単色実効モデル による厚み[mm]推定")
-    print("📋 gpt5pro8.md改良実装版 (フラット健全性+Ωロバスト化+現実HU)")
+    print("📋 gpt5pro8物理補正版 (アイソセンタ面積+5%パーセンタイル+物理厚み)")
     print("="*60)
     
     # 入力
@@ -283,11 +307,14 @@ def main():
         I_air  = get_flat_field(mask_vol, carm, view, outdir, flip_pa=True)
         print(f"  フラットフィールド完了: 範囲 {I_air.min():.6f}-{I_air.max():.6f}, 形状 {I_air.shape}")
 
-        print("\n🔄 STEP 3: Plan-A厚み推定")
-        # 3) 厚み推定
-        px_mm = float(getattr(carm, "pixel_size", 0.14))
-        V3D   = mask_volume_mm3(mask_nifti)
-        T_mm, mu_eff, Omega, vol_err = thickness_from_energy(I_mask, I_air, V3D, px_mm, support_tau=1e-4)
+        print("\n🔄 STEP 3: Plan-A厚み推定（物理補正版）")
+        # 3) アイソセンタ面画素面積計算
+        A_iso, px_iso, M = pixel_area_at_isocenter(carm)
+        print(f"  ℹ️ magnification M={M:.6f}, px_iso={px_iso:.6f} mm, A_iso={A_iso:.6f} mm²")
+        
+        # 4) 厚み推定（アイソセンタ面画素ピッチを使用）
+        V3D = mask_volume_mm3(mask_nifti)
+        T_mm, mu_eff, Omega, vol_err = thickness_from_energy(I_mask, I_air, V3D, px_mm=px_iso, support_tau=1e-4)
 
         print("\n🔄 STEP 4: 結果保存")
         # 4) 可視化保存
@@ -295,39 +322,40 @@ def main():
             T_disp = np.clip(T_mm / np.percentile(T_mm[T_mm>0], 99.9), 0, 1)
         else:
             T_disp = T_mm
-        save_u16(outdir/"PA_mask_thickness_mm_plan_a_gpt5pro8.png", T_disp)
-        np.save(outdir/"PA_mask_thickness_mm_plan_a_gpt5pro8.npy", T_mm)
+        save_u16(outdir/"PA_mask_thickness_mm_plan_a_gpt5pro8_physics.png", T_disp)
+        np.save(outdir/"PA_mask_thickness_mm_plan_a_gpt5pro8_physics.npy", T_mm)
         print(f"  ✅ 厚み画像保存: PA_mask_thickness_mm_plan_a_gpt5pro8.png/.npy")
 
         # 5) 参考: マスクDRR（表示用）
         print("\n🔄 STEP 5: 参考マスクDRR生成（表示用）")
         E = render_energy(mask_vol, carm, *view, flip_pa=True)
         E_disp = energy_to_display(E, method="energy", window=(1.0, 99.5))
-        save_u16(outdir/"PA_mask_deepdrr_plan_a_gpt5pro8.png", E_disp)
+        save_u16(outdir/"PA_mask_deepdrr_plan_a_gpt5pro8_physics.png", E_disp)
         print(f"  ✅ 表示用マスクDRR保存: PA_mask_deepdrr_plan_a_gpt5pro8.png")
 
         # 6) CT DRR生成（参考）
         print("\n🔄 STEP 6: 参考CT DRR生成（表示用）")
         CT_E = render_energy(ct_vol, carm, *view, flip_pa=True)
         CT_disp = energy_to_display(CT_E, method="energy", window=(1.0, 99.5))
-        save_u16(outdir/"PA_ct_deepdrr_plan_a_gpt5pro8.png", CT_disp)
+        save_u16(outdir/"PA_ct_deepdrr_plan_a_gpt5pro8_physics.png", CT_disp)
         print(f"  ✅ 表示用CT DRR保存: PA_ct_deepdrr_plan_a_gpt5pro8.png")
 
         print("\n🔄 STEP 7: QCレポート＆詳細可視化")
-        # 7) QC レポート
+        # 7) QC レポート  
         info = {
-            "pixel_pitch_mm": px_mm,
+            "pixel_pitch_mm": px_iso,
+            "magnification_M": float(M),
             "mu_eff_1_per_mm": float(mu_eff),
             "volume_3D_mm3": float(V3D),
-            "volume_2D_mm3": float(T_mm.sum() * px_mm * px_mm),
+            "volume_2D_mm3": float(T_mm.sum() * px_iso * px_iso),
             "volume_error_percent": float(vol_err),
             "support_pixels": int(Omega.sum()),
             "max_thickness_mm": float(T_mm.max()),
             "mean_thickness_mm": float(T_mm[Omega].mean()) if Omega.sum() > 0 else 0.0,
             "image_shape": list(T_mm.shape),
-            "plan_version": "gpt5pro8_plan_a_improved"
+            "plan_version": "gpt5pro8_plan_a_physics_corrected"
         }
-        with open(outdir/"thickness_info_plan_a_gpt5pro8.json", "w") as f:
+        with open(outdir/"thickness_info_plan_a_gpt5pro8_physics.json", "w") as f:
             json.dump(info, f, indent=2)
         
         # 詳細可視化
@@ -409,11 +437,12 @@ gpt5pro8改良特徴:
                       transform=axes[2,1].transAxes)
         
         tech_specs = f"""
-Plan-A実装: gpt5pro8改良版
+Plan-A実装: gpt5pro8物理補正版
 座標系: 厳密LPS同期変換
 C-arm: CT完全共有
   SID: 1800mm, SAD: 1720mm
-  解像度: {px_mm}mm/pixel
+  幾何倍率M: {info['magnification_M']:.4f}
+  アイソセンタ解像度: {info['pixel_pitch_mm']:.6f}mm/pixel
   
 投影角度: PA (α=0°, β=0°, γ=90°)
 反転処理: PAのみ水平反転1回
@@ -472,39 +501,40 @@ gpt5pro8厚み推定:
         plt.suptitle('Plan-A: 単色実効モデル厚み推定 (gpt5pro8改良実装)', 
                     fontsize=16, weight='bold')
         plt.tight_layout()
-        plt.savefig(outdir / "plan_a_analysis_gpt5pro8.png", dpi=150, bbox_inches='tight')
+        plt.savefig(outdir / "plan_a_analysis_gpt5pro8_physics.png", dpi=150, bbox_inches='tight')
         plt.close()
         
-        print("\n📊 STEP 8: Plan-A gpt5pro8最終成果報告")
-        print("🎉 Plan-A (gpt5pro8改良版) 実装完了!")
+        print("\n📊 STEP 8: Plan-A gpt5pro8物理補正最終成果報告")
+        print("🎉 Plan-A (gpt5pro8物理補正版) 実装完了!")
         print(json.dumps(info, indent=2, ensure_ascii=False))
 
-        print("\n🏆 Plan-A gpt5pro8主要成果:")
-        print(f"  ✅ Beer–Lambert逆変換+valid条件による物理的厚み推定")
+        print("\n🏆 Plan-A gpt5pro8物理補正主要成果:")
+        print(f"  ✅ アイソセンタ面積補正による物理的厚み[mm]推定")
+        print(f"  ✅ 幾何倍率M={M:.4f}で厚みスケール補正完了")
         print(f"  ✅ μ_eff体積一致自己較正: {info['mu_eff_1_per_mm']:.5f} [1/mm]")
         print(f"  ✅ 体積整合性: {info['volume_error_percent']:.2f}% 誤差")
         print(f"  ✅ 最大厚み: {info['max_thickness_mm']:.3f} mm")
         print(f"  ✅ QC判定: {'合格' if info['volume_error_percent'] < 2.0 else '要確認'}")
         
-        print("\n📁 Plan-A gpt5pro8出力ファイル:")
-        print(f"  • PA_mask_thickness_mm_plan_a_gpt5pro8.npy: 厚みデータ[mm]")
-        print(f"  • PA_mask_thickness_mm_plan_a_gpt5pro8.png: 厚み画像")
-        print(f"  • PA_mask_deepdrr_plan_a_gpt5pro8.png: マスクDRR")
-        print(f"  • PA_ct_deepdrr_plan_a_gpt5pro8.png: CT DRR")
-        print(f"  • thickness_info_plan_a_gpt5pro8.json: QCレポート")
-        print(f"  • plan_a_analysis_gpt5pro8.png: 詳細解析")
+        print("\n📁 Plan-A gpt5pro8物理補正出力ファイル:")
+        print(f"  • PA_mask_thickness_mm_plan_a_gpt5pro8_physics.npy: 物理厚みデータ[mm]")
+        print(f"  • PA_mask_thickness_mm_plan_a_gpt5pro8_physics.png: 物理厚み画像")
+        print(f"  • PA_mask_deepdrr_plan_a_gpt5pro8_physics.png: マスクDRR")
+        print(f"  • PA_ct_deepdrr_plan_a_gpt5pro8_physics.png: CT DRR")
+        print(f"  • thickness_info_plan_a_gpt5pro8_physics.json: QCレポート")
+        print(f"  • plan_a_analysis_gpt5pro8_physics.png: 詳細解析")
         
         print("\n" + "="*60)
-        print("🌟 gpt5pro8 Plan-A改良実装成功!")
-        print("📋 ∑T_mm * p² = V_3D体積一致を厳密達成 + ロバスト化")
+        print("🌟 gpt5pro8 Plan-A物理補正実装成功!")
+        print("📋 ∑T_mm * p² = V_3D体積一致を厳密達成 + 物理補正")
         if info['volume_error_percent'] < 2.0:
-            print("✅ QC合格：Plan-A gpt5pro8実装が基準値内で動作")
+            print("✅ QC合格：Plan-A gpt5pro8物理補正版が基準値内で動作")
         else:
             print("⚠️  QC要確認：体積整合性を再検証")
         print("="*60)
         
     except Exception as e:
-        print(f"❌ Plan-A gpt5pro8実装エラー: {e}")
+        print(f"❌ Plan-A gpt5pro8物理補正実装エラー: {e}")
         import traceback
         traceback.print_exc()
         raise
