@@ -1,0 +1,32 @@
+{
+  "case_name": "valid_2_a_1",
+  "ct_path": "/home/soya/ctrate_ws/data/CT-RATE-v2/dataset/valid_fixed/valid_2/valid_2_a/valid_2_a_1.nii.gz",
+  "baseline": {
+    "method": "baseline",
+    "total_time": 203.4196400642395,
+    "step1_time": 196.51057386398315,
+    "step2_time": 0,
+    "gpu_memory_start": {},
+    "gpu_memory_end": {},
+    "output_dir": "/home/soya/ctrate_ws/pipeline/totalseg_speed_test_results/valid_2_a_1/baseline"
+  },
+  "fast_optimized": {
+    "method": "fast_optimized",
+    "total_time": 68.31442761421204,
+    "step1_time": 61.309340476989746,
+    "step2_time": 0,
+    "gpu_memory_start": {},
+    "gpu_memory_end": {},
+    "output_dir": "/home/soya/ctrate_ws/pipeline/totalseg_speed_test_results/valid_2_a_1/fast_optimized",
+    "optimizations": [
+      "--fast"
+    ]
+  },
+  "quality_comparison": {
+    "liver.nii.gz": 0.9666315906222807,
+    "stomach.nii.gz": 0.9419538884302103,
+    "spleen.nii.gz": 0.9418232786453791
+  },
+  "timestamp": 1757401535.008294,
+  "speedup_ratio": 2.9776966179530775
+}

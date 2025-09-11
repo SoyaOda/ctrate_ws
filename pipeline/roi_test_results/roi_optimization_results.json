@@ -1,0 +1,141 @@
+{
+  "test_cases": [
+    {
+      "ct_path": "/home/soya/ctrate_ws/data/CT-RATE-v2/dataset/valid_fixed/valid_1/valid_1_a/valid_1_a_2.nii.gz",
+      "test_results": {
+        "full": {
+          "level": "full",
+          "config": {
+            "name": "全臓器セグメンテーション",
+            "organs": null,
+            "description": "TotalSegmentator標準（117臓器）"
+          },
+          "execution_time": 111.7677161693573,
+          "success": true,
+          "stdout": "\nIf you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024\n\nUsing 'fast' option: resampling to lower resolution (3mm)\nResampling...\n  Resampled in 8.08s\nPredicting...\n\nIf you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024\n\nUsing 'fast' option: resampling to lower resolution (3mm)\nResampling...\n  Resampled in 8.08s\nPredicting...\n\nIf you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024\n\nUsing 'fast' option: resampling to lower resolution (3mm)\nResampling...\n  Resampled in 8.08s\nPredicting...\n  Predicted in 24.93s\nResampling...\nSaving segmentations...\n  Saved in 64.61s\n",
+          "stderr": "\n  0%|          | 0/4 [00:00<?, ?it/s]\n 25%|██▌       | 1/4 [00:07<00:22,  7.45s/it]\n100%|██████████| 4/4 [00:07<00:00,  1.87s/it]\n",
+          "output_dir": "/home/soya/ctrate_ws/pipeline/roi_test_results/roi_test_full"
+        },
+        "minimal": {
+          "level": "minimal",
+          "config": {
+            "name": "最小臓器セット",
+            "organs": [
+              "heart",
+              "lung_upper_lobe_left",
+              "lung_upper_lobe_right",
+              "liver",
+              "aorta",
+              "esophagus"
+            ],
+            "description": "EAT/PAT抽出特化（6臓器）"
+          },
+          "execution_time": 98.68401432037354,
+          "success": true,
+          "stdout": "\nIf you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024\n\nUsing 'fast' option: resampling to lower resolution (3mm)\nGenerating rough segmentation for cropping...\nResampling...\n  Resampled in 6.97s\nPredicting...\n\nIf you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024\n\nUsing 'fast' option: resampling to lower resolution (3mm)\nGenerating rough segmentation for cropping...\nResampling...\n  Resampled in 6.97s\nPredicting...\n\nIf you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024\n\nUsing 'fast' option: resampling to lower resolution (3mm)\nGenerating rough segmentation for cropping...\nResampling...\n  Resampled in 6.97s\nPredicting...\n  Predicted in 9.54s\nResampling...\n  cropping from (512, 512, 502) to (482, 318, 483)\nResampling...\n  Resampled in 3.26s\nPredicting...\n\nIf you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024\n\nUsing 'fast' option: resampling to lower resolution (3mm)\nGenerating rough segmentation for cropping...\nResampling...\n  Resampled in 6.97s\nPredicting...\n  Predicted in 9.54s\nResampling...\n  cropping from (512, 512, 502) to (482, 318, 483)\nResampling...\n  Resampled in 3.26s\nPredicting...\n\nIf you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024\n\nUsing 'fast' option: resampling to lower resolution (3mm)\nGenerating rough segmentation for cropping...\nResampling...\n  Resampled in 6.97s\nPredicting...\n  Predicted in 9.54s\nResampling...\n  cropping from (512, 512, 502) to (482, 318, 483)\nResampling...\n  Resampled in 3.26s\nPredicting...\n  Predicted in 17.40s\nResampling...\nSaving segmentations...\n  Saved in 25.65s\n",
+          "stderr": "\n  0%|          | 0/1 [00:00<?, ?it/s]\n100%|██████████| 1/1 [00:02<00:00,  2.11s/it]\n100%|██████████| 1/1 [00:02<00:00,  2.11s/it]\n\n  0%|          | 0/2 [00:00<?, ?it/s]\n 50%|█████     | 1/2 [00:05<00:05,  5.15s/it]\n100%|██████████| 2/2 [00:05<00:00,  2.58s/it]\n",
+          "output_dir": "/home/soya/ctrate_ws/pipeline/roi_test_results/roi_test_minimal"
+        }
+      },
+      "comparison": {
+        "speedup_ratio": 1.1325817756714687,
+        "time_saved_seconds": 13.083701848983765,
+        "time_saved_minutes": 0.21806169748306276,
+        "full_time": 111.7677161693573,
+        "minimal_time": 98.68401432037354,
+        "organ_reduction": "117 → 6臓器"
+      },
+      "quality_analysis": {
+        "masks_comparison": {},
+        "coverage_analysis": {
+          "full_masks_count": 117,
+          "minimal_masks_count": 6,
+          "common_masks": 6,
+          "full_only_count": 111,
+          "minimal_only_count": 6,
+          "essential_organs_found": [
+            "heart",
+            "lung_upper_lobe_left",
+            "lung_upper_lobe_right",
+            "liver",
+            "aorta",
+            "esophagus"
+          ]
+        }
+      }
+    },
+    {
+      "ct_path": "/home/soya/ctrate_ws/data/CT-RATE-v2/dataset/valid_fixed/valid_1/valid_1_a/valid_1_a_1.nii.gz",
+      "test_results": {
+        "full": {
+          "level": "full",
+          "config": {
+            "name": "全臓器セグメンテーション",
+            "organs": null,
+            "description": "TotalSegmentator標準（117臓器）"
+          },
+          "execution_time": 578.3731904029846,
+          "success": true,
+          "stdout": "\nIf you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024\n\nUsing 'fast' option: resampling to lower resolution (3mm)\nResampling...\n  Resampled in 16.68s\nPredicting...\n\nIf you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024\n\nUsing 'fast' option: resampling to lower resolution (3mm)\nResampling...\n  Resampled in 16.68s\nPredicting...\n\nIf you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024\n\nUsing 'fast' option: resampling to lower resolution (3mm)\nResampling...\n  Resampled in 16.68s\nPredicting...\n  Predicted in 19.35s\nResampling...\nSaving segmentations...\nShape of output image is very big. Setting nr_threads_saving=1 to save memory.\n  Saved in 518.14s\n",
+          "stderr": "\n  0%|          | 0/4 [00:00<?, ?it/s]\n 25%|██▌       | 1/4 [00:04<00:13,  4.47s/it]\n100%|██████████| 4/4 [00:04<00:00,  1.12s/it]\n",
+          "output_dir": "/home/soya/ctrate_ws/pipeline/roi_test_results/roi_test_full"
+        },
+        "minimal": {
+          "level": "minimal",
+          "config": {
+            "name": "最小臓器セット",
+            "organs": [
+              "heart",
+              "lung_upper_lobe_left",
+              "lung_upper_lobe_right",
+              "liver",
+              "aorta",
+              "esophagus"
+            ],
+            "description": "EAT/PAT抽出特化（6臓器）"
+          },
+          "execution_time": 117.43285846710205,
+          "success": true,
+          "stdout": "\nIf you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024\n\nUsing 'fast' option: resampling to lower resolution (3mm)\nGenerating rough segmentation for cropping...\nResampling...\n  Resampled in 14.89s\nPredicting...\n\nIf you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024\n\nUsing 'fast' option: resampling to lower resolution (3mm)\nGenerating rough segmentation for cropping...\nResampling...\n  Resampled in 14.89s\nPredicting...\n\nIf you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024\n\nUsing 'fast' option: resampling to lower resolution (3mm)\nGenerating rough segmentation for cropping...\nResampling...\n  Resampled in 14.89s\nPredicting...\n  Predicted in 10.31s\nResampling...\n  cropping from (1024, 1024, 251) to (965, 636, 241)\nResampling...\n  Resampled in 8.56s\nPredicting...\n\nIf you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024\n\nUsing 'fast' option: resampling to lower resolution (3mm)\nGenerating rough segmentation for cropping...\nResampling...\n  Resampled in 14.89s\nPredicting...\n  Predicted in 10.31s\nResampling...\n  cropping from (1024, 1024, 251) to (965, 636, 241)\nResampling...\n  Resampled in 8.56s\nPredicting...\n\nIf you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024\n\nUsing 'fast' option: resampling to lower resolution (3mm)\nGenerating rough segmentation for cropping...\nResampling...\n  Resampled in 14.89s\nPredicting...\n  Predicted in 10.31s\nResampling...\n  cropping from (1024, 1024, 251) to (965, 636, 241)\nResampling...\n  Resampled in 8.56s\nPredicting...\n  Predicted in 20.76s\nResampling...\nSaving segmentations...\nShape of output image is very big. Setting nr_threads_saving=1 to save memory.\n  Saved in 26.21s\n",
+          "stderr": "\n  0%|          | 0/1 [00:00<?, ?it/s]\n100%|██████████| 1/1 [00:02<00:00,  2.02s/it]\n100%|██████████| 1/1 [00:02<00:00,  2.02s/it]\n\n  0%|          | 0/2 [00:00<?, ?it/s]\n 50%|█████     | 1/2 [00:07<00:07,  7.59s/it]\n100%|██████████| 2/2 [00:07<00:00,  3.80s/it]\n",
+          "output_dir": "/home/soya/ctrate_ws/pipeline/roi_test_results/roi_test_minimal"
+        }
+      },
+      "comparison": {
+        "speedup_ratio": 4.9251393345331165,
+        "time_saved_seconds": 460.94033193588257,
+        "time_saved_minutes": 7.682338865598043,
+        "full_time": 578.3731904029846,
+        "minimal_time": 117.43285846710205,
+        "organ_reduction": "117 → 6臓器"
+      },
+      "quality_analysis": {
+        "masks_comparison": {},
+        "coverage_analysis": {
+          "full_masks_count": 117,
+          "minimal_masks_count": 6,
+          "common_masks": 6,
+          "full_only_count": 111,
+          "minimal_only_count": 6,
+          "essential_organs_found": [
+            "heart",
+            "lung_upper_lobe_left",
+            "lung_upper_lobe_right",
+            "liver",
+            "aorta",
+            "esophagus"
+          ]
+        }
+      }
+    }
+  ],
+  "summary": {
+    "total_cases": 2,
+    "successful_cases": 2,
+    "average_speedup": 3.0288605551022925,
+    "median_speedup": 3.0288605551022925,
+    "min_speedup": 1.1325817756714687,
+    "max_speedup": 4.9251393345331165,
+    "std_speedup": 1.896278779430824
+  }
+}

@@ -1,0 +1,145 @@
+{
+  "ct_file": "/home/soya/ctrate_ws/data/CT-RATE-v2/dataset/valid_fixed/valid_1/valid_1_a/valid_1_a_1.nii.gz",
+  "output_dir": "/home/soya/ctrate_ws/pipeline/aug31_reproduce",
+  "aug31_params": {
+    "lung_contact_mm": 0.5,
+    "contact_eps_mm": 3.0,
+    "abdomen_gap_mm": 0.0,
+    "max_heart_dist_mm": 35.0,
+    "lung_dom_ratio": 1.5,
+    "seal_diaphragm_holes_mm": 3.0,
+    "dilation_radius": 15.0
+  },
+  "steps": {
+    "step1_heartchambers": {
+      "success": true,
+      "execution_time": 0,
+      "output_dir": "/home/soya/ctrate_ws/pipeline/aug31_reproduce/totalseg_heartchambers",
+      "skipped": true,
+      "message": "既存の出力を使用"
+    },
+    "step2_total": {
+      "success": true,
+      "execution_time": 0,
+      "skipped": true,
+      "message": "既存の出力を使用"
+    },
+    "step3_tissue": {
+      "success": true,
+      "execution_time": 0,
+      "skipped": true,
+      "message": "既存のtorso_fatを使用"
+    },
+    "step4_permissions": {
+      "success": true,
+      "execution_time": 0.05857729911804199,
+      "stdout": "",
+      "stderr": "[sudo] password for soya: ",
+      "returncode": 0
+    },
+    "step5_lungs": {
+      "success": true,
+      "execution_time": 0,
+      "skipped": true
+    },
+    "step6_eat_pat": {
+      "success": true,
+      "execution_time": 750.0621426105499,
+      "stdout": "\n=============\n== PyTorch ==\n=============\n\nNVIDIA Release 23.05 (build 60708168)\nPyTorch Version 2.0.0\n\nContainer image Copyright (c) 2023, NVIDIA CORPORATION & AFFILIATES. All rights reserved.\n\nCopyright (c) 2014-2023 Facebook Inc.\nCopyright (c) 2011-2014 Idiap Research Institute (Ronan Collobert)\nCopyright (c) 2012-2014 Deepmind Technologies    (Koray Kavukcuoglu)\nCopyright (c) 2011-2012 NEC Laboratories America (Koray Kavukcuoglu)\nCopyright (c) 2011-2013 NYU                      (Clement Farabet)\nCopyright (c) 2006-2010 NEC Laboratories America (Ronan Collobert, Leon Bottou, Iain Melvin, Jason Weston)\nCopyright (c) 2006      Idiap Research Institute (Samy Bengio)\nCopyright (c) 2001-2004 Idiap Research Institute (Ronan Collobert, Samy Bengio, Johnny Mariethoz)\nCopyright (c) 2015      Google Inc.\nCopyright (c) 2015      Yangqing Jia\nCopyright (c) 2013-2016 The Caffe contributors\nAll rights reserved.\n\nVarious files include modifications (c) NVIDIA CORPORATION & AFFILIATES.  All rights reserved.\n\nThis container image and its contents are governed by the NVIDIA Deep Learning Container License.\nBy pulling and using the container, you accept the terms and conditions of this license:\nhttps://developer.nvidia.com/ngc/nvidia-deep-learning-container-license\n\nNOTE: The SHMEM allocation limit is set to the default of 64MB.  This may be\n   insufficient for PyTorch.  NVIDIA recommends the use of the following flags:\n   docker run --gpus all --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 ...\n\n\n[Improved EAT+PAT Extraction v5.4 with Enhanced Z-axis Processing]\n============================================================\n1. Checking required masks...\n  ✓ All required masks found\n\n2. Loading CT data...\n  CT shape: (1024, 1024, 251)\n  Spacing: (0.341796875, 0.341796875, 1.5) mm\n\n3. Building heart mask...\n\n4. Incorporating proximal vessels...\n  Heart mask saved: /workspace/pipeline/aug31_reproduce/eat_pat_output/masks/heart.nii.gz\n\n5. Loading visceral fat mask (torso_fat)...\n  Visceral fat voxels: 4,510,997\n  Visceral fat mask saved: /workspace/pipeline/aug31_reproduce/eat_pat_output/masks/visceral_fat.nii.gz\n\n6. Loading lung masks...\n  Lung voxels: 29,663,475\n\n7. Loading abdominal organ masks...\n  Abdominal organ voxels: 13,171,751\n\n8. Computing anatomical boundaries (mode: rpa_to_diaphragm)...\n  Using diaphragm-based Z-range (RPA to diaphragm)\n  Anatomical Z-range: 34 to 146 (total: 113 slices)\n\n9. Computing Shell (EDT-based dilation: 15.0 mm)...\n  Heart dilated voxels: 7,920,629\n\n10. Applying Z-clipping...\n  Shell and fat clipped to Z-range [34:147]\n\n11. Applying mediastinal restriction...\n\n12. Applying abdominal organ clamping...\n\n13. Applying pericardial bridge for connectivity...\n\n13.5. Loading individual abdominal organs for dominant contact rule...\n\n14. Applying ILAM v5.4 (Fixed Dominant Contact with Enhanced Z-axis)...\n  Parameters:\n    - Inferior band: 50.0 mm\n    - Contact epsilon: 3.0 mm\n    - Abdomen gap: 0.0 mm (γ)\n    - Post-trim: 1.5 mm\n    - Lung dominance ratio: 1.5\n    - Min lung touch voxels: 150\n    - No Z limit: False\n    - Seed Z margin: 10.0 mm\n    - Seal diaphragm holes: 3.0 mm\n    - Require shell touch: True\n    - Max heart distance: 35.0 mm (ρ)\n    - Mode: add\n  ILAM Z-range: 34 to 68 (35 slices)\n  Z-spacing: 1.50 mm/slice\n  Sealing diaphragm holes with 3.0 mm closing...\n  Applied heart distance constraint: 35.0 mm\n  Seed Z range: 27 to 153 (margin: ±10.0 mm)\n  Excluded distal aorta PVAT (2.5mm forbidden zone)\n  Seed voxels (lung-touching fat in Z range): 182,669\n  Performing connected component labeling (without forbidden zones)...\n  Found 103 connected components in domain\n  Components touching lungs (candidates): 39\n\n  Evaluating dominant contact for each component...\n\n  Dominant contact filtering results:\n    Accepted: 13 components\n    Rejected: 26 components\n      - Small lung contact: 22\n      - Stomach dominant: 2\n      - No shell contact: 2\n\n  Applying post-trim safety margin (1.5 mm)...\n  ILAM component voxels (after post-trim): 790,734\n  ILAM voxels beyond shell: 319,766\n  Largest component: 599,165 voxels\n  Mean component size: 61804 voxels\n\n  Volume analysis:\n    Shell-based EAT+PAT: 499,242 voxels\n    Added by ILAM: 319,766 voxels (56.04 ml)\n    Final EAT+PAT: 819,008 voxels\n  ⚠ ILAM added >50% volume - consider adjusting parameters\n     Suggestions:\n     - Reduce inferior_band_mm from 50.0 to 20 mm\n     - Reduce lung_contact_mm from 0.5 to 1.0 mm\n     - Reduce max_heart_dist_mm from 35.0 to 20-25 mm\n\n  ILAM addition mask saved: /workspace/pipeline/aug31_reproduce/eat_pat_output/masks/ilam_addition.nii.gz\n  Lung contact components saved: /workspace/pipeline/aug31_reproduce/eat_pat_output/masks/lung_contact_components.nii.gz\n  Stomach contact components saved: /workspace/pipeline/aug31_reproduce/eat_pat_output/masks/stomach_contact_components.nii.gz\n  Shell mask saved: /workspace/pipeline/aug31_reproduce/eat_pat_output/masks/shell.nii.gz\n  EAT+PAT mask saved: /workspace/pipeline/aug31_reproduce/eat_pat_output/masks/eat_pat.nii.gz\n  ILAM components saved: /workspace/pipeline/aug31_reproduce/eat_pat_output/masks/ilam_components.nii.gz\n\n16. Calculating statistics...\n  Heart volume: 547.79 ml\n  Shell volume: 520.13 ml\n  EAT+PAT volume: 143.52 ml\n  Total visceral fat volume: 790.50 ml\n  Fat fraction in shell: 27.6%\n  EAT+PAT / Visceral fat ratio: 18.2%\n\n17. Statistics saved: /workspace/pipeline/aug31_reproduce/eat_pat_output/statistics/eat_pat_analysis.json\n\n[Validation]\n  ✓ EAT+PAT volume is within normal range (50-200 ml)\n  ✓ Fat fraction in shell is normal (< 30%)\n\n============================================================\nImproved EAT+PAT extraction v5.4 (Enhanced Z-axis Processing) completed successfully!\nOutput directory: /workspace/pipeline/aug31_reproduce/eat_pat_output\nTotal EAT+PAT volume: 143.52 ml\nShell volume: 520.13 ml\nFat fraction in shell: 27.6%\n",
+      "stderr": "",
+      "returncode": 0,
+      "statistics": {
+        "volumes_ml": {
+          "heart": 547.79,
+          "shell": 520.13,
+          "eat_pat": 143.52,
+          "visceral_fat": 790.5
+        },
+        "voxel_counts": {
+          "heart": 3125966,
+          "shell": 2968161,
+          "eat_pat": 819008,
+          "visceral_fat": 4510997
+        },
+        "ratios_percent": {
+          "fat_fraction_in_shell": 27.59,
+          "eat_pat_to_visceral": 18.16,
+          "eat_pat_to_heart": 26.2
+        },
+        "parameters": {
+          "dilation_radius_mm": 15.0,
+          "dilation_method": "EDT (Euclidean Distance Transform)",
+          "processing_version": "v5.4 with Enhanced Z-axis Processing",
+          "z_range_mode": "rpa_to_diaphragm",
+          "ilam_settings": {
+            "inferior_band_mm": 50.0,
+            "lung_contact_mm": 0.5,
+            "contact_eps_mm": 3.0,
+            "abdomen_gap_mm": 0.0,
+            "max_heart_dist_mm": 35.0,
+            "no_z_limit": false,
+            "lung_dom_ratio": 1.5,
+            "min_lung_touch_voxels": 150,
+            "seal_diaphragm_holes_mm": 3.0,
+            "post_trim_mm": 1.5,
+            "seed_z_margin_mm": 10.0,
+            "require_shell_touch": true,
+            "mode": "add",
+            "z_range": [
+              34,
+              68
+            ],
+            "z_spacing_mm": 1.5,
+            "added_voxels": 319766,
+            "added_volume_ml": 56.04,
+            "ilam_voxels": 790734,
+            "components_accepted": 13,
+            "components_rejected": 26
+          },
+          "improvements": [
+            "IVC/PV-based inferior boundary",
+            "Z-clipping before mediastinal restriction",
+            "Shell restricted to mediastinum",
+            "Abdominal organ clamping (3mm)",
+            "Pericardial bridge connectivity",
+            "ILAM v5.3: Fixed order of contact judgment and forbidden zones",
+            "Seed-only Z restriction with full 3D propagation",
+            "Shell contact requirement for component acceptance",
+            "Improved diaphragm hole sealing",
+            "Post-trim safety margin after contact judgment"
+          ],
+          "ct_shape": [
+            1024,
+            1024,
+            251
+          ],
+          "ct_spacing_mm": [
+            0.341796875,
+            0.341796875,
+            1.5
+          ],
+          "heart_z_range": [
+            34,
+            146
+          ],
+          "masks_used": {
+            "heart": "heart_myocardium.nii.gz",
+            "lung_left": "lung_left.nii.gz",
+            "lung_right": "lung_right.nii.gz",
+            "torso_fat": "torso_fat.nii.gz",
+            "liver": "liver.nii.gz",
+            "stomach": "stomach.nii.gz",
+            "spleen": "spleen.nii.gz",
+            "aorta": "aorta.nii.gz",
+            "pulmonary_artery": "pulmonary_artery.nii.gz",
+            "inferior_vena_cava": "inferior_vena_cava.nii.gz",
+            "pulmonary_vein": "pulmonary_vein.nii.gz"
+          }
+        }
+      },
+      "output_dir": "/home/soya/ctrate_ws/pipeline/aug31_reproduce/eat_pat_output"
+    }
+  },
+  "success": true,
+  "total_execution_time": 750.3178527355194
+}

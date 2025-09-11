@@ -15,60 +15,115 @@ v5は、lung_ROI_3.mdのフィードバックに基づいて改善された最�
 
 ### 1. セグメンテーションデータの準備
 
-TotalSegmentatorで2つのタスクを実行する必要があります：
+TotalSegmentatorで3つのタスクを実行する必要があります：
 
 ```bash
-# 1. Total task（臓器セグメンテーション）
-docker run --rm \
+# 1. Heartchambers_highres task（高精度心臓セグメンテーション）- 必須
+docker run --rm --gpus all \
   -v /home/soya/ctrate_ws:/workspace \
   wasserth/totalsegmentator:2.10.0 \
   TotalSegmentator \
   -i /workspace/data/CT-RATE-v2/dataset/valid_fixed/valid_1/valid_1_a/valid_1_a_2.nii.gz \
-  -o /workspace/outputs/batch_results/valid_1_valid_1_a_2/segmentation_total \
+  -o /workspace/outputs/batch_results/valid_1_valid_1_a_2/segmentation \
+  --task heartchambers_highres \
+  -l aca_DHDKRFJMHUX0PK
+
+# 2. Total task（臓器セグメンテーション）- 同じディレクトリに追加
+docker run --rm --gpus all \
+  -v /home/soya/ctrate_ws:/workspace \
+  wasserth/totalsegmentator:2.10.0 \
+  TotalSegmentator \
+  -i /workspace/data/CT-RATE-v2/dataset/valid_fixed/valid_1/valid_1_a/valid_1_a_2.nii.gz \
+  -o /workspace/outputs/batch_results/valid_1_valid_1_a_2/segmentation \
   --task total
 
-# 2. Tissue types task（脂肪セグメンテーション）- 別ディレクトリに出力
-docker run --rm \
+# 3. Tissue types task（脂肪セグメンテーション）- tissueサブディレクトリに出力
+docker run --rm --gpus all \
   -v /home/soya/ctrate_ws:/workspace \
   wasserth/totalsegmentator:2.10.0 \
   TotalSegmentator \
   -i /workspace/data/CT-RATE-v2/dataset/valid_fixed/valid_1/valid_1_a/valid_1_a_2.nii.gz \
-  -o /workspace/outputs/batch_results/valid_1_valid_1_a_2/segmentation_tissue \
-  --task tissue_types -ta <LICENSE_KEY>
+  -o /workspace/outputs/batch_results/valid_1_valid_1_a_2/segmentation/tissue \
+  --task tissue_types \
+  -l aca_DHDKRFJMHUX0PK
+
+# torso_fatをメインディレクトリにコピー
+cp /home/soya/ctrate_ws/outputs/batch_results/valid_1_valid_1_a_2/segmentation/tissue/torso_fat.nii.gz \
+   /home/soya/ctrate_ws/outputs/batch_results/valid_1_valid_1_a_2/segmentation/
 ```
 
 ### 2. セグメンテーションデータの統合
 
-権限エラーを回避するため、新しいディレクトリにマージします：
+上記の手順を実行すると、すべてのセグメンテーションが同じディレクトリに統合されます。
+権限エラーが発生する場合は、以下のコマンドで修正：
 
 ```bash
-# マージディレクトリを作成
-mkdir -p /home/soya/ctrate_ws/outputs/batch_results/valid_1_valid_1_a_2/segmentation_merged
+# 権限修正（必要な場合）
+echo "odaSOYA6480" | sudo -S chown -R $(id -u):$(id -g) \
+  /home/soya/ctrate_ws/outputs/batch_results/valid_1_valid_1_a_2/segmentation
 
-# tissue_typesの結果をコピー（torso_fat）
-cp /home/soya/ctrate_ws/outputs/batch_results/valid_1_valid_1_a_2/segmentation_tissue/*.nii.gz \
-   /home/soya/ctrate_ws/outputs/batch_results/valid_1_valid_1_a_2/segmentation_merged/
+# 肺マスクの統合（lung_left.nii.gz, lung_right.nii.gzが必要な場合）
+python3 -c "
+import nibabel as nib
+import numpy as np
+from pathlib import Path
 
-# totalタスクの結果をコピー（臓器）
-cp /home/soya/ctrate_ws/outputs/batch_results/valid_1_valid_1_a_2/segmentation_total/*.nii.gz \
-   /home/soya/ctrate_ws/outputs/batch_results/valid_1_valid_1_a_2/segmentation_merged/
+seg_dir = Path('/home/soya/ctrate_ws/outputs/batch_results/valid_1_valid_1_a_2/segmentation')
 
-# heart_chambersがある場合（オプション）
-cp /home/soya/ctrate_ws/outputs/batch_results/valid_1_valid_1_a_2/segmentation/heart_*.nii.gz \
-   /home/soya/ctrate_ws/outputs/batch_results/valid_1_valid_1_a_2/segmentation_merged/ 2>/dev/null
+# 左肺統合
+left_lobes = ['lung_upper_lobe_left.nii.gz', 'lung_lower_lobe_left.nii.gz']
+merged_left = None
+for lobe in left_lobes:
+    if (seg_dir / lobe).exists():
+        img = nib.load(str(seg_dir / lobe))
+        data = img.get_fdata() > 0
+        if merged_left is None:
+            merged_left = data
+            affine = img.affine
+        else:
+            merged_left = merged_left | data
+if merged_left is not None:
+    nib.save(nib.Nifti1Image(merged_left.astype(np.uint8), affine), 
+             str(seg_dir / 'lung_left.nii.gz'))
+
+# 右肺統合  
+right_lobes = ['lung_upper_lobe_right.nii.gz', 'lung_middle_lobe_right.nii.gz', 
+               'lung_lower_lobe_right.nii.gz']
+merged_right = None
+for lobe in right_lobes:
+    if (seg_dir / lobe).exists():
+        img = nib.load(str(seg_dir / lobe))
+        data = img.get_fdata() > 0
+        if merged_right is None:
+            merged_right = data
+            affine = img.affine
+        else:
+            merged_right = merged_right | data
+if merged_right is not None:
+    nib.save(nib.Nifti1Image(merged_right.astype(np.uint8), affine),
+             str(seg_dir / 'lung_right.nii.gz'))
+"
 ```
 
 ### 3. 必要なマスクの確認
 
 以下のファイルが必要です：
 
-**必須マスク：**
-- `heart_myocardium.nii.gz`（または`heart.nii.gz`）
-- `lung_left.nii.gz`と`lung_right.nii.gz`
-- `torso_fat.nii.gz`
+**必須マスク（heartchambers_highresタスクから）：**
+- `heart_myocardium.nii.gz`
+- `heart_atrium_left.nii.gz`
+- `heart_atrium_right.nii.gz`
+- `heart_ventricle_left.nii.gz`
+- `heart_ventricle_right.nii.gz`
+
+**必須マスク（totalタスクから）：**
+- `lung_left.nii.gz`と`lung_right.nii.gz`（または肺葉から統合）
 - `liver.nii.gz`
-- `stomach.nii.gz` 
+- `stomach.nii.gz`
 - `spleen.nii.gz`
+
+**必須マスク（tissue_typesタスクから）：**
+- `torso_fat.nii.gz`
 
 **推奨マスク（精度向上）：**
 - `inferior_vena_cava.nii.gz`

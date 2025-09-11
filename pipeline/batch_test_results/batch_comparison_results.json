@@ -1,0 +1,41 @@
+{
+  "test_cases": 2,
+  "individual_processing": {
+    "method": "individual",
+    "ct_files": [
+      "/home/soya/ctrate_ws/data/CT-RATE-v2/dataset/valid_fixed/valid_2/valid_2_a/valid_2_a_1.nii.gz",
+      "/home/soya/ctrate_ws/data/CT-RATE-v2/dataset/valid_fixed/valid_1/valid_1_a/valid_1_a_2.nii.gz"
+    ],
+    "processing_times": [
+      {
+        "ct_file": "/home/soya/ctrate_ws/data/CT-RATE-v2/dataset/valid_fixed/valid_2/valid_2_a/valid_2_a_1.nii.gz",
+        "time": 65.58768320083618,
+        "success": true
+      },
+      {
+        "ct_file": "/home/soya/ctrate_ws/data/CT-RATE-v2/dataset/valid_fixed/valid_1/valid_1_a/valid_1_a_2.nii.gz",
+        "time": 104.46136403083801,
+        "success": true
+      }
+    ],
+    "total_time": 170.05027151107788
+  },
+  "batch_processing": {
+    "method": "batch_persistent",
+    "ct_files": [
+      "/home/soya/ctrate_ws/data/CT-RATE-v2/dataset/valid_fixed/valid_2/valid_2_a/valid_2_a_1.nii.gz",
+      "/home/soya/ctrate_ws/data/CT-RATE-v2/dataset/valid_fixed/valid_1/valid_1_a/valid_1_a_2.nii.gz"
+    ],
+    "total_time": 150.10133981704712,
+    "success": true,
+    "stdout": "🚀 バッチ推論開始\n🔄 処理中: /workspace/data/CT-RATE-v2/dataset/valid_fixed/valid_2/valid_2_a/valid_2_a_1.nii.gz → /workspace/pipeline/batch_test_results/batch/valid_2_a_1\n\nIf you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024\n\nUsing 'fast' option: resampling to lower resolution (3mm)\nResampling...\n  Resampled in 3.28s\nPredicting...\n\nIf you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024\n\nUsing 'fast' option: resampling to lower resolution (3mm)\nResampling...\n  Resampled in 3.28s\nPredicting...\n\nIf you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024\n\nUsing 'fast' option: resampling to lower resolution (3mm)\nResampling...\n  Resampled in 3.28s\nPredicting...\n  Predicted in 19.43s\nResampling...\nSaving segmentations...\n  Saved in 23.38s\n✅ 完了: valid_2_a_1\n🔄 処理中: /workspace/data/CT-RATE-v2/dataset/valid_fixed/valid_1/valid_1_a/valid_1_a_2.nii.gz → /workspace/pipeline/batch_test_results/batch/valid_1_a_2\n\nIf you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024\n\nUsing 'fast' option: resampling to lower resolution (3mm)\nResampling...\n  Resampled in 6.27s\nPredicting...\n\nIf you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024\n\nUsing 'fast' option: resampling to lower resolution (3mm)\nResampling...\n  Resampled in 6.27s\nPredicting...\n\nIf you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024\n\nUsing 'fast' option: resampling to lower resolution (3mm)\nResampling...\n  Resampled in 6.27s\nPredicting...\n  Predicted in 18.71s\nResampling...\nSaving segmentations...\n  Saved in 57.29s\n✅ 完了: valid_1_a_2\n🎉 バッチ処理完了\n",
+    "stderr": "\n  0%|          | 0/2 [00:00<?, ?it/s]\n 50%|█████     | 1/2 [00:04<00:04,  4.69s/it]\n100%|██████████| 2/2 [00:04<00:00,  2.35s/it]\n\n  0%|          | 0/4 [00:00<?, ?it/s]\n 25%|██▌       | 1/4 [00:04<00:13,  4.67s/it]\n100%|██████████| 4/4 [00:04<00:00,  1.17s/it]\n"
+  },
+  "improvement_analysis": {
+    "speedup_ratio": 1.132903088795515,
+    "time_saved_seconds": 19.94893169403076,
+    "time_saved_minutes": 0.3324821949005127,
+    "individual_total_time": 170.05027151107788,
+    "batch_total_time": 150.10133981704712
+  }
+}

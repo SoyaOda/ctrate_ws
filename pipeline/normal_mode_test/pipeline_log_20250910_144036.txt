@@ -1,0 +1,902 @@
+========================================
+ステップ1: TotalSegmentator（通常モード）
+========================================
+🎯 TotalSegmentator実行（通常モード、全臓器）...
+  0%|          | 0/27 [00:00<?, ?it/s]  4%|▎         | 1/27 [00:01<00:39,  1.54s/it] 67%|██████▋   | 18/27 [00:01<00:00, 14.76it/s]100%|██████████| 27/27 [00:01<00:00, 18.75it/s]100%|██████████| 27/27 [00:01<00:00, 13.76it/s]
+
+If you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024
+
+Resampling...
+  Resampled in 14.44s
+Predicting part 1 of 5 ...
+
+If you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024
+
+Resampling...
+  Resampled in 14.44s
+Predicting part 1 of 5 ...
+  0%|          | 0/27 [00:00<?, ?it/s]  4%|▎         | 1/27 [00:00<00:07,  3.42it/s] 67%|██████▋   | 18/27 [00:00<00:00, 52.42it/s] 96%|█████████▋| 26/27 [00:00<00:00, 39.88it/s]100%|██████████| 27/27 [00:00<00:00, 36.81it/s]
+
+If you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024
+
+Resampling...
+  Resampled in 14.44s
+Predicting part 1 of 5 ...
+Predicting part 2 of 5 ...
+
+If you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024
+
+Resampling...
+  Resampled in 14.44s
+Predicting part 1 of 5 ...
+Predicting part 2 of 5 ...
+  0%|          | 0/27 [00:00<?, ?it/s]  4%|▎         | 1/27 [00:00<00:06,  4.25it/s] 67%|██████▋   | 18/27 [00:00<00:00, 59.53it/s] 96%|█████████▋| 26/27 [00:00<00:00, 43.02it/s]100%|██████████| 27/27 [00:00<00:00, 40.44it/s]
+
+If you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024
+
+Resampling...
+  Resampled in 14.44s
+Predicting part 1 of 5 ...
+Predicting part 2 of 5 ...
+Predicting part 3 of 5 ...
+
+If you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024
+
+Resampling...
+  Resampled in 14.44s
+Predicting part 1 of 5 ...
+Predicting part 2 of 5 ...
+Predicting part 3 of 5 ...
+  0%|          | 0/27 [00:00<?, ?it/s]  4%|▎         | 1/27 [00:00<00:07,  3.32it/s] 67%|██████▋   | 18/27 [00:00<00:00, 51.53it/s] 96%|█████████▋| 26/27 [00:00<00:00, 40.28it/s]100%|██████████| 27/27 [00:00<00:00, 36.82it/s]
+
+If you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024
+
+Resampling...
+  Resampled in 14.44s
+Predicting part 1 of 5 ...
+Predicting part 2 of 5 ...
+Predicting part 3 of 5 ...
+Predicting part 4 of 5 ...
+
+If you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024
+
+Resampling...
+  Resampled in 14.44s
+Predicting part 1 of 5 ...
+Predicting part 2 of 5 ...
+Predicting part 3 of 5 ...
+Predicting part 4 of 5 ...
+  0%|          | 0/27 [00:00<?, ?it/s] 52%|█████▏    | 14/27 [00:00<00:00, 55.33it/s] 74%|███████▍  | 20/27 [00:00<00:00, 40.74it/s] 89%|████████▉ | 24/27 [00:00<00:00, 37.36it/s]100%|██████████| 27/27 [00:00<00:00, 38.73it/s]
+
+If you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024
+
+Resampling...
+  Resampled in 14.44s
+Predicting part 1 of 5 ...
+Predicting part 2 of 5 ...
+Predicting part 3 of 5 ...
+Predicting part 4 of 5 ...
+Predicting part 5 of 5 ...
+
+If you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024
+
+Resampling...
+  Resampled in 14.44s
+Predicting part 1 of 5 ...
+Predicting part 2 of 5 ...
+Predicting part 3 of 5 ...
+Predicting part 4 of 5 ...
+Predicting part 5 of 5 ...
+
+If you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024
+
+Resampling...
+  Resampled in 14.44s
+Predicting part 1 of 5 ...
+Predicting part 2 of 5 ...
+Predicting part 3 of 5 ...
+Predicting part 4 of 5 ...
+Predicting part 5 of 5 ...
+  Predicted in 71.21s
+Resampling...
+Saving segmentations...
+Shape of output image is very big. Setting nr_threads_saving=1 to save memory.
+  Saved in 326.36s
+🔬 tissue_typesタスク実行...
+  0%|          | 0/27 [00:00<?, ?it/s]  4%|▎         | 1/27 [00:01<00:28,  1.10s/it] 63%|██████▎   | 17/27 [00:01<00:00, 19.05it/s]100%|██████████| 27/27 [00:01<00:00, 22.88it/s]100%|██████████| 27/27 [00:01<00:00, 17.50it/s]
+
+If you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024
+
+Resampling...
+  Resampled in 15.14s
+Predicting...
+
+If you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024
+
+Resampling...
+  Resampled in 15.14s
+Predicting...
+
+If you use this tool please cite: https://pubs.rsna.org/doi/10.1148/ryai.230024
+
+Resampling...
+  Resampled in 15.14s
+Predicting...
+  Predicted in 11.45s
+Resampling...
+Saving segmentations...
+Shape of output image is very big. Setting nr_threads_saving=1 to save memory.
+  Saved in 8.75s
+✅ torso_fatマスクコピー完了
+🫁 肺マスク統合中...
+⏱️ ステップ1完了: 492秒
+📊 生成マスク数: 120
+🫀 心臓統計:
+  - Voxel数: 3,318,873
+  - 体積: 581.59 ml
+
+========================================
+ステップ2: EAT/PAT抽出
+========================================
+🫀 EAT/PAT抽出実行中...
+
+=============
+== PyTorch ==
+=============
+
+NVIDIA Release 23.05 (build 60708168)
+PyTorch Version 2.0.0
+
+Container image Copyright (c) 2023, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+
+Copyright (c) 2014-2023 Facebook Inc.
+Copyright (c) 2011-2014 Idiap Research Institute (Ronan Collobert)
+Copyright (c) 2012-2014 Deepmind Technologies    (Koray Kavukcuoglu)
+Copyright (c) 2011-2012 NEC Laboratories America (Koray Kavukcuoglu)
+Copyright (c) 2011-2013 NYU                      (Clement Farabet)
+Copyright (c) 2006-2010 NEC Laboratories America (Ronan Collobert, Leon Bottou, Iain Melvin, Jason Weston)
+Copyright (c) 2006      Idiap Research Institute (Samy Bengio)
+Copyright (c) 2001-2004 Idiap Research Institute (Ronan Collobert, Samy Bengio, Johnny Mariethoz)
+Copyright (c) 2015      Google Inc.
+Copyright (c) 2015      Yangqing Jia
+Copyright (c) 2013-2016 The Caffe contributors
+All rights reserved.
+
+Various files include modifications (c) NVIDIA CORPORATION & AFFILIATES.  All rights reserved.
+
+This container image and its contents are governed by the NVIDIA Deep Learning Container License.
+By pulling and using the container, you accept the terms and conditions of this license:
+https://developer.nvidia.com/ngc/nvidia-deep-learning-container-license
+
+NOTE: The SHMEM allocation limit is set to the default of 64MB.  This may be
+   insufficient for PyTorch.  NVIDIA recommends the use of the following flags:
+   docker run --gpus all --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 ...
+
+
+[Improved EAT+PAT Extraction v5.4 with Enhanced Z-axis Processing]
+============================================================
+1. Checking required masks...
+  ✓ All required masks found
+
+2. Loading CT data...
+  CT shape: (1024, 1024, 251)
+  Spacing: (0.341796875, 0.341796875, 1.5) mm
+
+3. Building heart mask...
+
+4. Incorporating proximal vessels...
+  Heart mask saved: /workspace/pipeline/normal_mode_test/eat_pat_output/masks/heart.nii.gz
+
+5. Loading visceral fat mask (torso_fat)...
+  Visceral fat voxels: 4,511,112
+  Visceral fat mask saved: /workspace/pipeline/normal_mode_test/eat_pat_output/masks/visceral_fat.nii.gz
+
+6. Loading lung masks...
+  Lung voxels: 29,663,484
+
+7. Loading abdominal organ masks...
+  Abdominal organ voxels: 13,171,776
+
+8. Computing anatomical boundaries (mode: rpa_to_diaphragm)...
+  WARNING: abdomen_gap_mm (1.0) >= contact_eps_mm (1.0)
+           This may cause abdominal organ contacts to be always zero!
+  Using diaphragm-based Z-range (RPA to diaphragm)
+  Anatomical Z-range: 34 to 165 (total: 132 slices)
+
+9. Computing Shell (EDT-based dilation: 15.0 mm)...
+  Heart dilated voxels: 9,294,103
+
+10. Applying Z-clipping...
+  Shell and fat clipped to Z-range [34:166]
+
+11. Applying mediastinal restriction...
+
+12. Applying abdominal organ clamping...
+
+13. Applying pericardial bridge for connectivity...
+
+13.5. Loading individual abdominal organs for dominant contact rule...
+
+14. Applying ILAM v5.4 (Fixed Dominant Contact with Enhanced Z-axis)...
+  Parameters:
+    - Inferior band: 50.0 mm
+    - Contact epsilon: 1.0 mm
+    - Abdomen gap: 1.0 mm (γ)
+    - Post-trim: 1.5 mm
+    - Lung dominance ratio: 2.0
+    - Min lung touch voxels: 150
+    - No Z limit: False
+    - Seed Z margin: 10.0 mm
+    - Seal diaphragm holes: 4.0 mm
+    - Require shell touch: True
+    - Max heart distance: 20.0 mm (ρ)
+    - Mode: add
+
+  ⚠ WARNING: abdomen_gap_mm (1.0) >= contact_eps_mm (1.0)
+     This will cause abdominal organ contact counts to be 0!
+     Recommended: abdomen_gap_mm < contact_eps_mm
+  ILAM Z-range: 34 to 68 (35 slices)
+  Z-spacing: 1.50 mm/slice
+  Sealing diaphragm holes with 4.0 mm closing...
+  Applied heart distance constraint: 20.0 mm
+  Seed Z range: 27 to 172 (margin: ±10.0 mm)
+  Excluded distal aorta PVAT (2.5mm forbidden zone)
+  Seed voxels (lung-touching fat in Z range): 39,928
+  Performing connected component labeling (without forbidden zones)...
+  Found 82 connected components in domain
+  Components touching lungs (candidates): 22
+
+  Evaluating dominant contact for each component...
+
+  Dominant contact filtering results:
+    Accepted: 7 components
+    Rejected: 15 components
+      - Small lung contact: 15
+
+  Applying post-trim safety margin (1.5 mm)...
+  ILAM component voxels (after post-trim): 675,304
+  ILAM voxels beyond shell: 116,763
+  Largest component: 398,884 voxels
+  Mean component size: 96833 voxels
+
+  Volume analysis:
+    Shell-based EAT+PAT: 599,886 voxels
+    Added by ILAM: 116,763 voxels (20.46 ml)
+    Final EAT+PAT: 716,649 voxels
+
+  ILAM addition mask saved: /workspace/pipeline/normal_mode_test/eat_pat_output/masks/ilam_addition.nii.gz
+  Lung contact components saved: /workspace/pipeline/normal_mode_test/eat_pat_output/masks/lung_contact_components.nii.gz
+  Stomach contact components saved: /workspace/pipeline/normal_mode_test/eat_pat_output/masks/stomach_contact_components.nii.gz
+  Shell mask saved: /workspace/pipeline/normal_mode_test/eat_pat_output/masks/shell.nii.gz
+  EAT+PAT mask saved: /workspace/pipeline/normal_mode_test/eat_pat_output/masks/eat_pat.nii.gz
+  ILAM components saved: /workspace/pipeline/normal_mode_test/eat_pat_output/masks/ilam_components.nii.gz
+
+16. Calculating statistics...
+  Heart volume: 596.76 ml
+  Shell volume: 598.00 ml
+  EAT+PAT volume: 125.58 ml
+  Total visceral fat volume: 790.52 ml
+  Fat fraction in shell: 21.0%
+  EAT+PAT / Visceral fat ratio: 15.9%
+
+17. Statistics saved: /workspace/pipeline/normal_mode_test/eat_pat_output/statistics/eat_pat_analysis.json
+
+[Validation]
+  ✓ EAT+PAT volume is within normal range (50-200 ml)
+  ✓ Fat fraction in shell is normal (< 30%)
+
+============================================================
+Improved EAT+PAT extraction v5.4 (Enhanced Z-axis Processing) completed successfully!
+Output directory: /workspace/pipeline/normal_mode_test/eat_pat_output
+Total EAT+PAT volume: 125.58 ml
+Shell volume: 598.00 ml
+Fat fraction in shell: 21.0%
+⏱️ ステップ2完了: 688秒
+📊 EAT/PAT統計:
+📊 EAT/PAT統計:
+  - 心臓体積: 596.76 ml
+  - EAT+PAT体積: 125.58 ml
+  - Fat fraction: 21.00%
+  - ILAM設定:
+    - lung_contact_mm: 1.0
+    - contact_eps_mm: 1.0
+    - abdomen_gap_mm: 1.0
+    - max_heart_dist_mm: 20.0
+
+========================================
+ステップ3: DeepDRR生成
+========================================
+📸 DeepDRR生成実行中...
+
+==========
+== CUDA ==
+==========
+
+CUDA Version 11.8.0
+
+Container image Copyright (c) 2016-2023, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+
+This container image and its contents are governed by the NVIDIA Deep Learning Container License.
+By pulling and using the container, you accept the terms and conditions of this license:
+https://developer.nvidia.com/ngc/nvidia-deep-learning-container-license
+
+A copy of this license is made available in this container at /NGC-DL-CONTAINER-LICENSE for your convenience.
+
+🏥 DeepDRR PA左右反転修正版
+🎯 A案：PAのみ水平反転による最小修正アプローチ
+📋 radiographic view標準（患者の左=画像の右）に対応
+============================================================
+\n🔄 STEP 1: LPS厳密変換（配列・affine同期）
+📁 LPS厳密変換: /workspace/data/CT-RATE-v2/dataset/valid_fixed/valid_1/valid_1_a/valid_1_a_1.nii.gz
+🧭 元座標系: ('L', 'P', 'S')
+🔄 変換行列: [[0. 1.]
+ [1. 1.]
+ [2. 1.]]
+✅ 変換後座標系: ('L', 'P', 'S')
+📊 データ形状: (1024, 1024, 251)
+📏 spacing: [0.34179688 0.34179688 1.5       ]
+✅ LPS Volume構築完了（orient_patient不要）
+\n🔄 STEP 2: C-arm設定
+  ⚠️ 重要: LPS正規化済みのためorient_patient()は不要
+📏 C-arm設定:
+  検出器: 2500×3070 pixels (350.0×430.0mm)
+  SID: 1800.0mm, SAD: 1720.0mm, OID: 80.0mm
+  倍率: 1.047, ピクセル: 0.14mm
+  左右制御: rotate_camera_left=True（LAT正常のため維持）
+\n🔄 STEP 3: PA左右反転修正を含む投影
+  📋 修正アプローチ：A案（最小変更）
+    • LAT表示が正常 → rotate_camera_left=True維持
+    • PAのみ画像側で1回だけ水平反転
+    • radiographic view標準準拠
+\n  📸 PA正面投影 + 左右反転修正:
+📸 PA正面: α=0°, β=0°, γ=90.0°
+/usr/local/lib/python3.8/dist-packages/deepdrr/projector/projector.py:138: UserWarning: The CUDA compiler succeeded, but said the following:
+kernel.cu(2409): warning #1215-D: function "tex3D(texture<T, 3, cudaReadModeElementType>, float, float, float) [with T=float]"
+/usr/local/cuda/bin/../targets/x86_64-linux/include/texture_fetch_functions.h(267): here was declared deprecated
+
+kernel.cu(2409): warning #1215-D: function "tex3D(texture<T, 3, cudaReadModeElementType>, float, float, float) [with T=float]"
+/usr/local/cuda/bin/../targets/x86_64-linux/include/texture_fetch_functions.h(267): here was declared deprecated
+
+kernel.cu(2409): warning #1215-D: function "tex3D(texture<T, 3, cudaReadModeElementType>, float, float, float) [with T=float]"
+/usr/local/cuda/bin/../targets/x86_64-linux/include/texture_fetch_functions.h(267): here was declared deprecated
+
+kernel.cu(2786): warning #1215-D: function "tex3D(texture<T, 3, cudaReadModeElementType>, float, float, float) [with T=float]"
+/usr/local/cuda/bin/../targets/x86_64-linux/include/texture_fetch_functions.h(267): here was declared deprecated
+
+/usr/local/lib/python3.8/dist-packages/deepdrr/projector/cubic/internal/cubicTex3D_kernel.cu(65): warning #1215-D: function "tex3D(texture<T, 3, cudaReadModeElementType>, float, float, float) [with T=float]"
+/usr/local/cuda/bin/../targets/x86_64-linux/include/texture_fetch_functions.h(267): here was declared deprecated
+          detected during:
+            instantiation of "floatN cubicTex3D<floatN,T,mode>(texture<T, 3, mode>, float3) [with floatN=float, T=float, mode=cudaReadModeElementType]" 
+(125): here
+            instantiation of "float cubicTex3D(texture<float, 3, mode>, float, float, float) [with mode=cudaReadModeElementType]" 
+kernel.cu(2358): here
+
+/usr/local/lib/python3.8/dist-packages/deepdrr/projector/cubic/internal/cubicTex3D_kernel.cu(66): warning #1215-D: function "tex3D(texture<T, 3, cudaReadModeElementType>, float, float, float) [with T=float]"
+/usr/local/cuda/bin/../targets/x86_64-linux/include/texture_fetch_functions.h(267): here was declared deprecated
+          detected during:
+            instantiation of "floatN cubicTex3D<floatN,T,mode>(texture<T, 3, mode>, float3) [with floatN=float, T=float, mode=cudaReadModeElementType]" 
+(125): here
+            instantiation of "float cubicTex3D(texture<float, 3, mode>, float, float, float) [with mode=cudaReadModeElementType]" 
+kernel.cu(2358): here
+
+/usr/local/lib/python3.8/dist-packages/deepdrr/projector/cubic/internal/cubicTex3D_kernel.cu(68): warning #1215-D: function "tex3D(texture<T, 3, cudaReadModeElementType>, float, float, float) [with T=float]"
+/usr/local/cuda/bin/../targets/x86_64-linux/include/texture_fetch_functions.h(267): here was declared deprecated
+          detected during:
+            instantiation of "floatN cubicTex3D<floatN,T,mode>(texture<T, 3, mode>, float3) [with floatN=float, T=float, mode=cudaReadModeElementType]" 
+(125): here
+            instantiation of "float cubicTex3D(texture<float, 3, mode>, float, float, float) [with mode=cudaReadModeElementType]" 
+kernel.cu(2358): here
+
+/usr/local/lib/python3.8/dist-packages/deepdrr/projector/cubic/internal/cubicTex3D_kernel.cu(69): warning #1215-D: function "tex3D(texture<T, 3, cudaReadModeElementType>, float, float, float) [with T=float]"
+/usr/local/cuda/bin/../targets/x86_64-linux/include/texture_fetch_functions.h(267): here was declared deprecated
+          detected during:
+            instantiation of "floatN cubicTex3D<floatN,T,mode>(texture<T, 3, mode>, float3) [with floatN=float, T=float, mode=cudaReadModeElementType]" 
+(125): here
+            instantiation of "float cubicTex3D(texture<float, 3, mode>, float, float, float) [with mode=cudaReadModeElementType]" 
+kernel.cu(2358): here
+
+/usr/local/lib/python3.8/dist-packages/deepdrr/projector/cubic/internal/cubicTex3D_kernel.cu(72): warning #1215-D: function "tex3D(texture<T, 3, cudaReadModeElementType>, float, float, float) [with T=float]"
+/usr/local/cuda/bin/../targets/x86_64-linux/include/texture_fetch_functions.h(267): here was declared deprecated
+          detected during:
+            instantiation of "floatN cubicTex3D<floatN,T,mode>(texture<T, 3, mode>, float3) [with floatN=float, T=float, mode=cudaReadModeElementType]" 
+(125): here
+            instantiation of "float cubicTex3D(texture<float, 3, mode>, float, float, float) [with mode=cudaReadModeElementType]" 
+kernel.cu(2358): here
+
+/usr/local/lib/python3.8/dist-packages/deepdrr/projector/cubic/internal/cubicTex3D_kernel.cu(73): warning #1215-D: function "tex3D(texture<T, 3, cudaReadModeElementType>, float, float, float) [with T=float]"
+/usr/local/cuda/bin/../targets/x86_64-linux/include/texture_fetch_functions.h(267): here was declared deprecated
+          detected during:
+            instantiation of "floatN cubicTex3D<floatN,T,mode>(texture<T, 3, mode>, float3) [with floatN=float, T=float, mode=cudaReadModeElementType]" 
+(125): here
+            instantiation of "float cubicTex3D(texture<float, 3, mode>, float, float, float) [with mode=cudaReadModeElementType]" 
+kernel.cu(2358): here
+
+/usr/local/lib/python3.8/dist-packages/deepdrr/projector/cubic/internal/cubicTex3D_kernel.cu(75): warning #1215-D: function "tex3D(texture<T, 3, cudaReadModeElementType>, float, float, float) [with T=float]"
+/usr/local/cuda/bin/../targets/x86_64-linux/include/texture_fetch_functions.h(267): here was declared deprecated
+          detected during:
+            instantiation of "floatN cubicTex3D<floatN,T,mode>(texture<T, 3, mode>, float3) [with floatN=float, T=float, mode=cudaReadModeElementType]" 
+(125): here
+            instantiation of "float cubicTex3D(texture<float, 3, mode>, float, float, float) [with mode=cudaReadModeElementType]" 
+kernel.cu(2358): here
+
+/usr/local/lib/python3.8/dist-packages/deepdrr/projector/cubic/internal/cubicTex3D_kernel.cu(76): warning #1215-D: function "tex3D(texture<T, 3, cudaReadModeElementType>, float, float, float) [with T=float]"
+/usr/local/cuda/bin/../targets/x86_64-linux/include/texture_fetch_functions.h(267): here was declared deprecated
+          detected during:
+            instantiation of "floatN cubicTex3D<floatN,T,mode>(texture<T, 3, mode>, float3) [with floatN=float, T=float, mode=cudaReadModeElementType]" 
+(125): here
+            instantiation of "float cubicTex3D(texture<float, 3, mode>, float, float, float) [with mode=cudaReadModeElementType]" 
+kernel.cu(2358): here
+
+
+  return SourceModule(
+  結果: 範囲 0.000000-1.000000, 形状 (3070, 2500)
+    🔄 PA左右反転修正適用...
+      従来: 患者の左=画像の左（非標準）
+      修正: 患者の左=画像の右（radiographic view標準）
+    ✅ PA左右反転修正完了
+\n  📸 LAT側面投影:
+    📋 LAT表示は既に正常のため修正不要
+📸 LAT左側面: α=0°, β=90°, γ=90.0°
+  結果: 範囲 0.000000-1.000000, 形状 (3070, 2500)
+\n🔄 STEP 4: Energy表示変換
+\n🔄 STEP 5: Portrait調整
+  PA（左右反転修正済み）:
+    元: 2500×3070
+    アスペクト適正: 1.228
+  LAT:
+    元: 2500×3070
+    アスペクト適正: 1.228
+\n💾 STEP 6: PNG保存
+✅ PA左右反転修正版保存完了:
+  PA: /home/soya/ctrate_ws/pipeline/normal_mode_test/deepdrr_output/deepdrr_PA_final_pa_fixed.png (3070, 2500)
+  LAT: /home/soya/ctrate_ws/pipeline/normal_mode_test/deepdrr_output/deepdrr_LAT_final_pa_fixed.png (3070, 2500)
+\n🎨 STEP 7: PA左右反転修正確認可視化
+<string>:353: UserWarning: Glyph 27491 (\N{CJK UNIFIED IDEOGRAPH-6B63}) missing from current font.
+<string>:353: UserWarning: Glyph 38754 (\N{CJK UNIFIED IDEOGRAPH-9762}) missing from current font.
+<string>:353: UserWarning: Glyph 65288 (\N{FULLWIDTH LEFT PARENTHESIS}) missing from current font.
+<string>:353: UserWarning: Glyph 24038 (\N{CJK UNIFIED IDEOGRAPH-5DE6}) missing from current font.
+<string>:353: UserWarning: Glyph 21491 (\N{CJK UNIFIED IDEOGRAPH-53F3}) missing from current font.
+<string>:353: UserWarning: Glyph 21453 (\N{CJK UNIFIED IDEOGRAPH-53CD}) missing from current font.
+<string>:353: UserWarning: Glyph 36578 (\N{CJK UNIFIED IDEOGRAPH-8EE2}) missing from current font.
+<string>:353: UserWarning: Glyph 20462 (\N{CJK UNIFIED IDEOGRAPH-4FEE}) missing from current font.
+<string>:353: UserWarning: Glyph 28168 (\N{CJK UNIFIED IDEOGRAPH-6E08}) missing from current font.
+<string>:353: UserWarning: Glyph 12415 (\N{HIRAGANA LETTER MI}) missing from current font.
+<string>:353: UserWarning: Glyph 65289 (\N{FULLWIDTH RIGHT PARENTHESIS}) missing from current font.
+<string>:353: UserWarning: Glyph 32294 (\N{CJK UNIFIED IDEOGRAPH-7E26}) missing from current font.
+<string>:353: UserWarning: Glyph 21521 (\N{CJK UNIFIED IDEOGRAPH-5411}) missing from current font.
+<string>:353: UserWarning: Glyph 12365 (\N{HIRAGANA LETTER KI}) missing from current font.
+<string>:353: UserWarning: Glyph 20596 (\N{CJK UNIFIED IDEOGRAPH-5074}) missing from current font.
+<string>:353: UserWarning: Glyph 30495 (\N{CJK UNIFIED IDEOGRAPH-771F}) missing from current font.
+<string>:353: UserWarning: Glyph 12398 (\N{HIRAGANA LETTER NO}) missing from current font.
+<string>:353: UserWarning: Glyph 36600 (\N{CJK UNIFIED IDEOGRAPH-8EF8}) missing from current font.
+<string>:353: UserWarning: Glyph 22238 (\N{CJK UNIFIED IDEOGRAPH-56DE}) missing from current font.
+<string>:353: UserWarning: Glyph 12426 (\N{HIRAGANA LETTER RI}) missing from current font.
+<string>:353: UserWarning: Glyph 128260 (\N{ANTICLOCKWISE DOWNWARDS AND UPWARDS OPEN CIRCLE ARROWS}) missing from current font.
+<string>:353: UserWarning: Glyph 21069 (\N{CJK UNIFIED IDEOGRAPH-524D}) missing from current font.
+<string>:353: UserWarning: Glyph 21839 (\N{CJK UNIFIED IDEOGRAPH-554F}) missing from current font.
+<string>:353: UserWarning: Glyph 38988 (\N{CJK UNIFIED IDEOGRAPH-984C}) missing from current font.
+<string>:353: UserWarning: Glyph 24739 (\N{CJK UNIFIED IDEOGRAPH-60A3}) missing from current font.
+<string>:353: UserWarning: Glyph 32773 (\N{CJK UNIFIED IDEOGRAPH-8005}) missing from current font.
+<string>:353: UserWarning: Glyph 30011 (\N{CJK UNIFIED IDEOGRAPH-753B}) missing from current font.
+<string>:353: UserWarning: Glyph 20687 (\N{CJK UNIFIED IDEOGRAPH-50CF}) missing from current font.
+<string>:353: UserWarning: Glyph 38750 (\N{CJK UNIFIED IDEOGRAPH-975E}) missing from current font.
+<string>:353: UserWarning: Glyph 27161 (\N{CJK UNIFIED IDEOGRAPH-6A19}) missing from current font.
+<string>:353: UserWarning: Glyph 28310 (\N{CJK UNIFIED IDEOGRAPH-6E96}) missing from current font.
+<string>:353: UserWarning: Glyph 30340 (\N{CJK UNIFIED IDEOGRAPH-7684}) missing from current font.
+<string>:353: UserWarning: Glyph 12394 (\N{HIRAGANA LETTER NA}) missing from current font.
+<string>:353: UserWarning: Glyph 34920 (\N{CJK UNIFIED IDEOGRAPH-8868}) missing from current font.
+<string>:353: UserWarning: Glyph 31034 (\N{CJK UNIFIED IDEOGRAPH-793A}) missing from current font.
+<string>:353: UserWarning: Glyph 24515 (\N{CJK UNIFIED IDEOGRAPH-5FC3}) missing from current font.
+<string>:353: UserWarning: Glyph 38512 (\N{CJK UNIFIED IDEOGRAPH-9670}) missing from current font.
+<string>:353: UserWarning: Glyph 24433 (\N{CJK UNIFIED IDEOGRAPH-5F71}) missing from current font.
+<string>:353: UserWarning: Glyph 12364 (\N{HIRAGANA LETTER GA}) missing from current font.
+<string>:353: UserWarning: Glyph 24460 (\N{CJK UNIFIED IDEOGRAPH-5F8C}) missing from current font.
+<string>:353: UserWarning: Glyph 25312 (\N{CJK UNIFIED IDEOGRAPH-62E0}) missing from current font.
+<string>:353: UserWarning: Glyph 33256 (\N{CJK UNIFIED IDEOGRAPH-81E8}) missing from current font.
+<string>:353: UserWarning: Glyph 24202 (\N{CJK UNIFIED IDEOGRAPH-5E8A}) missing from current font.
+<string>:353: UserWarning: Glyph 23455 (\N{CJK UNIFIED IDEOGRAPH-5B9F}) missing from current font.
+<string>:353: UserWarning: Glyph 35013 (\N{CJK UNIFIED IDEOGRAPH-88C5}) missing from current font.
+<string>:353: UserWarning: Glyph 26041 (\N{CJK UNIFIED IDEOGRAPH-65B9}) missing from current font.
+<string>:353: UserWarning: Glyph 27861 (\N{CJK UNIFIED IDEOGRAPH-6CD5}) missing from current font.
+<string>:353: UserWarning: Glyph 26696 (\N{CJK UNIFIED IDEOGRAPH-6848}) missing from current font.
+<string>:353: UserWarning: Glyph 26368 (\N{CJK UNIFIED IDEOGRAPH-6700}) missing from current font.
+<string>:353: UserWarning: Glyph 23567 (\N{CJK UNIFIED IDEOGRAPH-5C0F}) missing from current font.
+<string>:353: UserWarning: Glyph 22793 (\N{CJK UNIFIED IDEOGRAPH-5909}) missing from current font.
+<string>:353: UserWarning: Glyph 26356 (\N{CJK UNIFIED IDEOGRAPH-66F4}) missing from current font.
+<string>:353: UserWarning: Glyph 25505 (\N{CJK UNIFIED IDEOGRAPH-63A1}) missing from current font.
+<string>:353: UserWarning: Glyph 29992 (\N{CJK UNIFIED IDEOGRAPH-7528}) missing from current font.
+<string>:353: UserWarning: Glyph 12384 (\N{HIRAGANA LETTER DA}) missing from current font.
+<string>:353: UserWarning: Glyph 12369 (\N{HIRAGANA LETTER KE}) missing from current font.
+<string>:353: UserWarning: Glyph 27700 (\N{CJK UNIFIED IDEOGRAPH-6C34}) missing from current font.
+<string>:353: UserWarning: Glyph 24179 (\N{CJK UNIFIED IDEOGRAPH-5E73}) missing from current font.
+<string>:353: UserWarning: Glyph 128203 (\N{CLIPBOARD}) missing from current font.
+<string>:353: UserWarning: Glyph 25216 (\N{CJK UNIFIED IDEOGRAPH-6280}) missing from current font.
+<string>:353: UserWarning: Glyph 34899 (\N{CJK UNIFIED IDEOGRAPH-8853}) missing from current font.
+<string>:353: UserWarning: Glyph 20181 (\N{CJK UNIFIED IDEOGRAPH-4ED5}) missing from current font.
+<string>:353: UserWarning: Glyph 27096 (\N{CJK UNIFIED IDEOGRAPH-69D8}) missing from current font.
+<string>:353: UserWarning: Glyph 25237 (\N{CJK UNIFIED IDEOGRAPH-6295}) missing from current font.
+<string>:353: UserWarning: Glyph 35282 (\N{CJK UNIFIED IDEOGRAPH-89D2}) missing from current font.
+<string>:353: UserWarning: Glyph 24230 (\N{CJK UNIFIED IDEOGRAPH-5EA6}) missing from current font.
+<string>:353: UserWarning: Glyph 24231 (\N{CJK UNIFIED IDEOGRAPH-5EA7}) missing from current font.
+<string>:353: UserWarning: Glyph 31995 (\N{CJK UNIFIED IDEOGRAPH-7CFB}) missing from current font.
+<string>:353: UserWarning: Glyph 21427 (\N{CJK UNIFIED IDEOGRAPH-53B3}) missing from current font.
+<string>:353: UserWarning: Glyph 23494 (\N{CJK UNIFIED IDEOGRAPH-5BC6}) missing from current font.
+<string>:353: UserWarning: Glyph 37197 (\N{CJK UNIFIED IDEOGRAPH-914D}) missing from current font.
+<string>:353: UserWarning: Glyph 21015 (\N{CJK UNIFIED IDEOGRAPH-5217}) missing from current font.
+<string>:353: UserWarning: Glyph 12539 (\N{KATAKANA MIDDLE DOT}) missing from current font.
+<string>:353: UserWarning: Glyph 21516 (\N{CJK UNIFIED IDEOGRAPH-540C}) missing from current font.
+<string>:353: UserWarning: Glyph 26399 (\N{CJK UNIFIED IDEOGRAPH-671F}) missing from current font.
+<string>:353: UserWarning: Glyph 27963 (\N{CJK UNIFIED IDEOGRAPH-6D3B}) missing from current font.
+<string>:353: UserWarning: Glyph 21697 (\N{CJK UNIFIED IDEOGRAPH-54C1}) missing from current font.
+<string>:353: UserWarning: Glyph 36074 (\N{CJK UNIFIED IDEOGRAPH-8CEA}) missing from current font.
+<string>:353: UserWarning: Glyph 20445 (\N{CJK UNIFIED IDEOGRAPH-4FDD}) missing from current font.
+<string>:353: UserWarning: Glyph 35388 (\N{CJK UNIFIED IDEOGRAPH-8A3C}) missing from current font.
+<string>:353: UserWarning: Glyph 29694 (\N{CJK UNIFIED IDEOGRAPH-73FE}) missing from current font.
+<string>:353: UserWarning: Glyph 24190 (\N{CJK UNIFIED IDEOGRAPH-5E7E}) missing from current font.
+<string>:353: UserWarning: Glyph 20309 (\N{CJK UNIFIED IDEOGRAPH-4F55}) missing from current font.
+<string>:353: UserWarning: Glyph 26032 (\N{CJK UNIFIED IDEOGRAPH-65B0}) missing from current font.
+<string>:353: UserWarning: Glyph 27231 (\N{CJK UNIFIED IDEOGRAPH-6A5F}) missing from current font.
+<string>:353: UserWarning: Glyph 127973 (\N{HOSPITAL}) missing from current font.
+<string>:353: UserWarning: Glyph 33016 (\N{CJK UNIFIED IDEOGRAPH-80F8}) missing from current font.
+<string>:353: UserWarning: Glyph 37096 (\N{CJK UNIFIED IDEOGRAPH-90E8}) missing from current font.
+<string>:353: UserWarning: Glyph 32218 (\N{CJK UNIFIED IDEOGRAPH-7DDA}) missing from current font.
+<string>:353: UserWarning: Glyph 128101 (\N{BUSTS IN SILHOUETTE}) missing from current font.
+<string>:353: UserWarning: Glyph 12392 (\N{HIRAGANA LETTER TO}) missing from current font.
+<string>:353: UserWarning: Glyph 12363 (\N{HIRAGANA LETTER KA}) missing from current font.
+<string>:353: UserWarning: Glyph 12356 (\N{HIRAGANA LETTER I}) missing from current font.
+<string>:353: UserWarning: Glyph 21512 (\N{CJK UNIFIED IDEOGRAPH-5408}) missing from current font.
+<string>:353: UserWarning: Glyph 12358 (\N{HIRAGANA LETTER U}) missing from current font.
+<string>:353: UserWarning: Glyph 35222 (\N{CJK UNIFIED IDEOGRAPH-8996}) missing from current font.
+<string>:353: UserWarning: Glyph 28857 (\N{CJK UNIFIED IDEOGRAPH-70B9}) missing from current font.
+<string>:353: UserWarning: Glyph 12399 (\N{HIRAGANA LETTER HA}) missing from current font.
+<string>:353: UserWarning: Glyph 12395 (\N{HIRAGANA LETTER NI}) missing from current font.
+<string>:353: UserWarning: Glyph 128218 (\N{BOOKS}) missing from current font.
+<string>:353: UserWarning: Glyph 21442 (\N{CJK UNIFIED IDEOGRAPH-53C2}) missing from current font.
+<string>:353: UserWarning: Glyph 32771 (\N{CJK UNIFIED IDEOGRAPH-8003}) missing from current font.
+<string>:353: UserWarning: Glyph 25991 (\N{CJK UNIFIED IDEOGRAPH-6587}) missing from current font.
+<string>:353: UserWarning: Glyph 29486 (\N{CJK UNIFIED IDEOGRAPH-732E}) missing from current font.
+<string>:353: UserWarning: Glyph 128295 (\N{WRENCH}) missing from current font.
+<string>:353: UserWarning: Glyph 26681 (\N{CJK UNIFIED IDEOGRAPH-6839}) missing from current font.
+<string>:353: UserWarning: Glyph 32066 (\N{CJK UNIFIED IDEOGRAPH-7D42}) missing from current font.
+<string>:353: UserWarning: Glyph 32622 (\N{CJK UNIFIED IDEOGRAPH-7F6E}) missing from current font.
+<string>:353: UserWarning: Glyph 12391 (\N{HIRAGANA LETTER DE}) missing from current font.
+<string>:353: UserWarning: Glyph 32113 (\N{CJK UNIFIED IDEOGRAPH-7D71}) missing from current font.
+<string>:353: UserWarning: Glyph 19968 (\N{CJK UNIFIED IDEOGRAPH-4E00}) missing from current font.
+<string>:353: UserWarning: Glyph 20108 (\N{CJK UNIFIED IDEOGRAPH-4E8C}) missing from current font.
+<string>:353: UserWarning: Glyph 37325 (\N{CJK UNIFIED IDEOGRAPH-91CD}) missing from current font.
+<string>:353: UserWarning: Glyph 31105 (\N{CJK UNIFIED IDEOGRAPH-7981}) missing from current font.
+<string>:353: UserWarning: Glyph 12450 (\N{KATAKANA LETTER A}) missing from current font.
+<string>:353: UserWarning: Glyph 12503 (\N{KATAKANA LETTER PU}) missing from current font.
+<string>:353: UserWarning: Glyph 12525 (\N{KATAKANA LETTER RO}) missing from current font.
+<string>:353: UserWarning: Glyph 12540 (\N{KATAKANA-HIRAGANA PROLONGED SOUND MARK}) missing from current font.
+<string>:353: UserWarning: Glyph 12481 (\N{KATAKANA LETTER TI}) missing from current font.
+<string>:353: UserWarning: Glyph 36984 (\N{CJK UNIFIED IDEOGRAPH-9078}) missing from current font.
+<string>:353: UserWarning: Glyph 25246 (\N{CJK UNIFIED IDEOGRAPH-629E}) missing from current font.
+<string>:353: UserWarning: Glyph 9989 (\N{WHITE HEAVY CHECK MARK}) missing from current font.
+<string>:353: UserWarning: Glyph 38911 (\N{CJK UNIFIED IDEOGRAPH-97FF}) missing from current font.
+<string>:353: UserWarning: Glyph 12375 (\N{HIRAGANA LETTER SI}) missing from current font.
+<string>:353: UserWarning: Glyph 26082 (\N{CJK UNIFIED IDEOGRAPH-65E2}) missing from current font.
+<string>:353: UserWarning: Glyph 23384 (\N{CJK UNIFIED IDEOGRAPH-5B58}) missing from current font.
+<string>:353: UserWarning: Glyph 25345 (\N{CJK UNIFIED IDEOGRAPH-6301}) missing from current font.
+<string>:353: UserWarning: Glyph 32173 (\N{CJK UNIFIED IDEOGRAPH-7DAD}) missing from current font.
+<string>:353: UserWarning: Glyph 31777 (\N{CJK UNIFIED IDEOGRAPH-7C21}) missing from current font.
+<string>:353: UserWarning: Glyph 28500 (\N{CJK UNIFIED IDEOGRAPH-6F54}) missing from current font.
+<string>:353: UserWarning: Glyph 20195 (\N{CJK UNIFIED IDEOGRAPH-4EE3}) missing from current font.
+<string>:353: UserWarning: Glyph 26367 (\N{CJK UNIFIED IDEOGRAPH-66FF}) missing from current font.
+<string>:353: UserWarning: Glyph 21046 (\N{CJK UNIFIED IDEOGRAPH-5236}) missing from current font.
+<string>:353: UserWarning: Glyph 24481 (\N{CJK UNIFIED IDEOGRAPH-5FA1}) missing from current font.
+<string>:353: UserWarning: Glyph 20840 (\N{CJK UNIFIED IDEOGRAPH-5168}) missing from current font.
+<string>:353: UserWarning: Glyph 12499 (\N{KATAKANA LETTER BI}) missing from current font.
+<string>:353: UserWarning: Glyph 12517 (\N{KATAKANA LETTER SMALL YU}) missing from current font.
+<string>:353: UserWarning: Glyph 12424 (\N{HIRAGANA LETTER YO}) missing from current font.
+<string>:353: UserWarning: Glyph 22533 (\N{CJK UNIFIED IDEOGRAPH-5805}) missing from current font.
+<string>:353: UserWarning: Glyph 29282 (\N{CJK UNIFIED IDEOGRAPH-7262}) missing from current font.
+<string>:353: UserWarning: Glyph 23558 (\N{CJK UNIFIED IDEOGRAPH-5C06}) missing from current font.
+<string>:353: UserWarning: Glyph 26469 (\N{CJK UNIFIED IDEOGRAPH-6765}) missing from current font.
+<string>:353: UserWarning: Glyph 23550 (\N{CJK UNIFIED IDEOGRAPH-5BFE}) missing from current font.
+<string>:353: UserWarning: Glyph 24540 (\N{CJK UNIFIED IDEOGRAPH-5FDC}) missing from current font.
+<string>:353: UserWarning: Glyph 20307 (\N{CJK UNIFIED IDEOGRAPH-4F53}) missing from current font.
+<string>:353: UserWarning: Glyph 36011 (\N{CJK UNIFIED IDEOGRAPH-8CAB}) missing from current font.
+<string>:353: UserWarning: Glyph 24615 (\N{CJK UNIFIED IDEOGRAPH-6027}) missing from current font.
+<string>:353: UserWarning: Glyph 24120 (\N{CJK UNIFIED IDEOGRAPH-5E38}) missing from current font.
+<string>:353: UserWarning: Glyph 12522 (\N{KATAKANA LETTER RI}) missing from current font.
+<string>:353: UserWarning: Glyph 12473 (\N{KATAKANA LETTER SU}) missing from current font.
+<string>:353: UserWarning: Glyph 12463 (\N{KATAKANA LETTER KU}) missing from current font.
+<string>:353: UserWarning: Glyph 22823 (\N{CJK UNIFIED IDEOGRAPH-5927}) missing from current font.
+<string>:353: UserWarning: Glyph 21177 (\N{CJK UNIFIED IDEOGRAPH-52B9}) missing from current font.
+<string>:353: UserWarning: Glyph 26524 (\N{CJK UNIFIED IDEOGRAPH-679C}) missing from current font.
+<string>:353: UserWarning: Glyph 27573 (\N{CJK UNIFIED IDEOGRAPH-6BB5}) missing from current font.
+<string>:353: UserWarning: Glyph 38542 (\N{CJK UNIFIED IDEOGRAPH-968E}) missing from current font.
+<string>:353: UserWarning: Glyph 25913 (\N{CJK UNIFIED IDEOGRAPH-6539}) missing from current font.
+<string>:353: UserWarning: Glyph 21892 (\N{CJK UNIFIED IDEOGRAPH-5584}) missing from current font.
+<string>:353: UserWarning: Glyph 26908 (\N{CJK UNIFIED IDEOGRAPH-691C}) missing from current font.
+<string>:353: UserWarning: Glyph 32080 (\N{CJK UNIFIED IDEOGRAPH-7D50}) missing from current font.
+<string>:353: UserWarning: Glyph 10060 (\N{CROSS MARK}) missing from current font.
+<string>:353: UserWarning: Glyph 25104 (\N{CJK UNIFIED IDEOGRAPH-6210}) missing from current font.
+<string>:353: UserWarning: Glyph 12434 (\N{HIRAGANA LETTER WO}) missing from current font.
+<string>:353: UserWarning: Glyph 23436 (\N{CJK UNIFIED IDEOGRAPH-5B8C}) missing from current font.
+<string>:353: UserWarning: Glyph 34892 (\N{CJK UNIFIED IDEOGRAPH-884C}) missing from current font.
+<string>:353: UserWarning: Glyph 12467 (\N{KATAKANA LETTER KO}) missing from current font.
+<string>:353: UserWarning: Glyph 12489 (\N{KATAKANA LETTER DO}) missing from current font.
+<string>:353: UserWarning: Glyph 36861 (\N{CJK UNIFIED IDEOGRAPH-8FFD}) missing from current font.
+<string>:353: UserWarning: Glyph 21152 (\N{CJK UNIFIED IDEOGRAPH-52A0}) missing from current font.
+<string>:353: UserWarning: Glyph 127919 (\N{DIRECT HIT}) missing from current font.
+<string>:353: UserWarning: Glyph 12289 (\N{IDEOGRAPHIC COMMA}) missing from current font.
+<string>:353: UserWarning: Glyph 22580 (\N{CJK UNIFIED IDEOGRAPH-5834}) missing from current font.
+<string>:353: UserWarning: Glyph 20351 (\N{CJK UNIFIED IDEOGRAPH-4F7F}) missing from current font.
+<string>:353: UserWarning: Glyph 21487 (\N{CJK UNIFIED IDEOGRAPH-53EF}) missing from current font.
+<string>:353: UserWarning: Glyph 33021 (\N{CJK UNIFIED IDEOGRAPH-80FD}) missing from current font.
+<string>:353: UserWarning: Glyph 29256 (\N{CJK UNIFIED IDEOGRAPH-7248}) missing from current font.
+<string>:353: UserWarning: Glyph 12427 (\N{HIRAGANA LETTER RU}) missing from current font.
+<string>:354: UserWarning: Glyph 27491 (\N{CJK UNIFIED IDEOGRAPH-6B63}) missing from current font.
+<string>:354: UserWarning: Glyph 38754 (\N{CJK UNIFIED IDEOGRAPH-9762}) missing from current font.
+<string>:354: UserWarning: Glyph 65288 (\N{FULLWIDTH LEFT PARENTHESIS}) missing from current font.
+<string>:354: UserWarning: Glyph 24038 (\N{CJK UNIFIED IDEOGRAPH-5DE6}) missing from current font.
+<string>:354: UserWarning: Glyph 21491 (\N{CJK UNIFIED IDEOGRAPH-53F3}) missing from current font.
+<string>:354: UserWarning: Glyph 21453 (\N{CJK UNIFIED IDEOGRAPH-53CD}) missing from current font.
+<string>:354: UserWarning: Glyph 36578 (\N{CJK UNIFIED IDEOGRAPH-8EE2}) missing from current font.
+<string>:354: UserWarning: Glyph 20462 (\N{CJK UNIFIED IDEOGRAPH-4FEE}) missing from current font.
+<string>:354: UserWarning: Glyph 28168 (\N{CJK UNIFIED IDEOGRAPH-6E08}) missing from current font.
+<string>:354: UserWarning: Glyph 12415 (\N{HIRAGANA LETTER MI}) missing from current font.
+<string>:354: UserWarning: Glyph 65289 (\N{FULLWIDTH RIGHT PARENTHESIS}) missing from current font.
+<string>:354: UserWarning: Glyph 32294 (\N{CJK UNIFIED IDEOGRAPH-7E26}) missing from current font.
+<string>:354: UserWarning: Glyph 21521 (\N{CJK UNIFIED IDEOGRAPH-5411}) missing from current font.
+<string>:354: UserWarning: Glyph 12365 (\N{HIRAGANA LETTER KI}) missing from current font.
+<string>:354: UserWarning: Glyph 20596 (\N{CJK UNIFIED IDEOGRAPH-5074}) missing from current font.
+<string>:354: UserWarning: Glyph 30495 (\N{CJK UNIFIED IDEOGRAPH-771F}) missing from current font.
+<string>:354: UserWarning: Glyph 12398 (\N{HIRAGANA LETTER NO}) missing from current font.
+<string>:354: UserWarning: Glyph 36600 (\N{CJK UNIFIED IDEOGRAPH-8EF8}) missing from current font.
+<string>:354: UserWarning: Glyph 22238 (\N{CJK UNIFIED IDEOGRAPH-56DE}) missing from current font.
+<string>:354: UserWarning: Glyph 12426 (\N{HIRAGANA LETTER RI}) missing from current font.
+<string>:354: UserWarning: Glyph 128260 (\N{ANTICLOCKWISE DOWNWARDS AND UPWARDS OPEN CIRCLE ARROWS}) missing from current font.
+<string>:354: UserWarning: Glyph 21069 (\N{CJK UNIFIED IDEOGRAPH-524D}) missing from current font.
+<string>:354: UserWarning: Glyph 21839 (\N{CJK UNIFIED IDEOGRAPH-554F}) missing from current font.
+<string>:354: UserWarning: Glyph 38988 (\N{CJK UNIFIED IDEOGRAPH-984C}) missing from current font.
+<string>:354: UserWarning: Glyph 24739 (\N{CJK UNIFIED IDEOGRAPH-60A3}) missing from current font.
+<string>:354: UserWarning: Glyph 32773 (\N{CJK UNIFIED IDEOGRAPH-8005}) missing from current font.
+<string>:354: UserWarning: Glyph 30011 (\N{CJK UNIFIED IDEOGRAPH-753B}) missing from current font.
+<string>:354: UserWarning: Glyph 20687 (\N{CJK UNIFIED IDEOGRAPH-50CF}) missing from current font.
+<string>:354: UserWarning: Glyph 38750 (\N{CJK UNIFIED IDEOGRAPH-975E}) missing from current font.
+<string>:354: UserWarning: Glyph 27161 (\N{CJK UNIFIED IDEOGRAPH-6A19}) missing from current font.
+<string>:354: UserWarning: Glyph 28310 (\N{CJK UNIFIED IDEOGRAPH-6E96}) missing from current font.
+<string>:354: UserWarning: Glyph 30340 (\N{CJK UNIFIED IDEOGRAPH-7684}) missing from current font.
+<string>:354: UserWarning: Glyph 12394 (\N{HIRAGANA LETTER NA}) missing from current font.
+<string>:354: UserWarning: Glyph 34920 (\N{CJK UNIFIED IDEOGRAPH-8868}) missing from current font.
+<string>:354: UserWarning: Glyph 31034 (\N{CJK UNIFIED IDEOGRAPH-793A}) missing from current font.
+<string>:354: UserWarning: Glyph 24515 (\N{CJK UNIFIED IDEOGRAPH-5FC3}) missing from current font.
+<string>:354: UserWarning: Glyph 38512 (\N{CJK UNIFIED IDEOGRAPH-9670}) missing from current font.
+<string>:354: UserWarning: Glyph 24433 (\N{CJK UNIFIED IDEOGRAPH-5F71}) missing from current font.
+<string>:354: UserWarning: Glyph 12364 (\N{HIRAGANA LETTER GA}) missing from current font.
+<string>:354: UserWarning: Glyph 24460 (\N{CJK UNIFIED IDEOGRAPH-5F8C}) missing from current font.
+<string>:354: UserWarning: Glyph 25312 (\N{CJK UNIFIED IDEOGRAPH-62E0}) missing from current font.
+<string>:354: UserWarning: Glyph 33256 (\N{CJK UNIFIED IDEOGRAPH-81E8}) missing from current font.
+<string>:354: UserWarning: Glyph 24202 (\N{CJK UNIFIED IDEOGRAPH-5E8A}) missing from current font.
+<string>:354: UserWarning: Glyph 23455 (\N{CJK UNIFIED IDEOGRAPH-5B9F}) missing from current font.
+<string>:354: UserWarning: Glyph 35013 (\N{CJK UNIFIED IDEOGRAPH-88C5}) missing from current font.
+<string>:354: UserWarning: Glyph 26041 (\N{CJK UNIFIED IDEOGRAPH-65B9}) missing from current font.
+<string>:354: UserWarning: Glyph 27861 (\N{CJK UNIFIED IDEOGRAPH-6CD5}) missing from current font.
+<string>:354: UserWarning: Glyph 26696 (\N{CJK UNIFIED IDEOGRAPH-6848}) missing from current font.
+<string>:354: UserWarning: Glyph 26368 (\N{CJK UNIFIED IDEOGRAPH-6700}) missing from current font.
+<string>:354: UserWarning: Glyph 23567 (\N{CJK UNIFIED IDEOGRAPH-5C0F}) missing from current font.
+<string>:354: UserWarning: Glyph 22793 (\N{CJK UNIFIED IDEOGRAPH-5909}) missing from current font.
+<string>:354: UserWarning: Glyph 26356 (\N{CJK UNIFIED IDEOGRAPH-66F4}) missing from current font.
+<string>:354: UserWarning: Glyph 25505 (\N{CJK UNIFIED IDEOGRAPH-63A1}) missing from current font.
+<string>:354: UserWarning: Glyph 29992 (\N{CJK UNIFIED IDEOGRAPH-7528}) missing from current font.
+<string>:354: UserWarning: Glyph 12384 (\N{HIRAGANA LETTER DA}) missing from current font.
+<string>:354: UserWarning: Glyph 12369 (\N{HIRAGANA LETTER KE}) missing from current font.
+<string>:354: UserWarning: Glyph 27700 (\N{CJK UNIFIED IDEOGRAPH-6C34}) missing from current font.
+<string>:354: UserWarning: Glyph 24179 (\N{CJK UNIFIED IDEOGRAPH-5E73}) missing from current font.
+<string>:354: UserWarning: Glyph 128203 (\N{CLIPBOARD}) missing from current font.
+<string>:354: UserWarning: Glyph 25216 (\N{CJK UNIFIED IDEOGRAPH-6280}) missing from current font.
+<string>:354: UserWarning: Glyph 34899 (\N{CJK UNIFIED IDEOGRAPH-8853}) missing from current font.
+<string>:354: UserWarning: Glyph 20181 (\N{CJK UNIFIED IDEOGRAPH-4ED5}) missing from current font.
+<string>:354: UserWarning: Glyph 27096 (\N{CJK UNIFIED IDEOGRAPH-69D8}) missing from current font.
+<string>:354: UserWarning: Glyph 25237 (\N{CJK UNIFIED IDEOGRAPH-6295}) missing from current font.
+<string>:354: UserWarning: Glyph 35282 (\N{CJK UNIFIED IDEOGRAPH-89D2}) missing from current font.
+<string>:354: UserWarning: Glyph 24230 (\N{CJK UNIFIED IDEOGRAPH-5EA6}) missing from current font.
+<string>:354: UserWarning: Glyph 24231 (\N{CJK UNIFIED IDEOGRAPH-5EA7}) missing from current font.
+<string>:354: UserWarning: Glyph 31995 (\N{CJK UNIFIED IDEOGRAPH-7CFB}) missing from current font.
+<string>:354: UserWarning: Glyph 21427 (\N{CJK UNIFIED IDEOGRAPH-53B3}) missing from current font.
+<string>:354: UserWarning: Glyph 23494 (\N{CJK UNIFIED IDEOGRAPH-5BC6}) missing from current font.
+<string>:354: UserWarning: Glyph 37197 (\N{CJK UNIFIED IDEOGRAPH-914D}) missing from current font.
+<string>:354: UserWarning: Glyph 21015 (\N{CJK UNIFIED IDEOGRAPH-5217}) missing from current font.
+<string>:354: UserWarning: Glyph 12539 (\N{KATAKANA MIDDLE DOT}) missing from current font.
+<string>:354: UserWarning: Glyph 21516 (\N{CJK UNIFIED IDEOGRAPH-540C}) missing from current font.
+<string>:354: UserWarning: Glyph 26399 (\N{CJK UNIFIED IDEOGRAPH-671F}) missing from current font.
+<string>:354: UserWarning: Glyph 27963 (\N{CJK UNIFIED IDEOGRAPH-6D3B}) missing from current font.
+<string>:354: UserWarning: Glyph 21697 (\N{CJK UNIFIED IDEOGRAPH-54C1}) missing from current font.
+<string>:354: UserWarning: Glyph 36074 (\N{CJK UNIFIED IDEOGRAPH-8CEA}) missing from current font.
+<string>:354: UserWarning: Glyph 20445 (\N{CJK UNIFIED IDEOGRAPH-4FDD}) missing from current font.
+<string>:354: UserWarning: Glyph 35388 (\N{CJK UNIFIED IDEOGRAPH-8A3C}) missing from current font.
+<string>:354: UserWarning: Glyph 29694 (\N{CJK UNIFIED IDEOGRAPH-73FE}) missing from current font.
+<string>:354: UserWarning: Glyph 24190 (\N{CJK UNIFIED IDEOGRAPH-5E7E}) missing from current font.
+<string>:354: UserWarning: Glyph 20309 (\N{CJK UNIFIED IDEOGRAPH-4F55}) missing from current font.
+<string>:354: UserWarning: Glyph 26032 (\N{CJK UNIFIED IDEOGRAPH-65B0}) missing from current font.
+<string>:354: UserWarning: Glyph 27231 (\N{CJK UNIFIED IDEOGRAPH-6A5F}) missing from current font.
+<string>:354: UserWarning: Glyph 127973 (\N{HOSPITAL}) missing from current font.
+<string>:354: UserWarning: Glyph 33016 (\N{CJK UNIFIED IDEOGRAPH-80F8}) missing from current font.
+<string>:354: UserWarning: Glyph 37096 (\N{CJK UNIFIED IDEOGRAPH-90E8}) missing from current font.
+<string>:354: UserWarning: Glyph 32218 (\N{CJK UNIFIED IDEOGRAPH-7DDA}) missing from current font.
+<string>:354: UserWarning: Glyph 128101 (\N{BUSTS IN SILHOUETTE}) missing from current font.
+<string>:354: UserWarning: Glyph 12392 (\N{HIRAGANA LETTER TO}) missing from current font.
+<string>:354: UserWarning: Glyph 12363 (\N{HIRAGANA LETTER KA}) missing from current font.
+<string>:354: UserWarning: Glyph 12356 (\N{HIRAGANA LETTER I}) missing from current font.
+<string>:354: UserWarning: Glyph 21512 (\N{CJK UNIFIED IDEOGRAPH-5408}) missing from current font.
+<string>:354: UserWarning: Glyph 12358 (\N{HIRAGANA LETTER U}) missing from current font.
+<string>:354: UserWarning: Glyph 35222 (\N{CJK UNIFIED IDEOGRAPH-8996}) missing from current font.
+<string>:354: UserWarning: Glyph 28857 (\N{CJK UNIFIED IDEOGRAPH-70B9}) missing from current font.
+<string>:354: UserWarning: Glyph 12399 (\N{HIRAGANA LETTER HA}) missing from current font.
+<string>:354: UserWarning: Glyph 12395 (\N{HIRAGANA LETTER NI}) missing from current font.
+<string>:354: UserWarning: Glyph 128218 (\N{BOOKS}) missing from current font.
+<string>:354: UserWarning: Glyph 21442 (\N{CJK UNIFIED IDEOGRAPH-53C2}) missing from current font.
+<string>:354: UserWarning: Glyph 32771 (\N{CJK UNIFIED IDEOGRAPH-8003}) missing from current font.
+<string>:354: UserWarning: Glyph 25991 (\N{CJK UNIFIED IDEOGRAPH-6587}) missing from current font.
+<string>:354: UserWarning: Glyph 29486 (\N{CJK UNIFIED IDEOGRAPH-732E}) missing from current font.
+<string>:354: UserWarning: Glyph 128295 (\N{WRENCH}) missing from current font.
+<string>:354: UserWarning: Glyph 26681 (\N{CJK UNIFIED IDEOGRAPH-6839}) missing from current font.
+<string>:354: UserWarning: Glyph 32066 (\N{CJK UNIFIED IDEOGRAPH-7D42}) missing from current font.
+<string>:354: UserWarning: Glyph 32622 (\N{CJK UNIFIED IDEOGRAPH-7F6E}) missing from current font.
+<string>:354: UserWarning: Glyph 12391 (\N{HIRAGANA LETTER DE}) missing from current font.
+<string>:354: UserWarning: Glyph 32113 (\N{CJK UNIFIED IDEOGRAPH-7D71}) missing from current font.
+<string>:354: UserWarning: Glyph 19968 (\N{CJK UNIFIED IDEOGRAPH-4E00}) missing from current font.
+<string>:354: UserWarning: Glyph 20108 (\N{CJK UNIFIED IDEOGRAPH-4E8C}) missing from current font.
+<string>:354: UserWarning: Glyph 37325 (\N{CJK UNIFIED IDEOGRAPH-91CD}) missing from current font.
+<string>:354: UserWarning: Glyph 31105 (\N{CJK UNIFIED IDEOGRAPH-7981}) missing from current font.
+<string>:354: UserWarning: Glyph 12450 (\N{KATAKANA LETTER A}) missing from current font.
+<string>:354: UserWarning: Glyph 12503 (\N{KATAKANA LETTER PU}) missing from current font.
+<string>:354: UserWarning: Glyph 12525 (\N{KATAKANA LETTER RO}) missing from current font.
+<string>:354: UserWarning: Glyph 12540 (\N{KATAKANA-HIRAGANA PROLONGED SOUND MARK}) missing from current font.
+<string>:354: UserWarning: Glyph 12481 (\N{KATAKANA LETTER TI}) missing from current font.
+<string>:354: UserWarning: Glyph 36984 (\N{CJK UNIFIED IDEOGRAPH-9078}) missing from current font.
+<string>:354: UserWarning: Glyph 25246 (\N{CJK UNIFIED IDEOGRAPH-629E}) missing from current font.
+<string>:354: UserWarning: Glyph 9989 (\N{WHITE HEAVY CHECK MARK}) missing from current font.
+<string>:354: UserWarning: Glyph 38911 (\N{CJK UNIFIED IDEOGRAPH-97FF}) missing from current font.
+<string>:354: UserWarning: Glyph 12375 (\N{HIRAGANA LETTER SI}) missing from current font.
+<string>:354: UserWarning: Glyph 26082 (\N{CJK UNIFIED IDEOGRAPH-65E2}) missing from current font.
+<string>:354: UserWarning: Glyph 23384 (\N{CJK UNIFIED IDEOGRAPH-5B58}) missing from current font.
+<string>:354: UserWarning: Glyph 25345 (\N{CJK UNIFIED IDEOGRAPH-6301}) missing from current font.
+<string>:354: UserWarning: Glyph 32173 (\N{CJK UNIFIED IDEOGRAPH-7DAD}) missing from current font.
+<string>:354: UserWarning: Glyph 31777 (\N{CJK UNIFIED IDEOGRAPH-7C21}) missing from current font.
+<string>:354: UserWarning: Glyph 28500 (\N{CJK UNIFIED IDEOGRAPH-6F54}) missing from current font.
+<string>:354: UserWarning: Glyph 20195 (\N{CJK UNIFIED IDEOGRAPH-4EE3}) missing from current font.
+<string>:354: UserWarning: Glyph 26367 (\N{CJK UNIFIED IDEOGRAPH-66FF}) missing from current font.
+<string>:354: UserWarning: Glyph 21046 (\N{CJK UNIFIED IDEOGRAPH-5236}) missing from current font.
+<string>:354: UserWarning: Glyph 24481 (\N{CJK UNIFIED IDEOGRAPH-5FA1}) missing from current font.
+<string>:354: UserWarning: Glyph 20840 (\N{CJK UNIFIED IDEOGRAPH-5168}) missing from current font.
+<string>:354: UserWarning: Glyph 12499 (\N{KATAKANA LETTER BI}) missing from current font.
+<string>:354: UserWarning: Glyph 12517 (\N{KATAKANA LETTER SMALL YU}) missing from current font.
+<string>:354: UserWarning: Glyph 12424 (\N{HIRAGANA LETTER YO}) missing from current font.
+<string>:354: UserWarning: Glyph 22533 (\N{CJK UNIFIED IDEOGRAPH-5805}) missing from current font.
+<string>:354: UserWarning: Glyph 29282 (\N{CJK UNIFIED IDEOGRAPH-7262}) missing from current font.
+<string>:354: UserWarning: Glyph 23558 (\N{CJK UNIFIED IDEOGRAPH-5C06}) missing from current font.
+<string>:354: UserWarning: Glyph 26469 (\N{CJK UNIFIED IDEOGRAPH-6765}) missing from current font.
+<string>:354: UserWarning: Glyph 23550 (\N{CJK UNIFIED IDEOGRAPH-5BFE}) missing from current font.
+<string>:354: UserWarning: Glyph 24540 (\N{CJK UNIFIED IDEOGRAPH-5FDC}) missing from current font.
+<string>:354: UserWarning: Glyph 20307 (\N{CJK UNIFIED IDEOGRAPH-4F53}) missing from current font.
+<string>:354: UserWarning: Glyph 36011 (\N{CJK UNIFIED IDEOGRAPH-8CAB}) missing from current font.
+<string>:354: UserWarning: Glyph 24615 (\N{CJK UNIFIED IDEOGRAPH-6027}) missing from current font.
+<string>:354: UserWarning: Glyph 24120 (\N{CJK UNIFIED IDEOGRAPH-5E38}) missing from current font.
+<string>:354: UserWarning: Glyph 12522 (\N{KATAKANA LETTER RI}) missing from current font.
+<string>:354: UserWarning: Glyph 12473 (\N{KATAKANA LETTER SU}) missing from current font.
+<string>:354: UserWarning: Glyph 12463 (\N{KATAKANA LETTER KU}) missing from current font.
+<string>:354: UserWarning: Glyph 22823 (\N{CJK UNIFIED IDEOGRAPH-5927}) missing from current font.
+<string>:354: UserWarning: Glyph 21177 (\N{CJK UNIFIED IDEOGRAPH-52B9}) missing from current font.
+<string>:354: UserWarning: Glyph 26524 (\N{CJK UNIFIED IDEOGRAPH-679C}) missing from current font.
+<string>:354: UserWarning: Glyph 27573 (\N{CJK UNIFIED IDEOGRAPH-6BB5}) missing from current font.
+<string>:354: UserWarning: Glyph 38542 (\N{CJK UNIFIED IDEOGRAPH-968E}) missing from current font.
+<string>:354: UserWarning: Glyph 25913 (\N{CJK UNIFIED IDEOGRAPH-6539}) missing from current font.
+<string>:354: UserWarning: Glyph 21892 (\N{CJK UNIFIED IDEOGRAPH-5584}) missing from current font.
+<string>:354: UserWarning: Glyph 26908 (\N{CJK UNIFIED IDEOGRAPH-691C}) missing from current font.
+<string>:354: UserWarning: Glyph 32080 (\N{CJK UNIFIED IDEOGRAPH-7D50}) missing from current font.
+<string>:354: UserWarning: Glyph 10060 (\N{CROSS MARK}) missing from current font.
+<string>:354: UserWarning: Glyph 25104 (\N{CJK UNIFIED IDEOGRAPH-6210}) missing from current font.
+<string>:354: UserWarning: Glyph 12434 (\N{HIRAGANA LETTER WO}) missing from current font.
+<string>:354: UserWarning: Glyph 23436 (\N{CJK UNIFIED IDEOGRAPH-5B8C}) missing from current font.
+<string>:354: UserWarning: Glyph 34892 (\N{CJK UNIFIED IDEOGRAPH-884C}) missing from current font.
+<string>:354: UserWarning: Glyph 12467 (\N{KATAKANA LETTER KO}) missing from current font.
+<string>:354: UserWarning: Glyph 12489 (\N{KATAKANA LETTER DO}) missing from current font.
+<string>:354: UserWarning: Glyph 36861 (\N{CJK UNIFIED IDEOGRAPH-8FFD}) missing from current font.
+<string>:354: UserWarning: Glyph 21152 (\N{CJK UNIFIED IDEOGRAPH-52A0}) missing from current font.
+<string>:354: UserWarning: Glyph 127919 (\N{DIRECT HIT}) missing from current font.
+<string>:354: UserWarning: Glyph 12289 (\N{IDEOGRAPHIC COMMA}) missing from current font.
+<string>:354: UserWarning: Glyph 22580 (\N{CJK UNIFIED IDEOGRAPH-5834}) missing from current font.
+<string>:354: UserWarning: Glyph 20351 (\N{CJK UNIFIED IDEOGRAPH-4F7F}) missing from current font.
+<string>:354: UserWarning: Glyph 21487 (\N{CJK UNIFIED IDEOGRAPH-53EF}) missing from current font.
+<string>:354: UserWarning: Glyph 33021 (\N{CJK UNIFIED IDEOGRAPH-80FD}) missing from current font.
+<string>:354: UserWarning: Glyph 29256 (\N{CJK UNIFIED IDEOGRAPH-7248}) missing from current font.
+<string>:354: UserWarning: Glyph 12427 (\N{HIRAGANA LETTER RU}) missing from current font.
+🖼️  PA左右反転修正確認画像: /home/soya/ctrate_ws/pipeline/normal_mode_test/deepdrr_output/deepdrr_final_pa_fixed_comparison.png
+\n📊 STEP 8: 最終成果報告
+🎉 DeepDRR PA左右反転修正版完了!
+\n🏆 PA左右反転修正の成果:
+  ❌ 修正前: 患者の左=画像の左（非標準）
+  ✅ 修正後: 患者の左=画像の右（radiographic view標準）
+  🔧 実装: 1回のみ水平反転（img_pa[:, ::-1].copy()）
+  📋 方針: A案採用（最小変更、LATに影響なし）
+\n📋 達成された仕様:
+  • PA正面: radiographic view準拠 (3070, 2500)
+  • LAT側面: 既存品質維持 (3070, 2500)
+  • 座標系: 厳密LPS（配列・affine完全同期）
+  • 品質: 実機準拠医療グレード + 臨床標準表示
+  • 修正: PAのみ1回だけ水平反転（最小リスク）
+\n📚 準拠標準:
+  • Radiology Masterclass: Chest X-ray Quality
+  • radiographic view: 患者と向かい合う表示
+  • DiffDRR→DeepDRR Tutorial: 最終水平反転推奨
+  • 臨床現場標準: 心陰影は画像右側表示
+\n============================================================
+🌟 PA左右反転修正による臨床標準表示を実現!
+📋 radiographic view準拠で医療現場で使用可能な品質
+🏥 最小変更で最大効果、既存LAT品質は完全保持
+============================================================
+⏱️ ステップ3完了: 157秒
+
+========================================
+ステップ4: マスク投影
+========================================
+🎭 マスク投影実行中...
+
+==========
+== CUDA ==
+==========
+
+CUDA Version 11.8.0
+
+Container image Copyright (c) 2016-2023, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+
+This container image and its contents are governed by the NVIDIA Deep Learning Container License.
+By pulling and using the container, you accept the terms and conditions of this license:
+https://developer.nvidia.com/ngc/nvidia-deep-learning-container-license
+
+A copy of this license is made available in this container at /NGC-DL-CONTAINER-LICENSE for your convenience.
+
+🏥 Plan-A: 単色実効モデル による厚み[mm]推定
+📋 gpt5pro8物理補正版 (アイソセンタ面積+5%パーセンタイル+物理厚み)
+============================================================
+
+🔄 STEP 1: ボリューム読み込み & 幾何設定
+❌ Plan-A gpt5pro8物理補正実装エラー: No such file or no access: '/home/soya/ctrate_ws/pipeline/normal_mode_test/eat_pat_output/masks/eat_pat.nii.gz'
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/nibabel/loadsave.py", line 100, in load
+    stat_result = os.stat(filename)
+FileNotFoundError: [Errno 2] No such file or directory: '/home/soya/ctrate_ws/pipeline/normal_mode_test/eat_pat_output/masks/eat_pat.nii.gz'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<string>", line 294, in main
+  File "<string>", line 47, in load_mask_volume_LPS
+  File "/usr/local/lib/python3.8/dist-packages/nibabel/loadsave.py", line 102, in load
+    raise FileNotFoundError(f"No such file or no access: '{filename}'")
+FileNotFoundError: No such file or no access: '/home/soya/ctrate_ws/pipeline/normal_mode_test/eat_pat_output/masks/eat_pat.nii.gz'
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/nibabel/loadsave.py", line 100, in load
+    stat_result = os.stat(filename)
+FileNotFoundError: [Errno 2] No such file or directory: '/home/soya/ctrate_ws/pipeline/normal_mode_test/eat_pat_output/masks/eat_pat.nii.gz'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<stdin>", line 12, in <module>
+  File "<string>", line 543, in <module>
+  File "<string>", line 294, in main
+  File "<string>", line 47, in load_mask_volume_LPS
+  File "/usr/local/lib/python3.8/dist-packages/nibabel/loadsave.py", line 102, in load
+    raise FileNotFoundError(f"No such file or no access: '{filename}'")
+FileNotFoundError: No such file or no access: '/home/soya/ctrate_ws/pipeline/normal_mode_test/eat_pat_output/masks/eat_pat.nii.gz'
+⏱️ ステップ4完了: 116秒
+
+📊 生成ファイル確認:
+
+================================================
+🎉 通常モードパイプライン完了
+================================================
+📊 実行時間サマリ:
+  - ステップ1 (TotalSeg通常): 492秒
+  - ステップ2 (EAT/PAT抽出): 688秒
+  - ステップ3 (DeepDRR生成): 157秒
+  - ステップ4 (マスク投影): 116秒
+  - 総実行時間: 1453秒
+
+📂 出力ディレクトリ: /home/soya/ctrate_ws/pipeline/normal_mode_test
+📄 ログファイル: /home/soya/ctrate_ws/pipeline/normal_mode_test/pipeline_log_20250910_144036.txt

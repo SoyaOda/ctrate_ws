@@ -24,14 +24,23 @@ Web searchの際は、必ずo3-query MCPを利用すること！
 - 具体的なライブラリやモデルの使用方法を調べたい時
 
 [Introduction]
-現状元CTデータであるdata/CT-RATE-v2/dataset/valid_fixed/valid_1/valid_1_a/valid_1_a_1.nii.gzとそのMaskでーたであるoutputs/eat_pat_v5_4_valid_1_a_1/masks/eat_pat.nii.gzが存在する。
-deepdrr/README.mdにあるように、deepdrr/test_deepdrr_final_pa_fixed.pyでCTのNiftiをPAのDRR（deepdrr/deepdrr/outputs/deepdrr_PA_final_pa_fixed.png）にすることはできた。次はMask dataをDRRに完全位置対応するように投射して2D画像を作成し、deepdrr/deepdrr/outputs/deepdrr_PA_final_pa_fixed.pngとOverlayして位置が合うかどうか確かめたい。
-
-
-
+TOTALSEG_LICENSE_KEY=aca_DHDKRFJMHUX0PK　ライセンスはこちら。
+現状元CTデータであるdata/CT-RATE-v2/dataset/valid_fixed/valid_1/valid_1_a/valid_1_a_1.nii.gzが存在する。
+現状、以下のScriptでそれぞれのタスクが完了した。
+1. PAT＋EATのMask作成：scripts/extract_eat_pat_improved_v5_4.py(利用する環境やコマンドはREADME_EAT_PAT_v4_ILAM.md参照)
+2. CTのDRR作成：deepdrr/test_deepdrr_final_pa_fixed.py(利用する環境やコマンドはdeepdrr/README.md参照)
+3. CTのDRRに位置位相を合わせたMaskの2D投影画像作成：mask_projection/src/mask_deepdrr_projection_thickness_gpt5pro8.py(利用する環境やコマンドは下を参照)
+docker run --rm --gpus all     -v /home/soya/ctrate_ws:/workspace     deepdrr-japan-mirror:latest bash -c "
+      pip3 install torch torchvision pydicom opencv-python scipy --no-cache-dir > /dev/null 2>&1 &&
+      echo '🎯 gpt5pro8最終改良版テスト実行開始' &&
+      cd /workspace &&
+      python3 mask_projection/src/mask_deepdrr_projection_thickness_gpt5pro8.py
+    "
 
 [命令]
-このプロジェクトはmask_projectionフォルダの中で進めたい。mask_projection/src/mask_deepdrr_projection_thickness_gpt5pro7.pyを複製して、mask_projection/md_files/gpt5pro8.mdの方法で、修正したScript作成して。
+pipelineフォルダの中で作業をしたい。
+CTのNiftiが数万例あるので上の1-3をパイプラインScriptをつくりたい。、data/CT-RATE-v2/dataset/valid_fixed/valid_1/valid_1_a/valid_1_a_1.nii.gzの1例で、各作業の各ステップのGPU Memoryや時間を含めた指標のログをとれるようにして数万例に適応可能なのかTestして。
+
 
 機能ごとに少しずつ実装を行い、適宜テストを行い実際に動くことを確認して次の機能を実装するように進めること。
 

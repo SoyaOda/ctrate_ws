@@ -1,0 +1,23 @@
+# CTスキャン処理パイプライン 必要パッケージ
+
+# リソース監視
+nvidia-ml-py3>=12.535.108  # GPU監視 (オプショナル)
+psutil>=5.8.0             # システムリソース監視
+
+# データ処理・可視化
+numpy>=1.21.0
+matplotlib>=3.5.0
+
+# その他の処理で使用（メインスクリプト側の依存）
+nibabel>=3.2.0           # NIfTI ファイル処理
+scipy>=1.7.0             # 画像処理
+imageio>=2.9.0           # 画像I/O
+
+# 基本ライブラリ
+pathlib2>=2.3.0         # パス操作 (Python < 3.8)
+argparse                 # 標準ライブラリ
+json                     # 標準ライブラリ
+logging                  # 標準ライブラリ
+subprocess              # 標準ライブラリ
+concurrent.futures      # 標準ライブラリ
+multiprocessing         # 標準ライブラリ

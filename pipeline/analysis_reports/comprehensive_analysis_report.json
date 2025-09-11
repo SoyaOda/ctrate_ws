@@ -1,0 +1,130 @@
+{
+  "summary": {
+    "test_cases": 3,
+    "analysis_timestamp": null,
+    "average_speedup": 2.1737265118810645,
+    "quality_maintained": true
+  },
+  "performance_analysis": {
+    "time_savings": {
+      "valid_1_a_1": {
+        "baseline_time": 664.6277940273285,
+        "fast_time": 495.0544943809509,
+        "time_saved": 169.57329964637756,
+        "speedup_ratio": 1.3425346129993694
+      },
+      "valid_1_a_2": {
+        "baseline_time": 245.474675655365,
+        "fast_time": 111.53132271766663,
+        "time_saved": 133.94335293769836,
+        "speedup_ratio": 2.200948304690747
+      },
+      "valid_2_a_1": {
+        "baseline_time": 203.4196400642395,
+        "fast_time": 68.31442761421204,
+        "time_saved": 135.10521245002747,
+        "speedup_ratio": 2.9776966179530775
+      }
+    },
+    "speedup_ratios": [
+      1.3425346129993694,
+      2.200948304690747,
+      2.9776966179530775
+    ],
+    "step_breakdown": {
+      "step1": [
+        1.3491958365135583,
+        2.278324255654607,
+        3.205230595128263
+      ],
+      "step2": [
+        0,
+        0,
+        0
+      ]
+    },
+    "summary": {
+      "average_speedup": 2.1737265118810645,
+      "median_speedup": 2.200948304690747,
+      "min_speedup": 1.3425346129993694,
+      "max_speedup": 2.9776966179530775,
+      "std_speedup": 0.6678295516641392
+    }
+  },
+  "quality_analysis": {
+    "mask_quality": {
+      "valid_1_a_1": {
+        "liver.nii.gz": 0.9645402131118206,
+        "stomach.nii.gz": 0.9416624576639592,
+        "spleen.nii.gz": 0.9455748979153235
+      },
+      "valid_1_a_2": {
+        "liver.nii.gz": 0.9723969122585182,
+        "stomach.nii.gz": 0.9610777143634608,
+        "spleen.nii.gz": 0.9536223721425685
+      },
+      "valid_2_a_1": {
+        "liver.nii.gz": 0.9666315906222807,
+        "stomach.nii.gz": 0.9419538884302103,
+        "spleen.nii.gz": 0.9418232786453791
+      }
+    },
+    "critical_masks": [
+      "heart_myocardium.nii.gz",
+      "torso_fat.nii.gz"
+    ],
+    "quality_summary": {
+      "liver.nii.gz": {
+        "mean_dice": 0.9678562386642066,
+        "min_dice": 0.9645402131118206,
+        "max_dice": 0.9723969122585182,
+        "std_dice": 0.0033223237340125216,
+        "count": 3,
+        "quality_level": "Excellent"
+      },
+      "stomach.nii.gz": {
+        "mean_dice": 0.9482313534858768,
+        "min_dice": 0.9416624576639592,
+        "max_dice": 0.9610777143634608,
+        "std_dice": 0.009084528012715556,
+        "count": 3,
+        "quality_level": "Very Good"
+      },
+      "spleen.nii.gz": {
+        "mean_dice": 0.947006849567757,
+        "min_dice": 0.9418232786453791,
+        "max_dice": 0.9536223721425685,
+        "std_dice": 0.004922229575442069,
+        "count": 3,
+        "quality_level": "Very Good"
+      }
+    }
+  },
+  "scalability_analysis": {
+    "target_cases": 30000,
+    "time_estimates": {
+      "baseline": {
+        "total_hours": 3093.116971519258,
+        "total_days": 128.87987381330242,
+        "feasibility": "Challenging"
+      },
+      "fast_optimized": {
+        "total_hours": 1874.7229019800823,
+        "total_days": 78.11345424917009,
+        "feasibility": "Good (3ヶ月以内)"
+      },
+      "future_optimized": {
+        "total_hours": 937.3614509900411,
+        "total_days": 39.056727124585045,
+        "feasibility": "Good (3ヶ月以内)",
+        "assumptions": "Docker最適化 + 並列処理改善"
+      }
+    },
+    "recommendations": [
+      "追加の最適化が必要",
+      "--fast + --roi_subsetオプションの継続使用を推奨",
+      "永続化コンテナによるオーバーヘッド削減を実装",
+      "品質が許容範囲内であることを定期的に検証"
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "pixel_pitch_mm": 0.1337777777777778,
+  "magnification_M": 1.0465116279069768,
+  "mu_eff_1_per_mm": 4.783785597741667,
+  "volume_3D_mm3": 127270.90358734131,
+  "volume_2D_mm3": 127271.48853965437,
+  "volume_error_percent": 0.000459611974581507,
+  "support_pixels": 7207668,
+  "max_thickness_mm": 1.0153814554214478,
+  "mean_thickness_mm": 0.9866607189178467,
+  "image_shape": [
+    3070,
+    2500
+  ],
+  "plan_version": "gpt5pro8_plan_a_physics_corrected"
+}

@@ -1,0 +1,89 @@
+{
+  "volumes_ml": {
+    "heart": 547.79,
+    "shell": 520.13,
+    "eat_pat": 143.52,
+    "visceral_fat": 790.5
+  },
+  "voxel_counts": {
+    "heart": 3125966,
+    "shell": 2968161,
+    "eat_pat": 819008,
+    "visceral_fat": 4510997
+  },
+  "ratios_percent": {
+    "fat_fraction_in_shell": 27.59,
+    "eat_pat_to_visceral": 18.16,
+    "eat_pat_to_heart": 26.2
+  },
+  "parameters": {
+    "dilation_radius_mm": 15.0,
+    "dilation_method": "EDT (Euclidean Distance Transform)",
+    "processing_version": "v5.4 with Enhanced Z-axis Processing",
+    "z_range_mode": "rpa_to_diaphragm",
+    "ilam_settings": {
+      "inferior_band_mm": 50.0,
+      "lung_contact_mm": 0.5,
+      "contact_eps_mm": 3.0,
+      "abdomen_gap_mm": 0.0,
+      "max_heart_dist_mm": 35.0,
+      "no_z_limit": false,
+      "lung_dom_ratio": 1.5,
+      "min_lung_touch_voxels": 150,
+      "seal_diaphragm_holes_mm": 3.0,
+      "post_trim_mm": 1.5,
+      "seed_z_margin_mm": 10.0,
+      "require_shell_touch": true,
+      "mode": "add",
+      "z_range": [
+        34,
+        68
+      ],
+      "z_spacing_mm": 1.5,
+      "added_voxels": 319766,
+      "added_volume_ml": 56.04,
+      "ilam_voxels": 790734,
+      "components_accepted": 13,
+      "components_rejected": 26
+    },
+    "improvements": [
+      "IVC/PV-based inferior boundary",
+      "Z-clipping before mediastinal restriction",
+      "Shell restricted to mediastinum",
+      "Abdominal organ clamping (3mm)",
+      "Pericardial bridge connectivity",
+      "ILAM v5.3: Fixed order of contact judgment and forbidden zones",
+      "Seed-only Z restriction with full 3D propagation",
+      "Shell contact requirement for component acceptance",
+      "Improved diaphragm hole sealing",
+      "Post-trim safety margin after contact judgment"
+    ],
+    "ct_shape": [
+      1024,
+      1024,
+      251
+    ],
+    "ct_spacing_mm": [
+      0.341796875,
+      0.341796875,
+      1.5
+    ],
+    "heart_z_range": [
+      34,
+      146
+    ],
+    "masks_used": {
+      "heart": "heart_myocardium.nii.gz",
+      "lung_left": "lung_left.nii.gz",
+      "lung_right": "lung_right.nii.gz",
+      "torso_fat": "torso_fat.nii.gz",
+      "liver": "liver.nii.gz",
+      "stomach": "stomach.nii.gz",
+      "spleen": "spleen.nii.gz",
+      "aorta": "aorta.nii.gz",
+      "pulmonary_artery": "pulmonary_artery.nii.gz",
+      "inferior_vena_cava": "inferior_vena_cava.nii.gz",
+      "pulmonary_vein": "pulmonary_vein.nii.gz"
+    }
+  }
+}
