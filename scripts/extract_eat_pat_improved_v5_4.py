@@ -15,6 +15,7 @@ Spec5.3.mdとz-axis.mdのフィードバックに基づく改善：
 import os
 import sys
 import json
+import time
 import numpy as np
 import nibabel as nib
 from pathlib import Path
@@ -601,9 +602,15 @@ def extract_eat_pat_improved_v5_4(ct_path, totalseg_dir, output_dir,
     print("\n[Improved EAT+PAT Extraction v5.4 with Enhanced Z-axis Processing]")
     print("="*60)
     
+    # 時間測定用辞書
+    timing_info = {}
+    total_start_time = time.time()
+    
     # 1. 必要なマスクの確認
     print("1. Checking required masks...")
+    step_start = time.time()
     missing_required, missing_optional, mask_status = check_required_masks(totalseg_dir)
+    timing_info["check_masks"] = time.time() - step_start
     
     if missing_required:
         error_msg = (
@@ -640,21 +647,26 @@ def extract_eat_pat_improved_v5_4(ct_path, totalseg_dir, output_dir,
     
     # 2. CT画像読み込み
     print("\n2. Loading CT data...")
+    step_start = time.time()
     ct_img = nib.load(ct_path)
     ct_data = ct_img.get_fdata()
     spacing = ct_img.header.get_zooms()[:3]
     spacing = tuple(float(s) for s in spacing)
+    timing_info["load_ct"] = time.time() - step_start
     
     print(f"  CT shape: {ct_data.shape}")
     print(f"  Spacing: {spacing} mm")
     
     # 3. 心臓マスクの構築
     print("\n3. Building heart mask...")
+    step_start = time.time()
     heart_mask, affine = load_heart_components(totalseg_dir, verbose)
+    timing_info["build_heart_mask"] = time.time() - step_start
     
     # オプション: 大血管近位部の追加
     if use_proximal_vessels:
         print("\n4. Incorporating proximal vessels...")
+        step_start = time.time()
         vessels = load_vessel_masks(totalseg_dir, verbose)
         if vessels:
             heart_mask = incorporate_proximal_vessels(
@@ -662,6 +674,7 @@ def extract_eat_pat_improved_v5_4(ct_path, totalseg_dir, output_dir,
             )
         else:
             print("  No vessel masks found (optional)")
+        timing_info["incorporate_vessels"] = time.time() - step_start
     
     # 心臓マスクを保存
     heart_path = masks_dir / "heart.nii.gz"
@@ -732,8 +745,10 @@ def extract_eat_pat_improved_v5_4(ct_path, totalseg_dir, output_dir,
     # 8. Shell（心臓周囲領域）の計算（EDTベースの等方的膨張）
     print(f"\n9. Computing Shell (EDT-based dilation: {dilation_radius_mm} mm)...")
     
+    step_start = time.time()
     # iso_dilateヘルパー関数を使用した等方的膨張
     heart_dilated = iso_dilate(heart_mask, dilation_radius_mm, spacing)
+    timing_info["compute_shell"] = time.time() - step_start
     
     print(f"  Heart dilated voxels: {np.sum(heart_dilated):,}")
     
@@ -812,6 +827,7 @@ def extract_eat_pat_improved_v5_4(ct_path, totalseg_dir, output_dir,
     
     # 14. ILAM (Inferior Lung-Adjacency Mode) v5.4 - 修正版優勢接触ルール with Z軸改善
     print("\n14. Applying ILAM v5.4 (Fixed Dominant Contact with Enhanced Z-axis)...")
+    ilam_start_time = time.time()
     print(f"  Parameters:")
     print(f"    - Inferior band: {inferior_band_mm} mm")
     print(f"    - Contact epsilon: {contact_eps_mm} mm")
@@ -1014,6 +1030,9 @@ def extract_eat_pat_improved_v5_4(ct_path, totalseg_dir, output_dir,
     ilam_voxels = np.sum(ilam_components)
     print(f"  ILAM component voxels (after post-trim): {ilam_voxels:,}")
     
+    # ILAM処理時間を記録
+    timing_info["ilam_processing"] = time.time() - ilam_start_time
+    
     # 診断情報：追加された部分
     ilam_addition = ilam_components & ~eat_pat_shell
     ilam_added_voxels = np.sum(ilam_addition)
@@ -1128,6 +1147,10 @@ def extract_eat_pat_improved_v5_4(ct_path, totalseg_dir, output_dir,
     print(f"  EAT+PAT / Visceral fat ratio: {(eat_pat_volume_ml/visceral_fat_volume_ml*100):.1f}%")
     
     # 16. 統計をJSON形式で保存
+    # 合計処理時間を計算
+    total_time = time.time() - total_start_time
+    timing_info["total"] = total_time
+    
     stats = {
         "volumes_ml": {
             "heart": round(heart_volume_ml, 2),
@@ -1189,7 +1212,8 @@ def extract_eat_pat_improved_v5_4(ct_path, totalseg_dir, output_dir,
             "ct_spacing_mm": list(spacing),
             "heart_z_range": [int(z_min), int(z_max)],
             "masks_used": mask_status
-        }
+        },
+        "processing_time": timing_info
     }
     
     stats_path = stats_dir / "eat_pat_analysis.json"

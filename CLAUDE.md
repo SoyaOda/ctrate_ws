@@ -27,19 +27,16 @@ Web searchの際は、必ずo3-query MCPを利用すること！
 TOTALSEG_LICENSE_KEY=aca_DHDKRFJMHUX0PK　ライセンスはこちら。
 現状元CTデータであるdata/CT-RATE-v2/dataset/valid_fixed/valid_1/valid_1_a/valid_1_a_1.nii.gzが存在する。
 現状、以下のScriptでそれぞれのタスクが完了した。
-1. PAT＋EATのMask作成：scripts/extract_eat_pat_improved_v5_4.py(利用する環境やコマンドはREADME_EAT_PAT_v4_ILAM.md参照)
-2. CTのDRR作成：deepdrr/test_deepdrr_final_pa_fixed.py(利用する環境やコマンドはdeepdrr/README.md参照)
-3. CTのDRRに位置位相を合わせたMaskの2D投影画像作成：mask_projection/src/mask_deepdrr_projection_thickness_gpt5pro8.py(利用する環境やコマンドは下を参照)
-docker run --rm --gpus all     -v /home/soya/ctrate_ws:/workspace     deepdrr-japan-mirror:latest bash -c "
-      pip3 install torch torchvision pydicom opencv-python scipy --no-cache-dir > /dev/null 2>&1 &&
-      echo '🎯 gpt5pro8最終改良版テスト実行開始' &&
-      cd /workspace &&
-      python3 mask_projection/src/mask_deepdrr_projection_thickness_gpt5pro8.py
-    "
+1. PAT＋EATのMask作成：scripts/extract_eat_pat_improved_v5_4.py(利用する環境やコマンドはREADME_EAT_PAT_v5.md参照)
+2. mask_generation/integrated_mask_pipeline.pyでMask生成までのすべての作業を行うパイプラインができた。
 
 [命令]
-pipelineフォルダの中で作業をしたい。
-CTのNiftiが数万例あるので上の1-3をパイプラインScriptをつくりたい。、data/CT-RATE-v2/dataset/valid_fixed/valid_1/valid_1_a/valid_1_a_1.nii.gzの1例で、各作業の各ステップのGPU Memoryや時間を含めた指標のログをとれるようにして数万例に適応可能なのかTestして。
+mask_generationフォルダの中で作業をしたい。
+integrated_mask_pipeline.pyに代わる新しいアルゴリズムも試してみたい。
+integrated_mask_pipeline.pyを複製して、mask_generation/md_files/new_algorhythm1.mdを参考に再構築するように修正・実装してほしい。
+
+
+まずそれができたのちに、そのScriptをベースに生成するMaskの質を保ちつつトータルの作業の速度を上げるように試行錯誤する予定（これは上記が実装できた後に別途指示する）。
 
 
 機能ごとに少しずつ実装を行い、適宜テストを行い実際に動くことを確認して次の機能を実装するように進めること。
